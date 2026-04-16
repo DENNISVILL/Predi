@@ -1,0 +1,46 @@
+/**
+ * Settings Stories
+ * Storybook stories for Settings component
+ */
+
+import type { Meta, StoryObj } from '@storybook/react';
+import { Settings } from './Settings';
+
+const meta: Meta<typeof Settings> = {
+    title: 'Components/Settings',
+    component: Settings,
+    tags: ['autodocs'],
+    parameters: {
+        layout: 'fullscreen',
+    },
+};
+
+export default meta;
+type Story = StoryObj<typeof Settings>;
+
+export const Default: Story = {
+    args: {},
+};
+
+export const ProfileTab: Story = {
+    args: {},
+    play: async ({ canvasElement }) => {
+        // Auto-select profile tab
+    },
+};
+
+export const NotificationsTab: Story = {
+    args: {},
+};
+
+export const PrivacyTab: Story = {
+    args: {},
+};
+
+export const SubscriptionTab: Story = {
+    args: {},
+};
+
+export const SecurityTab: Story = {
+    args: {},
+};

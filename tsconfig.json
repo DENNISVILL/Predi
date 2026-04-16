@@ -1,0 +1,89 @@
+{
+    "compilerOptions": {
+        // Target ES6 for modern browsers
+        "target": "ES2020",
+        "lib": [
+            "DOM",
+            "DOM.Iterable",
+            "ES2020"
+        ],
+        // Module system
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        // JSX support for React
+        "jsx": "react-jsx",
+        // Strict type checking
+        "strict": true,
+        "noImplicitAny": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        // Additional checks
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUncheckedIndexedAccess": true,
+        // Module resolution
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        // Source maps
+        "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        // Output
+        "outDir": "./dist",
+        "rootDir": "./src",
+        // Path mapping
+        "baseUrl": ".",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ],
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@hooks/*": [
+                "src/hooks/*"
+            ],
+            "@services/*": [
+                "src/services/*"
+            ],
+            "@utils/*": [
+                "src/utils/*"
+            ],
+            "@store/*": [
+                "src/store/*"
+            ],
+            "@types/*": [
+                "src/types/*"
+            ]
+        },
+        // Incremental compilation
+        "incremental": true,
+        "tsBuildInfoFile": "./dist/.tsbuildinfo",
+        // Skip lib check for faster compilation
+        "skipLibCheck": true,
+        // Allow importing .js files
+        "allowJs": true,
+        "checkJs": false
+    },
+    "include": [
+        "src/**/*",
+        "src/**/*.tsx",
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "build",
+        "dist",
+        "**/*.spec.ts",
+        "**/*.test.ts",
+        "cypress"
+    ]
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#007bff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Predix">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- SEO Meta Tags -->
+    <title>Predix - Predicciones de IA para Tendencias Digitales</title>
+    <meta name="description" content="La primera plataforma de IA que predice microtendencias digitales antes que se vuelvan virales. Predice. Actúa. Lidera.">
+    <meta name="keywords" content="IA, tendencias, predicciones, marketing digital, viral, redes sociales">
+    <meta name="author" content="Predix Team">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Predix - Predicciones de IA para Tendencias Digitales">
+    <meta property="og:description" content="Descubre lo que será viral antes de que ocurra. Predice. Actúa. Lidera.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://predix.app">
+    <meta property="og:image" content="%PUBLIC_URL%/logo512.png">
+    <meta property="og:site_name" content="Predix">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Predix - Predicciones de IA">
+    <meta name="twitter:description" content="La primera plataforma de IA que predice microtendencias digitales">
+    <meta name="twitter:image" content="%PUBLIC_URL%/logo512.png">
+    
+    <!-- Favicon and Icons -->
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico">
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png">
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Paddle Payment Gateway -->
+    <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+    
+    <!-- Prevent FOUC -->
+    <style>
+      body { 
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: #0b0c10;
+        margin: 0;
+        padding: 0;
+      }
+      #root { min-height: 100vh; }
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0b0c10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid #1f1f1f;
+        border-top: 3px solid #007bff;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div style="text-align: center; padding: 50px; color: white; background: #0b0c10;">
+        <h1>JavaScript requerido</h1>
+        <p>Esta aplicación requiere JavaScript para funcionar correctamente.</p>
+      </div>
+    </noscript>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-spinner"></div>
+    </div>
+    
+    <div id="root"></div>
+    
+    <!-- Remove loading screen when React loads -->
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+          const loadingScreen = document.getElementById('loading-screen');
+          if (loadingScreen) {
+            loadingScreen.style.opacity = '0';
+            loadingScreen.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => loadingScreen.remove(), 300);
+          }
+        }, 1000);
+      });
+    </script>
+  </body>
+</html>

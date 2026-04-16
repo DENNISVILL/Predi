@@ -1,0 +1,260 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "share": "Share",
+    "copy": "Copy",
+    "download": "Download"
+  },
+  "navigation": {
+    "dashboard": "Dashboard",
+    "trends": "Trends",
+    "analysis": "Analysis",
+    "actions": "Actions",
+    "alerts": "Alerts",
+    "settings": "Settings",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "auth": {
+    "login": "Sign In",
+    "register": "Sign Up",
+    "forgotPassword": "Forgot your password?",
+    "email": "Email address",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "name": "Full name",
+    "rememberMe": "Remember me",
+    "loginButton": "Sign In",
+    "registerButton": "Create account",
+    "demoMode": "Demo Mode",
+    "backToLogin": "Back to login",
+    "resetPassword": "Reset password",
+    "sendResetEmail": "Send reset email"
+  },
+  "landing": {
+    "hero": {
+      "title": "Predict. Act. Lead.",
+      "subtitle": "The AI platform that anticipates viral trends before anyone else. Turn data into golden opportunities.",
+      "cta": "Start Free",
+      "watchDemo": "Watch Demo"
+    },
+    "benefits": {
+      "title": "Why Predix?",
+      "ai": {
+        "title": "Advanced Predictive AI",
+        "description": "Algorithms that analyze millions of data points to predict what will go viral tomorrow."
+      },
+      "realtime": {
+        "title": "Real-time Alerts",
+        "description": "Instant notifications when we detect an emerging opportunity."
+      },
+      "global": {
+        "title": "Global Coverage",
+        "description": "We monitor trends across 50+ countries and 20+ social platforms."
+      }
+    },
+    "plans": {
+      "title": "Plans for every need",
+      "free": {
+        "name": "Free",
+        "price": "Free",
+        "features": [
+          "5 trends per day",
+          "Basic alerts",
+          "1 country analysis"
+        ]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "$29/month",
+        "features": [
+          "Unlimited trends",
+          "Advanced AI",
+          "Global analysis",
+          "Export reports"
+        ]
+      },
+      "enterprise": {
+        "name": "Enterprise",
+        "price": "$99/month",
+        "features": [
+          "Custom API",
+          "Dedicated manager",
+          "Custom reports",
+          "CRM integration"
+        ]
+      }
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "metrics": {
+      "trendsToday": "Trends Today",
+      "viralAlerts": "Viral Alerts",
+      "accuracy": "AI Accuracy",
+      "savedTrends": "Saved Trends"
+    },
+    "quickStats": "Quick Stats",
+    "aiAssistant": "AI Assistant",
+    "askQuestion": "Ask me about trends...",
+    "recentActivity": "Recent Activity"
+  },
+  "trends": {
+    "title": "Explore Trends",
+    "subtitle": "Discover the most promising opportunities of the moment",
+    "filters": {
+      "all": "All",
+      "country": "Country",
+      "platform": "Platform",
+      "category": "Category",
+      "confidence": "Confidence"
+    },
+    "views": {
+      "grid": "Grid View",
+      "list": "List View"
+    },
+    "metrics": {
+      "growth": "Growth",
+      "confidence": "Confidence",
+      "views": "Views",
+      "engagement": "Engagement",
+      "viralScore": "Viral Score"
+    },
+    "actions": {
+      "follow": "Follow",
+      "unfollow": "Unfollow",
+      "analyze": "Analyze",
+      "share": "Share",
+      "export": "Export"
+    }
+  },
+  "analysis": {
+    "title": "Detailed Analysis",
+    "tabs": {
+      "evolution": "Evolution",
+      "analysis": "AI Analysis",
+      "actions": "Actions"
+    },
+    "whyGrowing": "Why is it growing?",
+    "relatedTrends": "Related Trends",
+    "suggestedHashtags": "Suggested Hashtags",
+    "bestTimes": "Best Times",
+    "copyGenerator": "AI Copy Generator",
+    "generateCopy": "Generate AI copy",
+    "copyToClipboard": "Copy to clipboard"
+  },
+  "actions": {
+    "title": "Predictive Actions",
+    "subtitle": "AI Specialized in Predictive Marketing",
+    "chatPlaceholder": "Describe your goal and niche to generate a personalized strategy...",
+    "suggestions": {
+      "tech": "I want to create viral content about technology",
+      "fashion": "I need hashtags for my fashion brand",
+      "startup": "Looking for trends for my startup",
+      "engagement": "I want to improve my social media engagement"
+    },
+    "exportStrategy": "Export Strategy",
+    "online": "Online"
+  },
+  "alerts": {
+    "title": "Alerts & Microtrends",
+    "subtitle": "Stay up to date with the most promising opportunities",
+    "types": {
+      "viral": "Viral",
+      "micro": "Micro",
+      "following": "Following",
+      "ai": "AI"
+    },
+    "priority": {
+      "high": "HIGH",
+      "medium": "MEDIUM",
+      "low": "LOW"
+    },
+    "actions": {
+      "createContent": "Create content NOW",
+      "actNow": "Act NOW",
+      "followTrend": "Follow trend",
+      "viewAnalysis": "View analysis",
+      "explore": "Explore",
+      "monitor": "Monitor"
+    },
+    "notifications": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "newAlert": "New alert received"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account and preferences",
+    "tabs": {
+      "profile": "Profile",
+      "notifications": "Notifications",
+      "preferences": "Preferences",
+      "plan": "Plan",
+      "privacy": "Privacy"
+    },
+    "profile": {
+      "personalInfo": "Personal Information",
+      "name": "Name",
+      "email": "Email",
+      "country": "Country",
+      "bio": "Bio",
+      "saveChanges": "Save Changes"
+    },
+    "notifications": {
+      "title": "Notification Settings",
+      "viral": "Alerts when a trend goes viral",
+      "microtendencias": "New microtrends detected",
+      "seguimiento": "Updates from trends you follow",
+      "recomendaciones": "Personalized AI suggestions",
+      "email": "Daily email summary",
+      "push": "Browser push notifications"
+    },
+    "preferences": {
+      "appearance": "Appearance",
+      "theme": "Theme",
+      "language": "Language",
+      "darkMode": "Dark mode",
+      "lightMode": "Light mode"
+    },
+    "privacy": {
+      "dataPrivacy": "Data & Privacy",
+      "downloadData": "Download my data",
+      "deleteAccount": "Delete account",
+      "logout": "Sign Out"
+    }
+  },
+  "errors": {
+    "generic": "An unexpected error occurred",
+    "network": "Connection error",
+    "notFound": "Not found",
+    "unauthorized": "Unauthorized",
+    "validation": "Validation error",
+    "required": "This field is required",
+    "email": "Enter a valid email",
+    "password": "Password must be at least 8 characters",
+    "passwordMatch": "Passwords don't match"
+  },
+  "success": {
+    "saved": "Saved successfully",
+    "updated": "Updated successfully",
+    "deleted": "Deleted successfully",
+    "copied": "Copied to clipboard",
+    "exported": "Exported successfully",
+    "sent": "Sent successfully"
+  }
+}

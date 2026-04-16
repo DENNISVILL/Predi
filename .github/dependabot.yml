@@ -1,0 +1,88 @@
+# Dependabot Configuration
+# Mantiene las dependencias actualizadas automáticamente
+
+version: 2
+updates:
+  # Node dependencies (Frontend)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "MAKI"  # Cambiar por tu usuario de GitHub
+    assignees:
+      - "MAKI"  # Cambiar por tu usuario de GitHub
+    commit-message:
+      prefix: "deps"
+      prefix-development: "deps-dev"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "security"
+    ignore:
+      # Ignorar major updates de react-scripts (requiere revisión manual)
+      - dependency-name: "react-scripts"
+        update-types: ["version-update:semver-major"]
+    groups:
+      # Agrupar updates de testing juntos
+      testing-dependencies:
+        patterns:
+          - "@testing-library/*"
+          - "jest*"
+          - "@jest/*"
+      # Agrupar Lint dependencies
+      linting:
+        patterns:
+          - "eslint*"
+          - "@eslint/*"
+
+  # Python dependencies (Backend)
+  - package-ecosystem: "pip"
+    directory: "/backend"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "MAKI"
+    assignees:
+      - "MAKI"
+    commit-message:
+      prefix: "deps(backend)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "backend"
+      - "security"
+
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "ci"
+    labels:
+      - "ci/cd"
+      - "dependencies"
+
+  # Docker (si usas Docker)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "docker"
+    labels:
+      - "docker"
+      - "dependencies"

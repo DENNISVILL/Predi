@@ -1,0 +1,286 @@
+# Load Testing Configuration for Predix Platform
+# Apache JMeter Test Plan
+
+# ============================================
+# Test Configuration
+# ============================================
+
+# Concurrent Users Configuration
+ramp_up_period: 60  # seconds
+total_threads: 1000  # concurrent users
+loop_count: 10  # iterations per user
+duration: 3600  # 1 hour
+
+# ============================================
+# Test Scenarios
+# ============================================
+
+scenarios:
+  # Scenario 1: Normal User Flow
+  - name: "Normal User Browsing"
+    weight: 70  # 70% of traffic
+    steps:
+      - name: "Login"
+        method: POST
+        endpoint: "/api/v1/users/login"
+        body:
+          email: "${USER_EMAIL}"
+          password: "${USER_PASSWORD}"
+        extract:
+          - name: "access_token"
+            json_path: "$.access_token"
+        
+      - name: "Get Dashboard"
+        method: GET
+        endpoint: "/api/v1/dashboard"
+        headers:
+          Authorization: "Bearer ${access_token}"
+        think_time: 3  # seconds
+        
+      - name: "Browse Trends"
+        method: GET
+        endpoint: "/api/v1/trends?limit=20"
+        headers:
+          Authorization: "Bearer ${access_token}"
+        think_time: 5
+        
+      - name: "View Trend Details"
+        method: GET
+        endpoint: "/api/v1/trends/${RANDOM_TREND_ID}"
+        headers:
+          Authorization: "Bearer ${access_token}"
+        think_time: 10
+        
+      - name: "Logout"
+        method: POST
+        endpoint: "/api/v1/users/logout"
+        headers:
+          Authorization: "Bearer ${access_token}"
+
+  # Scenario 2: AI Prediction
+  - name: "AI Prediction Usage"
+    weight: 20  # 20% of traffic
+    steps:
+      - name: "Login"
+        method: POST
+        endpoint: "/api/v1/users/login"
+        body:
+          email: "${USER_EMAIL}"
+          password: "${USER_PASSWORD}"
+        extract:
+          - name: "access_token"
+            json_path: "$.access_token}"
+        
+      - name: "Create Prediction"
+        method: POST
+        endpoint: "/api/v1/ai/predict"
+        headers:
+          Authorization: "Bearer ${access_token}"
+        body:
+          platform: "tiktok"
+          name: "#LoadTest${__UUID}"
+          views: 1000000
+          likes: 50000
+          comments: 5000
+          shares: 10000
+        think_time: 30  # AI processing
+        
+      - name: "View Results"
+        method: GET
+        endpoint: "/api/v1/predictions"
+        headers:
+          Authorization: "Bearer ${access_token}"
+        think_time: 5
+
+  # Scenario 3: Analytics
+  - name: "Analytics Viewing"
+    weight: 10  # 10% of traffic
+    steps:
+      - name: "Login"
+        method: POST
+        endpoint: "/api/v1/users/login"
+        body:
+          email: "${USER_EMAIL}"
+          password: "${USER_PASSWORD}"
+        extract:
+          - name: "access_token"
+            json_path: "$.access_token}"
+        
+      - name: "View Analytics"
+        method: GET
+        endpoint: "/api/v1/analytics?period=week"
+        headers:
+          Authorization: "Bearer ${access_token}"
+        think_time: 8
+        
+      - name: "Export Report"
+        method: GET
+        endpoint: "/api/v1/analytics/export?format=csv"
+        headers:
+          Authorization: "Bearer ${access_token}"
+
+# ============================================
+# Performance Thresholds
+# ============================================
+
+thresholds:
+  # Response time thresholds (95th percentile)
+  response_time:
+    login: 500  # ms
+    dashboard: 300  # ms
+    trends_list: 400  # ms
+    ai_predict: 2000  # ms
+    analytics: 1000  # ms
+  
+  # Error rate thresholds
+  error_rate:
+    max: 1  # 1% max error rate
+  
+  # Throughput thresholds
+  throughput:
+    min: 100  # requests per second
+  
+  # Database thresholds
+  database:
+    connection_pool: 0.8  # 80% max utilization
+    query_time: 100  # ms average
+
+# ============================================
+# Load Patterns
+# ============================================
+
+load_patterns:
+  # Pattern 1: Steady Load
+  - name: "Steady State"
+    duration: 1800  # 30 minutes
+    users: 500
+    ramp_up: 60
+  
+  # Pattern 2: Spike Test
+  - name: "Traffic Spike"
+    duration: 300  # 5 minutes
+    users: 2000
+    ramp_up: 10
+  
+  # Pattern 3: Stress Test
+  - name: "Stress Test"
+    duration: 600  # 10 minutes
+    users: 5000
+    ramp_up: 60
+  
+  # Pattern 4: Soak Test
+  - name: "Soak Test"
+    duration: 7200  # 2 hours
+    users: 300
+    ramp_up: 120
+
+# ============================================
+# Monitoring Points
+# ============================================
+
+monitoring:
+  # System metrics to track
+  metrics:
+    - cpu_usage
+    - memory_usage
+    - disk_io
+    - network_io
+    - database_connections
+    - cache_hit_rate
+    - response_times
+    - error_rates
+    - throughput
+  
+  # Sampling interval
+  interval: 5  # seconds
+  
+  # Alert conditions
+  alerts:
+    - condition: "cpu_usage > 80"
+      severity: "warning"
+    - condition: "cpu_usage > 95"
+      severity: "critical"
+    - condition: "memory_usage > 85"
+      severity: "warning"
+    - condition: "error_rate > 5"
+      severity: "critical"
+    - condition: "response_time_p95 > 1000"
+      severity: "warning"
+
+# ============================================
+# Test Data
+# ============================================
+
+test_data:
+  # User credentials (CSV file)
+  users_file: "test_data/users.csv"
+  # Format: email,password,tier
+  
+  # Trend IDs for testing
+  trends_file: "test_data/trends.csv"
+  # Format: id,platform,name
+  
+  # Prediction data
+  predictions_file: "test_data/predictions.csv"
+  # Format: platform,name,views,likes,comments,shares
+
+# ============================================
+# Reporting
+# ============================================
+
+reporting:
+  # Report formats
+  formats:
+    - html
+    - csv
+    - json
+  
+  # Report location
+  output_dir: "./load_test_results"
+  
+  # Metrics to include
+  include:
+    - summary_stats
+    - response_time_percentiles
+    - throughput_over_time
+    - error_distribution
+    - resource_utilization
+  
+  # Dashboard
+  dashboard:
+    enabled: true
+    port: 9090
+    real_time: true
+
+# ============================================
+# Environment Configuration
+# ============================================
+
+environments:
+  local:
+    base_url: "http://localhost:8000"
+    threads: 100
+  
+  staging:
+    base_url: "https://staging.predix.com"
+    threads: 500
+  
+  production:
+    base_url: "https://api.predix.com"
+    threads: 1000
+
+# ============================================
+# Execution Commands
+# ============================================
+
+# Run with JMeter:
+# jmeter -n -t load_test.jmx -l results.jtl -e -o dashboard/
+
+# Run with Locust:
+# locust -f locustfile.py --host=http://localhost:8000 --users=1000 --spawn-rate=100
+
+# Run with k6:
+# k6 run --vus 1000 --duration 30m load_test.js
+
+# Run with Gatling:
+# gatling.sh -s predix.LoadTest

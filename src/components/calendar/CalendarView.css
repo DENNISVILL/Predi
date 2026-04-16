@@ -1,0 +1,184 @@
+/* CalendarView.css - Custom styles for react-big-calendar */
+
+.calendar-container {
+  width: 100%;
+  padding: 20px;
+}
+
+.calendar-wrapper .rbc-calendar {
+  font-family: inherit;
+  color: #e5e7eb;
+}
+
+/* Dark Mode Rounded Theme */
+.calendar-dark-mode {
+  background-color: #000000;
+}
+
+/* Header */
+.calendar-wrapper .rbc-header {
+  background-color: transparent;
+  color: #ffffff;
+  padding: 15px 0;
+  font-weight: 900;
+  text-transform: capitalize;
+  font-size: 16px;
+  border-bottom: none;
+  text-align: left;
+  padding-left: 10px;
+}
+
+/* Container */
+.calendar-wrapper .rbc-month-view,
+.calendar-wrapper .rbc-time-view {
+  background-color: transparent;
+  /* Let container bg show or specific bg */
+  border: none;
+}
+
+.calendar-wrapper .rbc-month-view {
+  gap: 8px;
+  /* Simulate gap via margin on cells */
+}
+
+/* The Day "Card" Background */
+.calendar-wrapper .rbc-day-bg {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  margin: 4px;
+  /* Creates the gap between cards */
+  height: calc(100% - 8px);
+  /* Adjust for margin */
+}
+
+/* Today styling */
+.calendar-wrapper .rbc-today {
+  background-color: #fef08a !important;
+  /* Yellow pastel for today */
+}
+
+/* Off-range (empty) days */
+.calendar-wrapper .rbc-off-range-bg {
+  background-color: transparent;
+  /* Hide them or make them subtle */
+  opacity: 0;
+}
+
+/* Date Number */
+.calendar-wrapper .rbc-date-cell {
+  color: #000000;
+  padding: 12px;
+  font-weight: 800;
+  font-size: 18px;
+  text-align: left;
+  /* Top Left */
+  opacity: 1;
+}
+
+.calendar-wrapper .rbc-event {
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+}
+
+.calendar-wrapper .rbc-event:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.calendar-wrapper .rbc-event-label {
+  font-size: 11px;
+}
+
+.calendar-wrapper .rbc-toolbar {
+  background-color: #1f2937;
+  padding: 15px;
+  border-radius: 8px 8px 0 0;
+  border-bottom: 2px solid #374151;
+  margin-bottom: 0;
+}
+
+.calendar-wrapper .rbc-toolbar button {
+  background-color: #374151;
+  color: #e5e7eb;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.calendar-wrapper .rbc-toolbar button:hover {
+  background-color: #4b5563;
+}
+
+.calendar-wrapper .rbc-toolbar button.rbc-active {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.calendar-wrapper .rbc-month-row {
+  min-height: 80px;
+}
+
+.calendar-wrapper .rbc-time-slot {
+  border-top: 1px solid #374151;
+  color: #9ca3af;
+}
+
+.calendar-wrapper .rbc-current-time-indicator {
+  background-color: #3b82f6;
+}
+
+/* Drag and drop placeholder */
+.calendar-wrapper .rbc-addons-dnd-drag-preview {
+  opacity: 0.7;
+}
+
+.calendar-wrapper .rbc-addons-dnd-over {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Custom Event Styles */
+.custom-event-content {
+  line-height: 1.2;
+}
+
+/* Events container setup */
+.calendar-wrapper .rbc-row-content {
+  pointer-events: none;
+  /* Let clicks pass through to background if needed */
+  z-index: 5;
+  padding: 4px;
+  /* Match margin of background */
+}
+
+.calendar-wrapper .rbc-event {
+  pointer-events: auto;
+  padding: 0 !important;
+  background: transparent !important;
+  border: none !important;
+  min-height: auto !important;
+  margin-top: 2px;
+}
+
+/* Ensure text is readable */
+.calendar-wrapper .rbc-event-content {
+  font-size: 12px;
+}
+
+/* Increase month row height to accommodate taller events */
+.calendar-wrapper .rbc-month-row {
+  min-height: 90px;
+  /* Slight increase for taller events */
+}
+
+/* Ensure padding between calendar and stats */
+.calendar-wrapper .rbc-month-view {
+  margin-bottom: 20px;
+}
+
+/* Improve grid lines visibility */
+.calendar-wrapper .rbc-day-bg+.rbc-day-bg {
+  border-left: 1px solid #374151;
+}

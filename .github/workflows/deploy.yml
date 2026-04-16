@@ -1,0 +1,423 @@
+name: 🚀 Predix CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+    tags: ['v*']
+  pull_request:
+    branches: [main]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: predix
+
+jobs:
+  # Test Stage
+  test:
+    name: 🧪 Run Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        component: [frontend, backend, ai_system]
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      # Frontend Tests
+      - name: 🎨 Setup Node.js (Frontend)
+        if: matrix.component == 'frontend'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: 📦 Install Frontend Dependencies
+        if: matrix.component == 'frontend'
+        run: npm ci
+      
+      - name: 🧪 Run Frontend Tests
+        if: matrix.component == 'frontend'
+        run: |
+          npm run test -- --coverage --watchAll=false
+          npm run build
+      
+      - name: 📊 Upload Frontend Coverage
+        if: matrix.component == 'frontend'
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./coverage/lcov.info
+          flags: frontend
+      
+      # Backend Tests
+      - name: 🐍 Setup Python (Backend)
+        if: matrix.component == 'backend'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: 📦 Install Backend Dependencies
+        if: matrix.component == 'backend'
+        working-directory: ./backend
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-cov httpx
+      
+      - name: 🧪 Run Backend Tests
+        if: matrix.component == 'backend'
+        working-directory: ./backend
+        run: |
+          pytest --cov=. --cov-report=xml --cov-report=html
+      
+      - name: 📊 Upload Backend Coverage
+        if: matrix.component == 'backend'
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./backend/coverage.xml
+          flags: backend
+      
+      # AI System Tests
+      - name: 🐍 Setup Python (AI System)
+        if: matrix.component == 'ai_system'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: 📦 Install AI System Dependencies
+        if: matrix.component == 'ai_system'
+        working-directory: ./ai_system
+        run: |
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-cov
+      
+      - name: 🧪 Run AI System Tests
+        if: matrix.component == 'ai_system'
+        working-directory: ./ai_system
+        run: |
+          pytest --cov=. --cov-report=xml
+      
+      - name: 📊 Upload AI System Coverage
+        if: matrix.component == 'ai_system'
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./ai_system/coverage.xml
+          flags: ai_system
+
+  # Security Scan
+  security:
+    name: 🔒 Security Scan
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🔍 Run Trivy Vulnerability Scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          scan-ref: '.'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+      
+      - name: 📤 Upload Trivy Results
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: 'trivy-results.sarif'
+      
+      - name: 🔐 Run Snyk Security Scan
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high
+
+  # Build Images
+  build:
+    name: 🏗️ Build Images
+    runs-on: ubuntu-latest
+    needs: [test, security]
+    if: github.event_name != 'pull_request'
+    
+    strategy:
+      matrix:
+        component: [frontend, backend, ai_system]
+    
+    outputs:
+      frontend-image: ${{ steps.meta.outputs.tags }}
+      backend-image: ${{ steps.meta.outputs.tags }}
+      ai-image: ${{ steps.meta.outputs.tags }}
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🐳 Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: 🔐 Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 📝 Extract Metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ matrix.component }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+      
+      - name: 🏗️ Build and Push Image
+        uses: docker/build-push-action@v5
+        with:
+          context: ${{ matrix.component == 'frontend' && '.' || format('./{0}', matrix.component) }}
+          file: ${{ matrix.component == 'frontend' && './Dockerfile' || format('./{0}/Dockerfile', matrix.component) }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64,linux/arm64
+
+  # Deploy to Staging
+  deploy-staging:
+    name: 🚀 Deploy to Staging
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🔧 Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+      
+      - name: 🏗️ Deploy Infrastructure
+        working-directory: ./infrastructure/terraform
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+          TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
+          TF_VAR_environment: staging
+          TF_VAR_postgres_password: ${{ secrets.POSTGRES_PASSWORD_STAGING }}
+          TF_VAR_redis_password: ${{ secrets.REDIS_PASSWORD_STAGING }}
+          TF_VAR_secret_key: ${{ secrets.SECRET_KEY_STAGING }}
+          TF_VAR_domain: ${{ secrets.STAGING_DOMAIN }}
+          TF_VAR_acme_email: ${{ secrets.ACME_EMAIL }}
+        run: |
+          terraform init
+          terraform plan -var-file="staging.tfvars"
+          terraform apply -auto-approve -var-file="staging.tfvars"
+      
+      - name: 📤 Get Infrastructure Outputs
+        id: terraform
+        working-directory: ./infrastructure/terraform
+        run: |
+          echo "app_server_ip=$(terraform output -raw app_server_public_ip)" >> $GITHUB_OUTPUT
+          echo "floating_ip=$(terraform output -raw floating_ip)" >> $GITHUB_OUTPUT
+      
+      - name: 🔐 Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ steps.terraform.outputs.app_server_ip }} >> ~/.ssh/known_hosts
+      
+      - name: 🚀 Deploy Application
+        run: |
+          # Copy deployment files
+          scp -r docker-compose.yml ubuntu@${{ steps.terraform.outputs.app_server_ip }}:/opt/predix/app/
+          scp -r .env.staging ubuntu@${{ steps.terraform.outputs.app_server_ip }}:/opt/predix/.env
+          
+          # Deploy application
+          ssh ubuntu@${{ steps.terraform.outputs.app_server_ip }} << 'EOF'
+            cd /opt/predix/app
+            docker-compose pull
+            docker-compose up -d
+            docker system prune -f
+          EOF
+      
+      - name: 🔍 Health Check
+        run: |
+          sleep 60
+          curl -f http://${{ steps.terraform.outputs.floating_ip }}/health || exit 1
+          curl -f http://${{ steps.terraform.outputs.floating_ip }}/api/v1/health || exit 1
+      
+      - name: 📢 Notify Deployment
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#deployments'
+          text: '🚀 Predix Staging deployed successfully!'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # Deploy to Production
+  deploy-production:
+    name: 🌟 Deploy to Production
+    runs-on: ubuntu-latest
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    environment: production
+    
+    steps:
+      - name: 📥 Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: 🔧 Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.0
+      
+      - name: 🏗️ Deploy Infrastructure
+        working-directory: ./infrastructure/terraform
+        env:
+          HCLOUD_TOKEN: ${{ secrets.HCLOUD_TOKEN }}
+          TF_VAR_hcloud_token: ${{ secrets.HCLOUD_TOKEN }}
+          TF_VAR_environment: production
+          TF_VAR_postgres_password: ${{ secrets.POSTGRES_PASSWORD_PROD }}
+          TF_VAR_redis_password: ${{ secrets.REDIS_PASSWORD_PROD }}
+          TF_VAR_secret_key: ${{ secrets.SECRET_KEY_PROD }}
+          TF_VAR_domain: ${{ secrets.PRODUCTION_DOMAIN }}
+          TF_VAR_acme_email: ${{ secrets.ACME_EMAIL }}
+          TF_VAR_paymentez_app_code: ${{ secrets.PAYMENTEZ_APP_CODE }}
+          TF_VAR_paymentez_app_key: ${{ secrets.PAYMENTEZ_APP_KEY }}
+          TF_VAR_sentry_dsn: ${{ secrets.SENTRY_DSN }}
+        run: |
+          terraform init
+          terraform plan -var-file="production.tfvars"
+          terraform apply -auto-approve -var-file="production.tfvars"
+      
+      - name: 📤 Get Infrastructure Outputs
+        id: terraform
+        working-directory: ./infrastructure/terraform
+        run: |
+          echo "app_server_ip=$(terraform output -raw app_server_public_ip)" >> $GITHUB_OUTPUT
+          echo "load_balancer_ip=$(terraform output -raw load_balancer_public_ip)" >> $GITHUB_OUTPUT
+      
+      - name: 🔐 Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ steps.terraform.outputs.app_server_ip }} >> ~/.ssh/known_hosts
+      
+      - name: 🚀 Deploy Application (Blue-Green)
+        run: |
+          # Copy deployment files
+          scp -r docker-compose.yml ubuntu@${{ steps.terraform.outputs.app_server_ip }}:/opt/predix/app/
+          scp -r .env.production ubuntu@${{ steps.terraform.outputs.app_server_ip }}:/opt/predix/.env
+          
+          # Blue-Green deployment
+          ssh ubuntu@${{ steps.terraform.outputs.app_server_ip }} << 'EOF'
+            cd /opt/predix/app
+            
+            # Create backup of current deployment
+            docker-compose -f docker-compose.yml -p predix-blue ps -q | xargs docker inspect --format='{{.Name}} {{.Config.Image}}' > /tmp/current-images.txt
+            
+            # Pull new images
+            docker-compose pull
+            
+            # Start new deployment (green)
+            docker-compose -f docker-compose.yml -p predix-green up -d
+            
+            # Wait for health check
+            sleep 60
+            
+            # Health check
+            if curl -f http://localhost/health && curl -f http://localhost/api/v1/health; then
+              echo "Health check passed, switching traffic"
+              
+              # Stop old deployment (blue)
+              docker-compose -f docker-compose.yml -p predix-blue down || true
+              
+              # Rename green to blue
+              docker-compose -f docker-compose.yml -p predix-green down
+              docker-compose -f docker-compose.yml -p predix up -d
+              
+              # Cleanup
+              docker system prune -f
+              
+              echo "Deployment successful"
+            else
+              echo "Health check failed, rolling back"
+              docker-compose -f docker-compose.yml -p predix-green down
+              exit 1
+            fi
+          EOF
+      
+      - name: 🔍 Production Health Check
+        run: |
+          sleep 120
+          curl -f https://${{ secrets.PRODUCTION_DOMAIN }}/health || exit 1
+          curl -f https://api.${{ secrets.PRODUCTION_DOMAIN }}/health || exit 1
+      
+      - name: 📊 Update Monitoring
+        run: |
+          # Update Grafana dashboards
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.GRAFANA_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"dashboard": {"title": "Predix Production", "tags": ["production"]}, "overwrite": true}' \
+            https://grafana.${{ secrets.PRODUCTION_DOMAIN }}/api/dashboards/db
+      
+      - name: 📢 Notify Production Deployment
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          channel: '#production'
+          text: '🌟 Predix Production deployed successfully! Version: ${{ github.ref_name }}'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      
+      - name: 🎉 Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Predix ${{ github.ref }}
+          body: |
+            ## 🚀 Predix Release ${{ github.ref_name }}
+            
+            ### 🆕 What's New
+            - Deployed to production
+            - All tests passed
+            - Security scans completed
+            
+            ### 🔗 Links
+            - [Production App](https://${{ secrets.PRODUCTION_DOMAIN }})
+            - [API Documentation](https://api.${{ secrets.PRODUCTION_DOMAIN }}/docs)
+            - [Monitoring](https://grafana.${{ secrets.PRODUCTION_DOMAIN }})
+          draft: false
+          prerelease: false
+
+  # Cleanup
+  cleanup:
+    name: 🧹 Cleanup
+    runs-on: ubuntu-latest
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    
+    steps:
+      - name: 🗑️ Clean up old images
+        run: |
+          # This would typically connect to the servers and clean up old Docker images
+          echo "Cleanup completed"

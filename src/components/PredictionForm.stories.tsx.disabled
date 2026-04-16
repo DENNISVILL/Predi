@@ -1,0 +1,112 @@
+/**
+ * PredictionForm Stories
+ * Storybook stories for PredictionForm component
+ */
+
+import type { Meta, StoryObj } from '@storybook/react';
+import { PredictionForm } from './PredictionForm';
+
+const meta: Meta<typeof PredictionForm> = {
+    title: 'Components/PredictionForm',
+    component: PredictionForm,
+    tags: ['autodocs'],
+    argTypes: {
+        onSubmit: { action: 'submitted' },
+        showDescription: { control: 'boolean' },
+        showHashtags: { control: 'boolean' },
+        showHelperText: { control: 'boolean' },
+        showReset: { control: 'boolean' },
+        showExampleButton: { control: 'boolean' },
+    },
+};
+
+export default meta;
+type Story = StoryObj<typeof PredictionForm>;
+
+const mockSubmit = async (data: any) => {
+    console.log('Form submitted:', data);
+    return new Promise((resolve) => setTimeout(resolve, 2000));
+};
+
+export const Default: Story = {
+    args: {
+        onSubmit: mockSubmit,
+    },
+};
+
+export const WithAllFeatures: Story = {
+    args: {
+        onSubmit: mockSubmit,
+        showDescription: true,
+        showHashtags: true,
+        showHelperText: true,
+        showReset: true,
+        showExampleButton: true,
+    },
+};
+
+export const WithInitialData: Story = {
+    args: {
+        onSubmit: mockSubmit,
+        initialData: {
+            platform: 'tiktok',
+            name: '#DanceChallenge',
+            views: 1000000,
+            likes: 50000,
+            comments: 5000,
+            shares: 10000,
+        },
+    },
+};
+
+export const WithHelperText: Story = {
+    args: {
+        onSubmit: mockSubmit,
+        showHelperText: true,
+    },
+};
+
+export const WithResetButton: Story = {
+    args: {
+        onSubmit: mockSubmit,
+        showReset: true,
+    },
+};
+
+export const WithExampleButton: Story = {
+    args: {
+        onSubmit: mockSubmit,
+        showExampleButton: true,
+    },
+};
+
+export const WithDescriptionField: Story = {
+    args: {
+        onSubmit: mockSubmit,
+        showDescription: true,
+    },
+};
+
+export const WithHashtagsField: Story = {
+    args: {
+        onSubmit: mockSubmit,
+        showHashtags: true,
+    },
+};
+
+export const FullFeatured: Story = {
+    args: {
+        onSubmit: mockSubmit,
+        showDescription: true,
+        showHashtags: true,
+        showHelperText: true,
+        showReset: true,
+        showExampleButton: true,
+        initialData: {
+            platform: 'twitter',
+            name: '#Trending',
+            views: 500000,
+            likes: 25000,
+        },
+    },
+};

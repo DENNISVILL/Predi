@@ -1,0 +1,35 @@
+/**
+ * Analytics Page Stories
+ * Storybook stories for Analytics page
+ */
+
+import type { Meta, StoryObj } from '@storybook/react';
+import { Analytics } from './Analytics';
+
+const meta: Meta<typeof Analytics> = {
+    title: 'Pages/Analytics',
+    component: Analytics,
+    tags: ['autodocs'],
+    parameters: {
+        layout: 'fullscreen',
+    },
+};
+
+export default meta;
+type Story = StoryObj<typeof Analytics>;
+
+export const Default: Story = {
+    args: {},
+};
+
+export const Last7Days: Story = {
+    args: {},
+};
+
+export const Last30Days: Story = {
+    args: {},
+};
+
+export const Last90Days: Story = {
+    args: {},
+};

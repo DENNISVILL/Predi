@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predix - Sin Conexión</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .offline-container {
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .offline-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: #374151;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+        
+        .offline-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #f9fafb;
+        }
+        
+        .offline-message {
+            font-size: 16px;
+            color: #9ca3af;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+        
+        .offline-features {
+            background: rgba(55, 65, 81, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .offline-features h3 {
+            color: #7c3aed;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .offline-features ul {
+            list-style: none;
+        }
+        
+        .offline-features li {
+            padding: 8px 0;
+            color: #d1d5db;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .offline-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .retry-button {
+            background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+        
+        .retry-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .retry-button:active {
+            transform: translateY(0);
+        }
+        
+        .connection-status {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .status-offline {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .status-online {
+            background: rgba(16, 185, 129, 0.1);
+            color: #6ee7b7;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        @media (max-width: 480px) {
+            .offline-title {
+                font-size: 24px;
+            }
+            
+            .offline-message {
+                font-size: 14px;
+            }
+            
+            .offline-container {
+                padding: 0 10px;
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon pulse">
+            📡
+        </div>
+        
+        <h1 class="offline-title">Sin Conexión</h1>
+        
+        <p class="offline-message">
+            No hay conexión a internet disponible. Pero no te preocupes, 
+            Predix funciona offline con datos en caché.
+        </p>
+        
+        <div class="offline-features">
+            <h3>Disponible sin conexión:</h3>
+            <ul>
+                <li>Ver tendencias guardadas</li>
+                <li>Acceder a contenido generado</li>
+                <li>Revisar análisis previos</li>
+                <li>Usar herramientas básicas</li>
+            </ul>
+        </div>
+        
+        <button class="retry-button" onclick="checkConnection()">
+            🔄 Verificar Conexión
+        </button>
+        
+        <div id="connectionStatus" class="connection-status status-offline">
+            📴 Sin conexión a internet
+        </div>
+    </div>
+
+    <script>
+        let isOnline = navigator.onLine;
+        
+        function updateConnectionStatus() {
+            const statusElement = document.getElementById('connectionStatus');
+            const retryButton = document.querySelector('.retry-button');
+            
+            if (navigator.onLine) {
+                statusElement.textContent = '🌐 Conexión restaurada';
+                statusElement.className = 'connection-status status-online';
+                retryButton.textContent = '🏠 Ir a Predix';
+                retryButton.onclick = () => window.location.href = '/';
+            } else {
+                statusElement.textContent = '📴 Sin conexión a internet';
+                statusElement.className = 'connection-status status-offline';
+                retryButton.textContent = '🔄 Verificar Conexión';
+                retryButton.onclick = checkConnection;
+            }
+        }
+        
+        function checkConnection() {
+            const button = document.querySelector('.retry-button');
+            const originalText = button.textContent;
+            
+            button.textContent = '⏳ Verificando...';
+            button.disabled = true;
+            
+            // Simular verificación
+            setTimeout(() => {
+                updateConnectionStatus();
+                button.disabled = false;
+                
+                if (!navigator.onLine) {
+                    button.textContent = originalText;
+                }
+            }, 1500);
+        }
+        
+        // Escuchar cambios de conexión
+        window.addEventListener('online', () => {
+            isOnline = true;
+            updateConnectionStatus();
+            
+            // Auto-redirect después de 3 segundos
+            setTimeout(() => {
+                if (navigator.onLine) {
+                    window.location.href = '/';
+                }
+            }, 3000);
+        });
+        
+        window.addEventListener('offline', () => {
+            isOnline = false;
+            updateConnectionStatus();
+        });
+        
+        // Verificar conexión inicial
+        updateConnectionStatus();
+        
+        // Verificar conexión periódicamente
+        setInterval(() => {
+            if (!navigator.onLine && isOnline) {
+                isOnline = false;
+                updateConnectionStatus();
+            } else if (navigator.onLine && !isOnline) {
+                isOnline = true;
+                updateConnectionStatus();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

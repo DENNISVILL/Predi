@@ -1,0 +1,191 @@
+/* ===========================================
+   PREDIX DESIGN TOKENS
+   Sistema de diseño escalable y consistente
+   =========================================== */
+
+:root {
+  /* === COLORES PRINCIPALES === */
+  --predix-primary: #007bff;
+  --predix-primary-light: #3395ff;
+  --predix-primary-dark: #0056b3;
+  
+  --predix-secondary: #00ff9d;
+  --predix-secondary-light: #33ffb3;
+  --predix-secondary-dark: #00cc7d;
+  
+  --predix-accent: #8b5cf6;
+  --predix-accent-light: #a78bfa;
+  --predix-accent-dark: #7c3aed;
+
+  /* === COLORES DE ESTADO === */
+  --predix-success: #10b981;
+  --predix-warning: #f59e0b;
+  --predix-error: #ef4444;
+  --predix-info: #3b82f6;
+
+  /* === COLORES DE FONDO === */
+  --predix-bg-primary: #0b0c10;
+  --predix-bg-secondary: #1f1f1f;
+  --predix-bg-tertiary: #2a2a2a;
+  --predix-bg-overlay: rgba(0, 0, 0, 0.8);
+
+  /* === COLORES DE TEXTO === */
+  --predix-text-primary: #ffffff;
+  --predix-text-secondary: #e5e7eb;
+  --predix-text-tertiary: #9ca3af;
+  --predix-text-muted: #6b7280;
+  --predix-text-disabled: #4b5563;
+
+  /* === COLORES DE BORDE === */
+  --predix-border-primary: #374151;
+  --predix-border-secondary: #4b5563;
+  --predix-border-focus: var(--predix-primary);
+
+  /* === TIPOGRAFÍA === */
+  --predix-font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --predix-font-family-secondary: 'Poppins', sans-serif;
+  --predix-font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* === TAMAÑOS DE FUENTE === */
+  --predix-text-xs: 0.75rem;    /* 12px */
+  --predix-text-sm: 0.875rem;   /* 14px */
+  --predix-text-base: 1rem;     /* 16px */
+  --predix-text-lg: 1.125rem;   /* 18px */
+  --predix-text-xl: 1.25rem;    /* 20px */
+  --predix-text-2xl: 1.5rem;    /* 24px */
+  --predix-text-3xl: 1.875rem;  /* 30px */
+  --predix-text-4xl: 2.25rem;   /* 36px */
+  --predix-text-5xl: 3rem;      /* 48px */
+
+  /* === PESOS DE FUENTE === */
+  --predix-font-light: 300;
+  --predix-font-normal: 400;
+  --predix-font-medium: 500;
+  --predix-font-semibold: 600;
+  --predix-font-bold: 700;
+  --predix-font-extrabold: 800;
+
+  /* === ESPACIADO === */
+  --predix-space-1: 0.25rem;   /* 4px */
+  --predix-space-2: 0.5rem;    /* 8px */
+  --predix-space-3: 0.75rem;   /* 12px */
+  --predix-space-4: 1rem;      /* 16px */
+  --predix-space-5: 1.25rem;   /* 20px */
+  --predix-space-6: 1.5rem;    /* 24px */
+  --predix-space-8: 2rem;      /* 32px */
+  --predix-space-10: 2.5rem;   /* 40px */
+  --predix-space-12: 3rem;     /* 48px */
+  --predix-space-16: 4rem;     /* 64px */
+  --predix-space-20: 5rem;     /* 80px */
+
+  /* === BORDES REDONDEADOS === */
+  --predix-radius-sm: 0.25rem;  /* 4px */
+  --predix-radius-md: 0.5rem;   /* 8px */
+  --predix-radius-lg: 0.75rem;  /* 12px */
+  --predix-radius-xl: 1rem;     /* 16px */
+  --predix-radius-2xl: 1.5rem;  /* 24px */
+  --predix-radius-full: 9999px;
+
+  /* === SOMBRAS === */
+  --predix-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --predix-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --predix-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --predix-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --predix-shadow-glow: 0 0 20px rgba(0, 123, 255, 0.3);
+  --predix-shadow-glow-secondary: 0 0 20px rgba(0, 255, 157, 0.3);
+
+  /* === TRANSICIONES === */
+  --predix-transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --predix-transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --predix-transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === Z-INDEX === */
+  --predix-z-dropdown: 1000;
+  --predix-z-sticky: 1020;
+  --predix-z-fixed: 1030;
+  --predix-z-modal-backdrop: 1040;
+  --predix-z-modal: 1050;
+  --predix-z-popover: 1060;
+  --predix-z-tooltip: 1070;
+  --predix-z-toast: 1080;
+
+  /* === BREAKPOINTS === */
+  --predix-screen-sm: 640px;
+  --predix-screen-md: 768px;
+  --predix-screen-lg: 1024px;
+  --predix-screen-xl: 1280px;
+  --predix-screen-2xl: 1536px;
+}
+
+/* === MODO CLARO (OPCIONAL) === */
+[data-theme="light"] {
+  --predix-bg-primary: #ffffff;
+  --predix-bg-secondary: #f8fafc;
+  --predix-bg-tertiary: #f1f5f9;
+  --predix-bg-overlay: rgba(255, 255, 255, 0.9);
+  
+  --predix-text-primary: #1f2937;
+  --predix-text-secondary: #374151;
+  --predix-text-tertiary: #6b7280;
+  --predix-text-muted: #9ca3af;
+  --predix-text-disabled: #d1d5db;
+  
+  --predix-border-primary: #e5e7eb;
+  --predix-border-secondary: #d1d5db;
+}
+
+/* === CLASES UTILITARIAS === */
+.predix-gradient-primary {
+  background: linear-gradient(135deg, var(--predix-primary) 0%, var(--predix-secondary) 100%);
+}
+
+.predix-gradient-accent {
+  background: linear-gradient(135deg, var(--predix-accent) 0%, var(--predix-primary) 100%);
+}
+
+.predix-text-gradient {
+  background: linear-gradient(135deg, var(--predix-primary) 0%, var(--predix-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.predix-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.predix-glow {
+  box-shadow: var(--predix-shadow-glow);
+}
+
+.predix-glow-secondary {
+  box-shadow: var(--predix-shadow-glow-secondary);
+}
+
+/* === ANIMACIONES === */
+@keyframes predix-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes predix-bounce {
+  0%, 100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+  50% { transform: translateY(0); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+}
+
+@keyframes predix-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes predix-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.predix-animate-pulse { animation: predix-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.predix-animate-bounce { animation: predix-bounce 1s infinite; }
+.predix-animate-spin { animation: predix-spin 1s linear infinite; }
+.predix-animate-fade-in { animation: predix-fade-in 0.3s ease-out; }

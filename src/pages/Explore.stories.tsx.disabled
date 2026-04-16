@@ -1,0 +1,35 @@
+/**
+ * Explore Page Stories
+ * Storybook stories for Explore page
+ */
+
+import type { Meta, StoryObj } from '@storybook/react';
+import { Explore } from './Explore';
+
+const meta: Meta<typeof Explore> = {
+    title: 'Pages/Explore',
+    component: Explore,
+    tags: ['autodocs'],
+    parameters: {
+        layout: 'fullscreen',
+    },
+};
+
+export default meta;
+type Story = StoryObj<typeof Explore>;
+
+export const Default: Story = {
+    args: {},
+};
+
+export const WithFilters: Story = {
+    args: {},
+};
+
+export const SearchResults: Story = {
+    args: {},
+};
+
+export const EmptyState: Story = {
+    args: {},
+};

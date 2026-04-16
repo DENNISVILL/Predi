@@ -1,0 +1,49 @@
+/**
+ * AlertList Stories
+ * Storybook stories for AlertList component
+ */
+
+import type { Meta, StoryObj } from '@storybook/react';
+import { AlertList } from './AlertList';
+
+const meta: Meta<typeof AlertList> = {
+    title: 'Components/AlertList',
+    component: AlertList,
+    tags: ['autodocs'],
+    argTypes: {
+        showFilters: { control: 'boolean' },
+        limit: { control: 'number' },
+    },
+    parameters: {
+        layout: 'fullscreen',
+    },
+};
+
+export default meta;
+type Story = StoryObj<typeof AlertList>;
+
+export const Default: Story = {
+    args: {
+        showFilters: true,
+    },
+};
+
+export const WithoutFilters: Story = {
+    args: {
+        showFilters: false,
+    },
+};
+
+export const Limited: Story = {
+    args: {
+        showFilters: true,
+        limit: 5,
+    },
+};
+
+export const Compact: Story = {
+    args: {
+        showFilters: false,
+        limit: 3,
+    },
+};
