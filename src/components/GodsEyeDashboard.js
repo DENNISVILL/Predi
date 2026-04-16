@@ -53,7 +53,7 @@ const PlatformStatus = ({ platform, status, score, Icon }) => (
 );
 
 const GodsEyeDashboard = () => {
-  const [scanActive, setScanActive]] = useState(true);
+  const [scanActive, setScanActive] = useState(true);
 
   // Decorative grid background
   const GridBackground = () => (

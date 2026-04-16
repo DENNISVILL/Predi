@@ -14,7 +14,6 @@ const ViralMusicTracker = () => {
     ];
 
     return (
-    return (
         <div className="p-6 lg:p-10 min-h-screen">
             <div className="max-w-7xl mx-auto mb-8">
                 <header className="flex flex-col md:flex-row justify-between items-end gap-6">
