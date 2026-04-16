@@ -40,6 +40,7 @@ const ViralMusicTracker = lazy(() => import('./components/ViralMusicTracker'));
 import useStore from './store/useStore';
 
 // God's Eye Modules
+const GodsEyeLayout = lazy(() => import('./components/GodsEyeLayout'));
 const GodsEyeDashboard = lazy(() => import('./components/GodsEyeDashboard'));
 const CMBrainModule = lazy(() => import('./components/CMBrainModule'));
 const OmniCalendar = lazy(() => import('./components/OmniCalendar'));
@@ -146,10 +147,13 @@ const App: React.FC = () => {
                         <Route path="/contact" element={<ContactPage />} />
                         
                         {/* God's Eye Modules Demo Routes */}
-                        <Route path="/gods-eye" element={<GodsEyeDashboard />} />
-                        <Route path="/brain" element={<CMBrainModule />} />
-                        <Route path="/calendar" element={<OmniCalendar />} />
-                        <Route path="/vault" element={<CMVault />} />
+                        <Route element={<GodsEyeLayout />}>
+                            <Route path="/gods-eye" element={<GodsEyeDashboard />} />
+                            <Route path="/brain" element={<CMBrainModule />} />
+                            <Route path="/calendar" element={<OmniCalendar />} />
+                            <Route path="/vault" element={<CMVault />} />
+                            <Route path="/music" element={<ViralMusicTracker />} />
+                        </Route>
 
                         {/* Admin Routes */}
                         <Route path="/admin" element={isAdminAuthenticated ? <AdminDashboard /> : <AdminAuth />} />

@@ -408,34 +408,20 @@ const MusicTrendsModule = ({ activePlatform = 'all' }) => {
   };
 
   return (
-    <div className="bg-gray-900 text-white min-h-screen p-6">
+    <div className="w-full">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Music className="w-12 h-12 text-pink-400" />
-            <h1 className="text-4xl font-bold">Buscador de Música Viral</h1>
-          </div>
-          <p className="text-xl text-gray-400 mb-2">
-            Top 50 Viral: Las canciones más escuchadas del momento en tiempo real
-          </p>
-          <div className="flex items-center justify-center gap-4 text-sm text-gray-500">
-            <span>📊 Datos Oficiales de Charts</span>
-            <span>•</span>
-            <span>🎧 Previews de Alta Calidad</span>
-            <span>•</span>
-            <div className="flex items-center gap-2">
-              <span>⏱️ Actualizado cada 60 min (Última: {lastUpdated || 'Calculando...'})</span>
-              <button onClick={() => loadTrends(true)} disabled={isRefreshing} className="bg-gray-800 hover:bg-gray-700 p-1.5 rounded-full text-white transition-colors">
+        {/* Header Compacto para controles */}
+        <div className="flex justify-end items-center mb-6">
+          <div className="flex items-center gap-4 text-xs font-mono text-text-muted">
+            <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-accent animate-pulse"></span> Oficial Charts API</span>
+            <div className="flex items-center gap-2 bg-surface/50 px-3 py-1.5 rounded-lg border border-white/5">
+              <span>Sync: {lastUpdated || 'Calculando...'}</span>
+              <button onClick={() => loadTrends(true)} disabled={isRefreshing} className="text-primary hover:text-white transition-colors">
                 <Loader className={`w-3 h-3 ${isRefreshing ? 'animate-spin' : ''}`} />
               </button>
             </div>
           </div>
         </div>
-
-
-
-        {/* 🌐 SECCIONES DE REDES SOCIALES EN 3 COLUMNAS */}
         {/* ⚠️ ESTADO VACÍO / ERROR */}
         {!isLoading.global && trendingMusic.length === 0 && loadingError && (
           <div className="col-span-full text-center py-20 bg-gray-800/30 rounded-xl border border-dashed border-gray-700 mb-8">
@@ -484,14 +470,14 @@ const MusicTrendsModule = ({ activePlatform = 'all' }) => {
                 </div>
               </div>
 
-              <div className="space-y-2 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-gray-800">
+              <div className="space-y-2 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-pink-500 scrollbar-track-transparent">
                 {trendingMusic.filter(m => m.plataforma === 'tiktok').slice(0, 50).map((music, index) => (
                   <motion.div
                     key={music.id}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-gray-800/40 rounded-lg p-2 border border-pink-500/20 hover:border-pink-400/50 transition-colors cursor-pointer"
+                    className="glass-card p-3 hover:border-pink-500/50 transition-colors cursor-pointer"
                     onClick={() => playPreview(music)}
                   >
                     <div className="flex items-center justify-between">
@@ -544,14 +530,14 @@ const MusicTrendsModule = ({ activePlatform = 'all' }) => {
                 </div>
               </div>
 
-              <div className="space-y-2 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-800">
+              <div className="space-y-2 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-transparent">
                 {trendingMusic.filter(m => m.plataforma === 'instagram').slice(0, 50).map((music, index) => (
                   <motion.div
                     key={music.id}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-gray-800/40 rounded-lg p-2 border border-purple-500/20 hover:border-purple-400/50 transition-colors cursor-pointer"
+                    className="glass-card p-3 hover:border-purple-500/50 transition-colors cursor-pointer"
                     onClick={() => playPreview(music)}
                   >
                     <div className="flex items-center justify-between">
@@ -604,14 +590,14 @@ const MusicTrendsModule = ({ activePlatform = 'all' }) => {
                 </div>
               </div>
 
-              <div className="space-y-2 max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-800">
+              <div className="space-y-2 max-h-[600px] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-transparent">
                 {trendingMusic.filter(m => m.plataforma === 'facebook').slice(0, 50).map((music, index) => (
                   <motion.div
                     key={music.id}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="bg-gray-800/40 rounded-lg p-2 border border-blue-500/20 hover:border-blue-400/50 transition-colors cursor-pointer"
+                    className="glass-card p-3 hover:border-blue-500/50 transition-colors cursor-pointer"
                     onClick={() => playPreview(music)}
                   >
                     <div className="flex items-center justify-between">
@@ -647,7 +633,7 @@ const MusicTrendsModule = ({ activePlatform = 'all' }) => {
               initial={{ y: 100 }}
               animate={{ y: 0 }}
               exit={{ y: 100 }}
-              className="fixed bottom-0 left-0 right-0 bg-gray-900 border-t border-gray-800 p-4 shadow-2xl z-50"
+              className="fixed bottom-0 left-0 right-0 glass-panel shadow-[0_-10px_30px_rgba(0,0,0,0.8)] border-t border-t-primary/30 p-2 z-50 rounded-none w-full"
             >
               <div className="max-w-7xl mx-auto flex items-center justify-between">
                 <div className="flex items-center gap-4">
