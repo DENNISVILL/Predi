@@ -119,9 +119,9 @@ const PaymentPage = () => {
 
     // Map internal Plan IDs to Paddle Product/Price IDs (Configure these in .env)
     const PLAN_IDS = {
-        'starter': process.env.REACT_APP_PADDLE_STARTER_ID || 12345,
-        'pro': process.env.REACT_APP_PADDLE_PRO_ID || 67890,
-        'business': process.env.REACT_APP_PADDLE_BUSINESS_ID || 11223
+        'starter': import.meta.env.VITE_PADDLE_STARTER_ID || 12345,
+        'pro': import.meta.env.VITE_PADDLE_PRO_ID || 67890,
+        'business': import.meta.env.VITE_PADDLE_BUSINESS_ID || 11223
     };
 
     const handlePayment = () => {

@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 
 // Función para verificar si tenemos API key válida
 const hasValidApiKey = () => {
-  const envKey = process.env.REACT_APP_OPENAI_API_KEY;
+  const envKey = import.meta.env.VITE_OPENAI_API_KEY;
   const localKey = localStorage.getItem('predix_openai_key');
 
   const keyToCheck = localKey || envKey;
@@ -14,7 +14,7 @@ const createOpenAIInstance = () => {
   if (hasValidApiKey()) {
     try {
       return new OpenAI({
-        apiKey: localStorage.getItem('predix_openai_key') || process.env.REACT_APP_OPENAI_API_KEY,
+        apiKey: localStorage.getItem('predix_openai_key') || import.meta.env.VITE_OPENAI_API_KEY,
         dangerouslyAllowBrowser: true
       });
     } catch (error) {

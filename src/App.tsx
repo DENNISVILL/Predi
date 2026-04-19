@@ -1,13 +1,8 @@
 import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { App as CapacitorApp } from '@capacitor/app';
-import { SplashScreen } from '@capacitor/splash-screen';
-import { StatusBar, Style } from '@capacitor/status-bar';
-import { Network } from '@capacitor/network';
-import { Capacitor } from '@capacitor/core';
 
-// Core Components - Only essential imports
+// Core Components
 import EnhancedLanding from './components/EnhancedLanding';
 import AuthPage from './components/AuthPage';
 import Loading from './components/Loading';
@@ -30,14 +25,11 @@ const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard'));
 const AboutPage = lazy(() => import('./components/AboutPage'));
 const ContactPage = lazy(() => import('./components/ContactPage'));
 
-// New Components - Posts, Predictions, Subscriptions
+// Posts, Predictions, Subscriptions
 const PostsManager = lazy(() => import('./components/PostsManager'));
 const PredictionsView = lazy(() => import('./components/PredictionsView'));
 const SubscriptionPage = lazy(() => import('./components/SubscriptionPage'));
 const ViralMusicTracker = lazy(() => import('./components/ViralMusicTracker'));
-
-// Store & Hooks
-import useStore from './store/useStore';
 
 // God's Eye Modules
 const GodsEyeLayout = lazy(() => import('./components/GodsEyeLayout'));
@@ -45,6 +37,12 @@ const GodsEyeDashboard = lazy(() => import('./components/GodsEyeDashboard'));
 const CMBrainModule = lazy(() => import('./components/CMBrainModule'));
 const OmniCalendar = lazy(() => import('./components/OmniCalendar'));
 const CMVault = lazy(() => import('./components/CMVault'));
+
+// NEW: Community Manager Automated Module
+const CommunityManagerModule = lazy(() => import('./components/CommunityManagerModule'));
+
+// Store & Hooks
+import useStore from './store/useStore';
 import { useAdminStore } from './store/useAdminStore';
 import usePricingStore from './store/usePricingStore';
 import { useNotifications } from './hooks/useNotifications';
@@ -55,56 +53,19 @@ const App: React.FC = () => {
     const { currentPlan } = usePricingStore();
     const { requestPermission } = useNotifications();
 
-    // Initialize Capacitor (Native App)
+    // Register Service Worker (Web PWA)
     useEffect(() => {
-        if (Capacitor.isNativePlatform()) {
-            initializeNativeApp();
-        }
-    }, []);
-
-    const initializeNativeApp = async () => {
-        try {
-            // Hide splash screen
-            await SplashScreen.hide();
-
-            // Configure status bar
-            if (Capacitor.getPlatform() !== 'web') {
-                await StatusBar.setStyle({ style: Style.Dark });
-                await StatusBar.setBackgroundColor({ color: '#0b0c10' });
-            }
-
-            // Listen to app state changes
-            CapacitorApp.addListener('appStateChange', ({ isActive }) => {
-                console.log('App state changed. Is active?', isActive);
-            });
-
-            // Listen to deep links
-            CapacitorApp.addListener('appUrlOpen', (data) => {
-                console.log('App opened with URL:', data.url);
-            });
-
-            // Network status monitoring
-            Network.addListener('networkStatusChange', status => {
-                console.log('Network status changed', status);
-            });
-        } catch (error) {
-            console.error('Error initializing native app:', error);
-        }
-    };
-
-    // Registrar Service Worker (Web)
-    useEffect(() => {
-        if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
+        if ('serviceWorker' in navigator && import.meta.env.PROD) {
             navigator.serviceWorker.register('/sw.js').catch(() => { });
         }
     }, []);
 
-    // Inicializar admin token
+    // Initialize admin token
     useEffect(() => {
         initializeFromToken();
     }, [initializeFromToken]);
 
-    // Solicitar permisos de notificación
+    // Request notification permissions when authenticated
     useEffect(() => {
         if (isAuthenticated) {
             requestPermission();
@@ -129,6 +90,7 @@ const App: React.FC = () => {
             <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                 <Suspense fallback={<Loading />}>
                     <Routes>
+                        {/* Public Routes */}
                         <Route path="/" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <EnhancedLanding />} />
                         <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <AuthPage />} />
                         <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <AuthPage />} />
@@ -145,8 +107,8 @@ const App: React.FC = () => {
                         <Route path="/privacy" element={<PrivacyPage />} />
                         <Route path="/about" element={<AboutPage />} />
                         <Route path="/contact" element={<ContactPage />} />
-                        
-                        {/* God's Eye Modules Demo Routes */}
+
+                        {/* God's Eye Modules */}
                         <Route element={<GodsEyeLayout />}>
                             <Route path="/gods-eye" element={<GodsEyeDashboard />} />
                             <Route path="/brain" element={<CMBrainModule />} />
@@ -183,8 +145,11 @@ const App: React.FC = () => {
                                 <Route path="/billing" element={<SubscriptionPage />} />
 
                                 {/* Viral Music Tracker */}
-                                <Route path="/music" element={<ViralMusicTracker />} />
                                 <Route path="/viral-music" element={<ViralMusicTracker />} />
+
+                                {/* NEW: Community Manager Automated */}
+                                <Route path="/community-manager" element={<CommunityManagerModule />} />
+                                <Route path="/cm" element={<Navigate to="/community-manager" replace />} />
                             </>
                         )}
 

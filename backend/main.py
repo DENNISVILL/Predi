@@ -20,6 +20,8 @@ from database.models import Base
 
 # Import routes
 from routes import users, trends, analytics, payments, ai, health, admin, two_factor
+from routes.community_manager import router as cm_router
+from routes.integrations import router as integrations_router
 from services.auth_service import AuthService
 from services.websocket_service import WebSocketManager
 
@@ -251,6 +253,10 @@ from routers import posts, predictions, subscriptions
 app.include_router(posts.router, prefix="/api/v1", tags=["Posts"])
 app.include_router(predictions.router, prefix="/api/v1", tags=["Predictions"])
 app.include_router(subscriptions.router, prefix="/api/v1", tags=["Subscriptions"])
+
+# Include migrated Node.js routes (External Integrations & Community Manager)
+app.include_router(integrations_router, prefix="/api/v1", tags=["External Integrations"])
+app.include_router(cm_router, prefix="/api/v1", tags=["Community Manager"])
 
 
 # WebSocket endpoint

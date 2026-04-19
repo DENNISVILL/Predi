@@ -3,9 +3,9 @@
 
 class SocialMediaService {
   constructor() {
-    this.instagramToken = process.env.REACT_APP_INSTAGRAM_ACCESS_TOKEN;
-    this.facebookToken = process.env.REACT_APP_FACEBOOK_ACCESS_TOKEN;
-    this.tiktokClientKey = process.env.REACT_APP_TIKTOK_CLIENT_KEY;
+    this.instagramToken = import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN;
+    this.facebookToken = import.meta.env.VITE_FACEBOOK_ACCESS_TOKEN;
+    this.tiktokClientKey = import.meta.env.VITE_TIKTOK_CLIENT_KEY;
   }
 
   // === INSTAGRAM BASIC DISPLAY API ===

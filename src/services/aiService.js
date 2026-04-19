@@ -3,9 +3,9 @@
 
 class AIService {
   constructor() {
-    this.openaiApiKey = process.env.OPENAI_API_KEY;
-    this.googleVisionApiKey = process.env.GOOGLE_VISION_API_KEY;
-    this.azureCognitiveKey = process.env.AZURE_COGNITIVE_KEY;
+    this.openaiApiKey = import.meta.env.VITE_OPENAI_API_KEY;
+    this.googleVisionApiKey = import.meta.env.VITE_GOOGLE_VISION_API_KEY;
+    this.azureCognitiveKey = import.meta.env.VITE_AZURE_COGNITIVE_KEY;
     
     this.models = {
       gpt4: {

@@ -5,8 +5,8 @@
 
 import axios from 'axios';
 
-// API configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// API configuration — Backend: Python FastAPI (port 8000)
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1';
 const API_TIMEOUT = 30000; // 30 seconds
 
 // Create axios instance 
@@ -26,7 +26,7 @@ apiClient.interceptors.request.use(
             config.headers.Authorization = `Bearer ${token}`;
         }
 
-        if (process.env.NODE_ENV === 'development') {
+        if (import.meta.env.MODE === 'development') {
             console.log(`[API Request] ${config.method?.toUpperCase()} ${config.url}`);
         }
 
@@ -41,7 +41,7 @@ apiClient.interceptors.request.use(
 // Response interceptor
 apiClient.interceptors.response.use(
     (response: any) => {
-        if (process.env.NODE_ENV === 'development') {
+        if (import.meta.env.MODE === 'development') {
             console.log(`[API Response] ${response.config.url}`, response.data);
         }
         return response;

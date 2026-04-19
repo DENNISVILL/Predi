@@ -8,8 +8,8 @@ import moduleConnector from '../utils/moduleConnector';
 import spotifyService from '../services/spotifyService'; // 🔄 Cambio a Spotify
 import { useCountry } from '../components/CountrySelector';
 
-const SPOTIFY_CLIENT_ID = process.env.REACT_APP_SPOTIFY_CLIENT_ID || '';
-const SPOTIFY_CLIENT_SECRET = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET || '';
+const SPOTIFY_CLIENT_ID = import.meta.env.VITE_SPOTIFY_CLIENT_ID || '';
+const SPOTIFY_CLIENT_SECRET = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET || '';
 
 const MusicTrendsModule = ({ activePlatform = 'all' }) => {
   // ... (mantener otros estados necesarios, borrar los de audio viejo)

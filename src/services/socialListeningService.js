@@ -116,7 +116,7 @@ class SocialListeningService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.REACT_APP_API_TOKEN}`
+          'Authorization': `Bearer ${import.meta.env.VITE_API_TOKEN}`
         },
         body: JSON.stringify({
           keywords,

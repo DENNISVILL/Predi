@@ -37,7 +37,7 @@ import {
   Layers,
   Paintbrush,
   Eraser,
-  Dropper,
+  Pipette,
   Save,
   Upload,
   X,
@@ -217,18 +217,18 @@ const VisualContentGenerator = () => {
 
   const niches = [
     { id: 'fitness', name: 'Fitness', icon: '💪' },
-    { id: 'food', name: 'Food', icon: '🍳' },
-    { id: 'fashion', name: 'Fashion', icon: '👗' },
-    { id: 'tech', name: 'Tech', icon: '📱' },
-    { id: 'lifestyle', name: 'Lifestyle', icon: '✨' },
-    { id: 'travel', name: 'Travel', icon: '✈️' }
+    { id: 'food', name: 'Comida', icon: '🍳' },
+    { id: 'fashion', name: 'Moda', icon: '👗' },
+    { id: 'tech', name: 'Tecnología', icon: '📱' },
+    { id: 'lifestyle', name: 'Estilo de Vida', icon: '✨' },
+    { id: 'travel', name: 'Viajes', icon: '✈️' }
   ];
 
   const tabs = [
     { id: 'generate', name: 'Generar', icon: Wand2 },
     { id: 'edit', name: 'Editar', icon: Palette },
-    { id: 'templates', name: 'Templates', icon: Grid3X3 },
-    { id: 'analytics', name: 'Analytics', icon: TrendingUp }
+    { id: 'templates', name: 'Plantillas', icon: Grid3X3 },
+    { id: 'analytics', name: 'Analíticas', icon: TrendingUp }
   ];
 
   return (
@@ -236,8 +236,8 @@ const VisualContentGenerator = () => {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-2">Visual Content Generator</h2>
-          <p className="text-gray-400">Crea contenido visual impactante con IA</p>
+          <h2 className="text-xl font-bold text-white mb-1">Generador de Contenido Visual</h2>
+          <p className="text-gray-400 text-sm">Crea contenido visual impactante con IA</p>
         </div>
         <div className="flex items-center gap-3">
           <button

@@ -19,9 +19,9 @@ class APIConfig {
         },
         auth: {
           type: 'oauth2',
-          clientId: process.env.TIKTOK_CLIENT_ID,
-          clientSecret: process.env.TIKTOK_CLIENT_SECRET,
-          redirectUri: process.env.TIKTOK_REDIRECT_URI
+          clientId: import.meta.env.VITE_TIKTOK_CLIENT_ID,
+          clientSecret: import.meta.env.VITE_TIKTOK_CLIENT_SECRET,
+          redirectUri: import.meta.env.VITE_TIKTOK_REDIRECT_URI
         }
       },
 
@@ -40,9 +40,9 @@ class APIConfig {
         },
         auth: {
           type: 'oauth2',
-          accessToken: process.env.INSTAGRAM_ACCESS_TOKEN,
-          appId: process.env.INSTAGRAM_APP_ID,
-          appSecret: process.env.INSTAGRAM_APP_SECRET
+          accessToken: import.meta.env.VITE_INSTAGRAM_ACCESS_TOKEN,
+          appId: import.meta.env.VITE_INSTAGRAM_APP_ID,
+          appSecret: import.meta.env.VITE_INSTAGRAM_APP_SECRET
         }
       },
 
@@ -61,9 +61,9 @@ class APIConfig {
         },
         auth: {
           type: 'oauth2',
-          apiKey: process.env.YOUTUBE_API_KEY,
-          clientId: process.env.YOUTUBE_CLIENT_ID,
-          clientSecret: process.env.YOUTUBE_CLIENT_SECRET
+          apiKey: import.meta.env.VITE_YOUTUBE_API_KEY,
+          clientId: import.meta.env.VITE_YOUTUBE_CLIENT_ID,
+          clientSecret: import.meta.env.VITE_YOUTUBE_CLIENT_SECRET
         }
       },
 
@@ -82,9 +82,9 @@ class APIConfig {
         },
         auth: {
           type: 'bearer',
-          bearerToken: process.env.TWITTER_BEARER_TOKEN,
-          apiKey: process.env.TWITTER_API_KEY,
-          apiSecret: process.env.TWITTER_API_SECRET
+          bearerToken: import.meta.env.VITE_TWITTER_BEARER_TOKEN,
+          apiKey: import.meta.env.VITE_TWITTER_API_KEY,
+          apiSecret: import.meta.env.VITE_TWITTER_API_SECRET
         }
       },
 
@@ -103,9 +103,9 @@ class APIConfig {
         },
         auth: {
           type: 'oauth2',
-          clientId: process.env.LINKEDIN_CLIENT_ID,
-          clientSecret: process.env.LINKEDIN_CLIENT_SECRET,
-          accessToken: process.env.LINKEDIN_ACCESS_TOKEN
+          clientId: import.meta.env.VITE_LINKEDIN_CLIENT_ID,
+          clientSecret: import.meta.env.VITE_LINKEDIN_CLIENT_SECRET,
+          accessToken: import.meta.env.VITE_LINKEDIN_ACCESS_TOKEN
         }
       },
 
@@ -124,8 +124,8 @@ class APIConfig {
         },
         auth: {
           type: 'client_credentials',
-          clientId: process.env.SPOTIFY_CLIENT_ID,
-          clientSecret: process.env.SPOTIFY_CLIENT_SECRET
+          clientId: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
+          clientSecret: import.meta.env.VITE_SPOTIFY_CLIENT_SECRET
         }
       },
 
@@ -144,7 +144,7 @@ class APIConfig {
         },
         auth: {
           type: 'api_key',
-          apiKey: process.env.GOOGLE_TRENDS_API_KEY
+          apiKey: import.meta.env.VITE_GOOGLE_TRENDS_API_KEY
         }
       }
     };

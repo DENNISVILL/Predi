@@ -35,6 +35,9 @@ import {
   Lock,
   Brain,
   Users,
+  Megaphone,
+  Mail,
+  Terminal,
   Sparkles // Importar Lock icon
 } from 'lucide-react';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
@@ -83,7 +86,15 @@ import UnifiedChat from './UnifiedChat';
 import IntelligentRadar from './IntelligentRadar';
 import HelpPanel from './help/HelpPanel';
 import OnboardingWizard from './onboarding/OnboardingWizard';
-import ChatIAPage from './ChatIAPage';
+import AIStrategistModule from './strategist/AIStrategistModule';
+import ContentStudioModule from './studio/ContentStudioModule';
+import AnalyticsAgencyModule from './analytics/AnalyticsAgencyModule';
+import OmniSchedulerModule from './scheduler/OmniSchedulerModule';
+import TrendRadarModule from './radar/TrendRadarModule';
+import SEOStudioModule from './seo/SEOStudioModule';
+import AdsManagerModule from './ads/AdsManagerModule';
+import EmailFunnelModule from './email/EmailFunnelModule';
+import PromptsLibraryModule from './knowledge/PromptsLibraryModule';
 
 ChartJS.register(
   CategoryScale,
@@ -210,7 +221,7 @@ const MainDashboard = () => {
       createdAt: new Date()
     };
     setScheduledReminders(prev => [...prev, newReminder]);
-    setActiveSection('content-scheduler');
+    setActiveSection('scheduler');
 
     // Mostrar notificación de éxito
     showToast('¡Recordatorio creado exitosamente!', 'success');
@@ -222,9 +233,15 @@ const MainDashboard = () => {
 
     let newSection = 'inicio'; // default
     if (path === '/dashboard') newSection = 'inicio';
-    else if (path === '/explore') newSection = 'inicio'; // Cambiado para mostrar dashboard principal
-    else if (path === '/actions') newSection = 'acciones';
-    else if (path === '/alerts') newSection = 'alertas';
+    else if (path === '/strategist') newSection = 'strategist';
+    else if (path === '/explore' || path === '/radar') newSection = 'radar';
+    else if (path === '/studio') newSection = 'studio';
+    else if (path === '/scheduler') newSection = 'scheduler';
+    else if (path === '/analytics') newSection = 'analytics';
+    else if (path === '/seo') newSection = 'seo';
+    else if (path === '/ads') newSection = 'ads';
+    else if (path === '/email') newSection = 'email';
+    else if (path === '/prompts') newSection = 'prompts';
     else if (path === '/settings') newSection = 'configuracion';
 
     // Solo actualizar si es diferente
@@ -498,13 +515,18 @@ const MainDashboard = () => {
     }
   };
 
-  // Secciones del sidebar
+  // Secciones del sidebar (AI Community Manager Pipeline)
   const sidebarSections = [
-    { id: 'inicio', label: 'Inicio', icon: Home },
-    { id: 'chat', label: 'Chat IA', icon: Brain },
-    { id: 'radar', label: 'Radar Inteligente', icon: Target },
-    { id: 'music-trends', label: 'Música Viral', icon: Music },
-    { id: 'content-scheduler', label: 'Calendario', icon: Calendar },
+    { id: 'inicio', label: 'Centro de Mando', icon: Home },
+    { id: 'strategist', label: 'Estratega IA', icon: Brain },
+    { id: 'radar', label: 'Radar Tendencias', icon: Target },
+    { id: 'studio', label: 'Estudio Creativo', icon: Wand2 },
+    { id: 'scheduler', label: 'Planificador', icon: Calendar },
+    { id: 'analytics', label: 'Analítica & Agencia', icon: BarChart3 },
+    { id: 'seo', label: 'SEO Studio', icon: Search },
+    { id: 'ads', label: 'Gestor de Ads', icon: Megaphone },
+    { id: 'email', label: 'Email & Funnels', icon: Mail },
+    { id: 'prompts', label: '10K+ Prompts IA', icon: Terminal },
     { id: 'configuracion', label: 'Configuración', icon: Settings }
   ];
 
@@ -603,14 +625,24 @@ const MainDashboard = () => {
                     if (section.id === 'inicio') {
                       navigate('/dashboard');
                       setActiveSection('inicio');
-                    } else if (section.id === 'chat') {
-                      setActiveSection('chat');
+                    } else if (section.id === 'strategist') {
+                      setActiveSection('strategist');
                     } else if (section.id === 'radar') {
                       setActiveSection('radar');
-                    } else if (section.id === 'music-trends') {
-                      setActiveSection('music-trends');
-                    } else if (section.id === 'content-scheduler') {
-                      setActiveSection('content-scheduler');
+                    } else if (section.id === 'studio') {
+                      setActiveSection('studio');
+                    } else if (section.id === 'scheduler') {
+                      setActiveSection('scheduler');
+                    } else if (section.id === 'analytics') {
+                      setActiveSection('analytics');
+                    } else if (section.id === 'seo') {
+                      setActiveSection('seo');
+                    } else if (section.id === 'ads') {
+                      setActiveSection('ads');
+                    } else if (section.id === 'email') {
+                      setActiveSection('email');
+                    } else if (section.id === 'prompts') {
+                      setActiveSection('prompts');
                     } else if (section.id === 'configuracion') {
                       navigate('/settings');
                       setActiveSection('configuracion');
@@ -704,11 +736,16 @@ const MainDashboard = () => {
               </motion.button>
               <div>
                 <h1 className={`text-lg md:text-xl font-bold truncate max-w-[150px] md:max-w-none ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
-                  {activeSection === 'inicio' && 'Dashboard Principal'}
-                  {activeSection === 'chat' && 'Chat IA'}
-                  {activeSection === 'radar' && 'Radar Inteligente'}
-                  {activeSection === 'music-trends' && 'Música Viral'}
-                  {activeSection === 'content-scheduler' && 'Calendario'}
+                  {activeSection === 'inicio' && 'Centro de Mando'}
+                  {activeSection === 'strategist' && 'Estratega IA'}
+                  {activeSection === 'radar' && 'Radar de Tendencias'}
+                  {activeSection === 'studio' && 'Estudio Creativo'}
+                  {activeSection === 'scheduler' && 'Planificador Omni'}
+                  {activeSection === 'analytics' && 'Analítica & Agencia'}
+                  {activeSection === 'seo' && 'SEO Studio'}
+                  {activeSection === 'ads' && 'Gestor de Ads'}
+                  {activeSection === 'email' && 'Email & Funnels'}
+                  {activeSection === 'prompts' && 'Base de Conocimiento'}
                   {activeSection === 'create-reminder' && 'Nuevo Recordatorio'}
                   {activeSection === 'configuracion' && 'Configuración'}
                 </h1>
@@ -777,27 +814,73 @@ const MainDashboard = () => {
                   {/* Dashboard Localizado por País */}
                   <CountryDashboard key={`dashboard-${dashboardKey}`} />
 
-                  {/* Summary Cards Originales (comentadas para mostrar el nuevo dashboard) */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4" style={{ display: 'none' }}>
-                    {summaryCards.map((card, index) => (
+                  {/* Alertas Premium / Insights IA */}
+                  <div className="bg-gradient-to-r from-red-900/40 to-orange-900/40 border border-red-500/20 rounded-2xl p-4 md:p-5 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-red-500/20 rounded-full flex items-center justify-center flex-shrink-0 relative">
+                        <Bell className="w-6 h-6 text-red-400" />
+                        <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-[#111318] rounded-full animate-ping"></span>
+                        <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 border-2 border-[#111318] rounded-full"></span>
+                      </div>
+                      <div>
+                        <h4 className="text-white font-bold text-sm md:text-base flex items-center gap-2">
+                          Alerta de Tendencia Crítica <span className="text-[10px] bg-red-500/20 text-red-400 px-2 py-0.5 rounded uppercase tracking-wider font-bold">Premium</span>
+                        </h4>
+                        <p className="text-gray-300 text-xs md:text-sm">El formato "Carrusel Educativo" está perdiendo alcance orgánico (-22%). La IA sugiere pivotar a Reels cortos (15s) esta semana.</p>
+                      </div>
+                    </div>
+                    <button className="bg-red-500 hover:bg-red-600 text-white font-bold px-4 py-2 rounded-xl text-sm transition-colors whitespace-nowrap flex-shrink-0 w-full md:w-auto">
+                      Ver Análisis Completo
+                    </button>
+                  </div>
+
+                  {/* Summary Cards Actualizadas */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 mb-6">
+                    {[
+                      {
+                        title: 'Alcance Orgánico Total',
+                        value: '2.4M',
+                        change: '+15.2%',
+                        icon: TrendingUp,
+                        color: 'from-blue-600 to-cyan-500',
+                        description: 'A través de todas las plataformas'
+                      },
+                      {
+                        title: 'Tasa de Conversión (ER)',
+                        value: '4.8%',
+                        change: '+1.1%',
+                        icon: Target,
+                        color: 'from-[#00ff9d] to-emerald-500',
+                        description: 'Mejor que el 85% de tu industria'
+                      },
+                      {
+                        title: 'Leads Capturados',
+                        value: '842',
+                        change: '+24%',
+                        icon: Users,
+                        color: 'from-purple-600 to-pink-500',
+                        description: 'Costo por Lead (CPL): $1.24'
+                      }
+                    ].map((card, index) => (
                       <motion.div
                         key={index}
-                        className="card-hover"
+                        className="bg-[#1a1d24] border border-white/5 p-6 rounded-2xl relative overflow-hidden group hover:border-white/10 transition-colors"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: index * 0.1 }}
                       >
-                        <div className="flex items-center justify-between mb-3">
-                          <div className={`p-2 rounded-lg bg-gradient-to-r ${card.color}`}>
+                        <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${card.color} opacity-5 rounded-full blur-3xl group-hover:opacity-10 transition-opacity`} />
+                        <div className="flex items-center justify-between mb-4 relative z-10">
+                          <div className={`w-10 h-10 rounded-xl bg-gradient-to-r ${card.color} flex items-center justify-center shadow-lg`}>
                             <card.icon className="w-5 h-5 text-white" />
                           </div>
-                          <span className="text-[#00ff9d] text-xs font-semibold">
-                            {card.change}
+                          <span className="text-[#00ff9d] text-xs font-bold bg-[#00ff9d]/10 px-2 py-1 rounded-lg flex items-center gap-1">
+                            ↑ {card.change}
                           </span>
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-1">{card.value}</h3>
-                        <p className="text-gray-400 text-xs mb-1">{card.title}</p>
-                        <p className="text-gray-500 text-xs">{card.description}</p>
+                        <h3 className="text-3xl font-black text-white mb-1 relative z-10">{card.value}</h3>
+                        <p className="text-gray-400 font-semibold text-sm mb-1 relative z-10">{card.title}</p>
+                        <p className="text-gray-500 text-xs relative z-10">{card.description}</p>
                       </motion.div>
                     ))}
                   </div>
@@ -956,79 +1039,21 @@ const MainDashboard = () => {
 
 
 
-              {/* Placeholder para otras secciones */}
-              {activeSection === 'tendencias' && (
+              {/* === AI STRATEGIST (FASE 2) === */}
+              {activeSection === 'strategist' && (
                 <motion.div
-                  key="tendencias"
+                  key="strategist"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
-                  className="min-h-screen"
+                  className="w-full h-full text-white pb-20 md:pb-0"
                 >
-                  <div className="bg-red-500 p-4 mb-4 text-white font-bold">
-                    🔍 SECCIÓN TENDENCIAS ACTIVA
-                  </div>
-                  <ExploreTrendsModule />
+                  <AIStrategistModule />
                 </motion.div>
               )}
 
-              {activeSection === 'acciones' && (
-                <motion.div
-                  key="acciones"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="min-h-screen"
-                >
-                  <div className="bg-blue-500 p-4 mb-4 text-white font-bold">
-                    ⚡ SECCIÓN ACCIONES ACTIVA
-                  </div>
-                  <PredictiveActionsModule />
-                </motion.div>
-              )}
-
-              {activeSection === 'alertas' && (
-                <motion.div
-                  key="alertas"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {console.log('🔔 Rendering AlertsModule')}
-                  <AlertsModule />
-                </motion.div>
-              )}
-
-              {/* Los módulos Nichos y Copy Generator ahora están fusionados en el Chat IA */}
-
-              {activeSection === 'music-trends' && (
-                <motion.div
-                  key="music-trends"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <ViralMusicTracker />
-                </motion.div>
-              )}
-
-              {activeSection === 'chat' && (
-                <motion.div
-                  key="chat"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="fixed inset-0 z-50 bg-gray-900"
-                >
-                  <ChatIAPage onClose={() => setActiveSection('inicio')} />
-                </motion.div>
-              )}
-
+              {/* === TREND RADAR === */}
               {activeSection === 'radar' && (
                 <motion.div
                   key="radar"
@@ -1036,8 +1061,9 @@ const MainDashboard = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
+                  className="pb-20 md:pb-0"
                 >
-                  <IntelligentRadar
+                  <TrendRadarModule
                     scheduledReminders={scheduledReminders}
                     onSendHashtagMix={(mix) => {
                       if (!mix) return;
@@ -1048,17 +1074,37 @@ const MainDashboard = () => {
                 </motion.div>
               )}
 
-              {/* Predictor Viral ahora está fusionado en el Chat IA */}
-
-              {activeSection === 'content-scheduler' && (
+              {/* === CONTENT STUDIO === */}
+              {activeSection === 'studio' && (
                 <motion.div
-                  key="content-scheduler"
+                  key="studio"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
+                  className="w-full h-full text-white"
                 >
-                  <ContentSchedulerModule
+                  <div className="bg-gradient-to-r from-blue-600 to-cyan-500 p-8 rounded-2xl mb-6 shadow-lg relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-[40px]" />
+                    <h2 className="text-2xl font-bold mb-2 flex items-center gap-2"><Wand2 className="w-6 h-6" /> Content Studio</h2>
+                    <p className="text-white/80">Fábrica de Ideas, Generador Visual y Asistente Copywriter IA en un solo lugar.</p>
+                  </div>
+                  {/* ContentStudio orquesta Creador Visual, Ideas y Scripts */}
+                  <ContentStudioModule />
+                </motion.div>
+              )}
+
+              {/* === OMNI-SCHEDULER === */}
+              {activeSection === 'scheduler' && (
+                <motion.div
+                  key="scheduler"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="pb-20 md:pb-0"
+                >
+                  <OmniSchedulerModule
                     onNavigateToCreate={() => {
                       console.log('Navegando a create-reminder...');
                       setActiveSection('create-reminder');
@@ -1069,6 +1115,77 @@ const MainDashboard = () => {
                 </motion.div>
               )}
 
+              {/* === ANALYTICS & AGENCY === */}
+              {activeSection === 'analytics' && (
+                <motion.div
+                  key="analytics"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full h-full text-white pb-20 md:pb-0"
+                >
+                  <AnalyticsAgencyModule />
+                </motion.div>
+              )}
+
+              {/* === SEO STUDIO === */}
+              {activeSection === 'seo' && (
+                <motion.div
+                  key="seo"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full h-full text-white pb-20 md:pb-0"
+                >
+                  <SEOStudioModule />
+                </motion.div>
+              )}
+
+              {/* === GESTOR DE ADS === */}
+              {activeSection === 'ads' && (
+                <motion.div
+                  key="ads"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full h-full text-white pb-20 md:pb-0"
+                >
+                  <AdsManagerModule />
+                </motion.div>
+              )}
+
+              {/* === EMAIL & FUNNELS === */}
+              {activeSection === 'email' && (
+                <motion.div
+                  key="email"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full h-full text-white pb-20 md:pb-0"
+                >
+                  <EmailFunnelModule />
+                </motion.div>
+              )}
+
+              {/* === KNOWLEDGE BASE === */}
+              {activeSection === 'prompts' && (
+                <motion.div
+                  key="prompts"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full h-full text-white pb-20 md:pb-0"
+                >
+                  <PromptsLibraryModule />
+                </motion.div>
+              )}
+
+              {/* === CREATE REMINDER === */}
               {activeSection === 'create-reminder' && (
                 <motion.div
                   key="create-reminder"
@@ -1078,15 +1195,14 @@ const MainDashboard = () => {
                   transition={{ duration: 0.3 }}
                 >
                   <CreateReminderPage
-                    onBack={() => setActiveSection('content-scheduler')}
+                    onBack={() => setActiveSection('scheduler')}
                     onSave={handleAddReminder}
                     initialHashtagMix={initialHashtagMix}
                   />
                 </motion.div>
               )}
 
-              {/* Los módulos Visual Generator y A/B Testing ahora están fusionados en el Chat IA */}
-
+              {/* === CONFIGURACIÓN === */}
               {activeSection === 'configuracion' && (
                 <motion.div
                   key="configuracion"

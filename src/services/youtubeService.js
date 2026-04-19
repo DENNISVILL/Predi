@@ -3,7 +3,7 @@
 
 class YouTubeService {
   constructor() {
-    this.apiKey = process.env.REACT_APP_YOUTUBE_API_KEY;
+    this.apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
     this.baseUrl = 'https://www.googleapis.com/youtube/v3';
   }
 

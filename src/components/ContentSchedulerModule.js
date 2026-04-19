@@ -9879,7 +9879,7 @@ const ContentSchedulerModule = ({ onNavigateToCreate, scheduledReminders = [], o
 
   // Verificar consistencia por categoría
   const checkCategoryConsistency = (content, category, config) => {
-    const result = {
+    let result = {
       score: 0,
       violations: [],
       recommendations: []

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const PADDLE_VENDOR_ID = Number(process.env.REACT_APP_PADDLE_VENDOR_ID) || 12345; // Default for Sandbox
+const PADDLE_VENDOR_ID = Number(import.meta.env.VITE_PADDLE_VENDOR_ID) || 12345; // Default for Sandbox
 
 export const usePaddle = () => {
     const [paddle, setPaddle] = useState(null);

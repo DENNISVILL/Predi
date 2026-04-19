@@ -11,8 +11,8 @@ import { BrowserTracing } from "@sentry/tracing";
  * Call this as early as possible in your app
  */
 export const initSentry = () => {
-    const dsn = process.env.REACT_APP_SENTRY_DSN;
-    const environment = process.env.REACT_APP_ENVIRONMENT || "development";
+    const dsn = import.meta.env.VITE_SENTRY_DSN;
+    const environment = import.meta.env.VITE_ENVIRONMENT || "development";
 
     if (!dsn) {
         console.warn("⚠️ Sentry DSN not configured. Error tracking disabled.");

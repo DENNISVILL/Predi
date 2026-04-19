@@ -80,7 +80,7 @@ const RadarCompacto = ({ onTrendSelect, selectedTrend, setSelectedTrend, onSendH
   // Función para obtener tendencias reales desde el backend
   const fetchRealTrends = useCallback(async (forceRefresh = false) => {
     const country = selectedCountry || 'MX';
-    const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    const BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || 'http://localhost:8000/api/v1';
     
     setIsLoadingTrends(true);
     setTrendsError(null);
@@ -95,7 +95,7 @@ const RadarCompacto = ({ onTrendSelect, selectedTrend, setSelectedTrend, onSendH
     }, 400);
 
     try {
-      const url = `${BASE_URL}/api/trends/radar?country=${country}&platform=all&niche=${selectedNiche}${forceRefresh ? '&refresh=true' : ''}`;
+      const url = `${BASE_URL}/integrations/radar?country=${country}&platform=all&niche=${selectedNiche}${forceRefresh ? '&refresh=true' : ''}`;
       const response = await fetch(url);
       
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -133,7 +133,39 @@ const RadarCompacto = ({ onTrendSelect, selectedTrend, setSelectedTrend, onSendH
       }
     } catch (error) {
       console.error('Error fetching radar trends:', error);
-      setTrendsError('No se pudo conectar con el servidor. Reintentando...');
+      setTrendsError('Modo Offline: Mostrando tendencias simuladas.');
+      
+      // MOCK DATA PARA OFFLINE MODE
+      const mockData = [
+        { hashtag: '#TendenciaGlobal', platform: 'tiktok', mentions: 2500000, growth: 150, category: 'VIRAL', positionChange: 2 },
+        { hashtag: '#ParaTi', platform: 'tiktok', mentions: 1200000, growth: 80, category: 'HOT', positionChange: 1 },
+        { hashtag: '#Aesthetic', platform: 'instagram', mentions: 3400000, growth: 200, category: 'VIRAL', positionChange: 5 },
+        { hashtag: '#Reels', platform: 'instagram', mentions: 800000, growth: 45, category: 'RISING', positionChange: 3 },
+        { hashtag: '#Noticias', platform: 'facebook', mentions: 5000000, growth: 10, category: 'HOT', positionChange: -1 },
+        { hashtag: '#Comunidad', platform: 'facebook', mentions: 300000, growth: 120, category: 'RISING', positionChange: 4 }
+      ];
+      
+      const mapped = mockData.map((t, i) => ({
+        id: i + 1,
+        platform: t.platform,
+        country: country,
+        hashtag: t.hashtag,
+        mentions: t.mentions,
+        growth: t.growth,
+        engagement: 80,
+        velocity: t.growth * 2.5,
+        category: t.category,
+        direction: t.positionChange >= 0 ? 'up' : 'down',
+        positionChange: t.positionChange,
+        description: 'Generado en modo offline',
+        contentType: 'hashtags',
+        viralityScore: Math.min(100, t.growth / 5),
+        detectedAt: new Date(),
+        sentiment: t.growth > 100 ? 'positive' : 'neutral'
+      }));
+      setStableTrends(mapped);
+      setScanProgress(100);
+
     } finally {
       clearInterval(scanAnim);
       setIsLoadingTrends(false);

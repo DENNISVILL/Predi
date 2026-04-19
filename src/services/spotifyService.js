@@ -12,8 +12,8 @@ const TOP_PLAYLISTS = {
 
 class SpotifyService {
   constructor() {
-    this.clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID;
-    this.clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET;
+    this.clientId = import.meta.env.VITE_SPOTIFY_CLIENT_ID;
+    this.clientSecret = import.meta.env.VITE_SPOTIFY_CLIENT_SECRET;
     this.accessToken = null;
     this.tokenExpiry = null;
   }
@@ -52,7 +52,17 @@ class SpotifyService {
   // Obtener playlists trending por país
   async getTrendingByCountry(country = 'MX', limit = 50) {
     const token = await this.getAccessToken();
-    if (!token) return { success: false, error: 'No token available' };
+    if (!token) {
+      // MOCK DATA
+      return {
+        success: true,
+        playlists: [
+          { id: '1', name: 'Top 50 - México', description: 'Las canciones más escuchadas' },
+          { id: '2', name: 'Éxitos México', description: 'Los éxitos del momento' }
+        ],
+        country: country
+      };
+    }
 
     try {
       // Obtener playlists featured por país
@@ -81,7 +91,19 @@ class SpotifyService {
   // Obtener top tracks de una playlist
   async getPlaylistTracks(playlistId, limit = 50) {
     const token = await this.getAccessToken();
-    if (!token) return { success: false, error: 'No token available' };
+    
+    const mockData = { 
+        success: true, 
+        tracks: [
+          { id: '1', rank: 1, name: 'Canción Viral 1', artist: 'Artista Trending', album: 'Album Hit', duration: 180, popularity: 95, url: '#' },
+          { id: '2', rank: 2, name: 'Sonido de TikTok', artist: 'Creador X', album: 'Viral Sounds', duration: 150, popularity: 90, url: '#' },
+          { id: '3', rank: 3, name: 'Verano Mix', artist: 'DJ Verano', album: 'Hits 2024', duration: 200, popularity: 88, url: '#' },
+          { id: '4', rank: 4, name: 'Challenge Dance', artist: 'Pop Star', album: 'Dance Edition', duration: 160, popularity: 85, url: '#' },
+          { id: '5', rank: 5, name: 'Trend Acoustic', artist: 'Indie Artist', album: 'Chill Vibes', duration: 190, popularity: 80, url: '#' }
+        ]
+      };
+
+    if (!token) return mockData;
 
     try {
       const response = await fetch(
@@ -112,7 +134,18 @@ class SpotifyService {
       };
     } catch (error) {
       console.error('Error obteniendo tracks de playlist:', error);
-      return { success: false, error: error.message };
+      
+      // MOCK DATA PARA OFFLINE MODE
+      return { 
+        success: true, 
+        tracks: [
+          { id: '1', rank: 1, name: 'Canción Viral 1', artist: 'Artista Trending', album: 'Album Hit', duration: 180, popularity: 95 },
+          { id: '2', rank: 2, name: 'Sonido de TikTok', artist: 'Creador X', album: 'Viral Sounds', duration: 150, popularity: 90 },
+          { id: '3', rank: 3, name: 'Verano Mix', artist: 'DJ Verano', album: 'Hits 2024', duration: 200, popularity: 88 },
+          { id: '4', rank: 4, name: 'Challenge Dance', artist: 'Pop Star', album: 'Dance Edition', duration: 160, popularity: 85 },
+          { id: '5', rank: 5, name: 'Trend Acoustic', artist: 'Indie Artist', album: 'Chill Vibes', duration: 190, popularity: 80 }
+        ]
+      };
     }
   }
 
@@ -127,7 +160,7 @@ class SpotifyService {
   // Buscar canciones por género o término
   async searchTracks(query, type = 'track', limit = 20) {
     const token = await this.getAccessToken();
-    if (!token) return { success: false, error: 'No token available' };
+    if (!token) return { success: true, tracks: [] };
 
     try {
       const response = await fetch(
@@ -163,7 +196,7 @@ class SpotifyService {
   // Obtener géneros disponibles
   async getAvailableGenres() {
     const token = await this.getAccessToken();
-    if (!token) return { success: false, error: 'No token available' };
+    if (!token) return { success: true, genres: ['pop', 'rock', 'reggaeton', 'latin', 'electronic'] };
 
     try {
       const response = await fetch(

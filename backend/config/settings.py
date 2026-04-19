@@ -39,11 +39,27 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379/0"
     REDIS_EXPIRE_SECONDS: int = 3600
     
-    # AI System
+    # AI System (internal microservice)
     AI_API_URL: str = "http://localhost:8001"
     AI_API_KEY: Optional[str] = None
     AI_TIMEOUT_SECONDS: int = 30
-    
+
+    # Google Gemini (Direct integration)
+    GEMINI_API_KEY: Optional[str] = None
+    GEMINI_DEFAULT_MODEL: str = "gemini-2.5-flash"
+    GEMINI_CACHE_TTL_MINUTES: int = 60
+
+    # Google OAuth & Calendar
+    GOOGLE_CLIENT_ID: Optional[str] = None
+    GOOGLE_CLIENT_SECRET: Optional[str] = None
+    GOOGLE_REDIRECT_URI: str = "http://localhost:8000/auth/google/callback"
+
+    # Social Media APIs
+    SPOTIFY_CLIENT_ID: Optional[str] = None
+    SPOTIFY_CLIENT_SECRET: Optional[str] = None
+    YOUTUBE_API_KEY: Optional[str] = None
+    META_ACCESS_TOKEN: Optional[str] = None
+
     # Payments
     PAYMENTEZ_APP_CODE: Optional[str] = None
     PAYMENTEZ_APP_KEY: Optional[str] = None

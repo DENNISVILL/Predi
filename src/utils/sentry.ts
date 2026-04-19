@@ -7,7 +7,7 @@
  * Capture exception and send to Sentry
  */
 export function captureException(error: Error | string, context?: Record<string, any>): void {
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.MODE === 'development') {
         console.error('[Sentry]', error, context);
         return;
     }
@@ -21,7 +21,7 @@ export function captureException(error: Error | string, context?: Record<string,
  * Capture message (non-error)
  */
 export function captureMessage(message: string, level: 'info' | 'warning' | 'error' = 'info'): void {
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.MODE === 'development') {
         console.log(`[Sentry ${level.toUpperCase()}]`, message);
         return;
     }
@@ -33,7 +33,7 @@ export function captureMessage(message: string, level: 'info' | 'warning' | 'err
  * Set user context for Sentry
  */
 export function setUserContext(user: { id: number; email?: string; username?: string }): void {
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.MODE === 'development') {
         console.log('[Sentry] User context set:', user);
     }
 }
@@ -42,7 +42,7 @@ export function setUserContext(user: { id: number; email?: string; username?: st
  * Add breadcrumb
  */
 export function addBreadcrumb(crumb: { message: string; category?: string; level?: string }): void {
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.MODE === 'development') {
         console.log('[Sentry Breadcrumb]', crumb);
     }
 }

@@ -38,11 +38,11 @@ const PasswordRow = ({ service, username, lastUpdate, type }) => {
   );
 };
 
-const CMVault = () => {
+const CMVault = ({ hideHeader = false }) => {
   return (
-    <div className="p-6 lg:p-10 min-h-screen">
+    <div className={hideHeader ? "p-4" : "p-6 lg:p-10 min-h-screen"}>
       <div className="max-w-6xl mx-auto">
-        <header className="mb-10 flex justify-between items-end">
+        <header className={`mb-10 flex justify-between items-end ${hideHeader ? 'hidden' : ''}`}>
           <div>
             <h2 className="text-3xl font-display font-bold flex items-center gap-3">
               <Shield className="text-accent" size={32} />

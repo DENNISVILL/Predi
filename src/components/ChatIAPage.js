@@ -1,4 +1,4 @@
-Ôªøimport React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCountry } from './CountrySelector';
 import { generateChatGPTResponse, checkAPIStatus } from '../services/openaiService';
@@ -97,119 +97,119 @@ const ChatIAPage = ({ onClose }) => {
   const [aiSettings, setAiSettings] = useState({
     temperature: 0.7,
     maxTokens: 2000,
-    systemPrompt: `Eres Predix AI, asistente experto en Community Management (24 a√±os) y Copywriting (25 a√±os).
+    systemPrompt: `Eres Predix AI, asistente experto en Community Management (24 aÒos) y Copywriting (25 aÒos).
 
-üéØ COMPORTAMIENTO: Conversaciones NATURALES como ChatGPT. Puedo mantener di√°logos, responder preguntas, generar contenido cuando me lo pidas (posts, captions, hashtags, estrategias, etc.), y ayudarte paso a paso.
+?? COMPORTAMIENTO: Conversaciones NATURALES como ChatGPT. Puedo mantener di·logos, responder preguntas, generar contenido cuando me lo pidas (posts, captions, hashtags, estrategias, etc.), y ayudarte paso a paso.
 
-üí¨ C√ìMO INTERACTUAR CONMIGO:
+?? C”MO INTERACTUAR CONMIGO:
 
 **Puedes pedirme:**
-‚Ä¢ "Escr√≠beme 5 captions para Instagram sobre [tema]"
-‚Ä¢ "Dame ideas de contenido para esta semana"
-‚Ä¢ "¬øQu√© hashtags deber√≠a usar para un post de [tema]?"
-‚Ä¢ "Ay√∫dame a crear una estrategia de Reels"
-‚Ä¢ "Expl√≠came c√≥mo funciona el algoritmo de TikTok"
-‚Ä¢ "Revisa este copy y mej√≥ralo"
-‚Ä¢ "Dame un calendario de contenido para [nicho]"
-‚Ä¢ **"Analiza este track viral: [nombre]"**
-‚Ä¢ **"Predice si este sonido ser√° viral"**
-‚Ä¢ **"Crea contenido usando la m√∫sica [nombre]"**
-‚Ä¢ **"Dame estrategia social para este trend musical"**
+ï "EscrÌbeme 5 captions para Instagram sobre [tema]"
+ï "Dame ideas de contenido para esta semana"
+ï "øQuÈ hashtags deberÌa usar para un post de [tema]?"
+ï "Ay˙dame a crear una estrategia de Reels"
+ï "ExplÌcame cÛmo funciona el algoritmo de TikTok"
+ï "Revisa este copy y mejÛralo"
+ï "Dame un calendario de contenido para [nicho]"
+ï **"Analiza este track viral: [nombre]"**
+ï **"Predice si este sonido ser· viral"**
+ï **"Crea contenido usando la m˙sica [nombre]"**
+ï **"Dame estrategia social para este trend musical"**
 
-**C√≥mo respondo:**
-‚Ä¢ De forma conversacional y natural (como hablas conmigo ahora)
-‚Ä¢ Generando contenido REAL cuando me lo pidas (captions, posts, estrategias)
-‚Ä¢ Haciendo preguntas si necesito m√°s info
-‚Ä¢ Dando consejos pr√°cticos y accionables
-‚Ä¢ Citando frameworks/t√©cnicas cuando sea √∫til
+**CÛmo respondo:**
+ï De forma conversacional y natural (como hablas conmigo ahora)
+ï Generando contenido REAL cuando me lo pidas (captions, posts, estrategias)
+ï Haciendo preguntas si necesito m·s info
+ï Dando consejos pr·cticos y accionables
+ï Citando frameworks/tÈcnicas cuando sea ˙til
 
-üìö MI EXPERTISE COMPLETO:
+?? MI EXPERTISE COMPLETO:
 
-**COMMUNITY MANAGEMENT (24 a√±os):**
-He visto toda la evoluci√≥n desde foros de Yahoo!/GeoCities ‚Üí MySpace (2003) ‚Üí Facebook (2004) ‚Üí Twitter (2006) ‚Üí Instagram (2010) ‚Üí TikTok (2016) ‚Üí Threads/BeReal (2024).
+**COMMUNITY MANAGEMENT (24 aÒos):**
+He visto toda la evoluciÛn desde foros de Yahoo!/GeoCities ? MySpace (2003) ? Facebook (2004) ? Twitter (2006) ? Instagram (2010) ? TikTok (2016) ? Threads/BeReal (2024).
 
-Conozco TODO lo que hace un CM d√≠a a d√≠a: revisar m√©tricas, responder DMs, programar contenido, engagement, monitoreo de crisis, reportes, community building, colaboraciones con influencers, herramientas (Hootsuite, Buffer, Later, Metricool).
+Conozco TODO lo que hace un CM dÌa a dÌa: revisar mÈtricas, responder DMs, programar contenido, engagement, monitoreo de crisis, reportes, community building, colaboraciones con influencers, herramientas (Hootsuite, Buffer, Later, Metricool).
 
 Dominio de TODAS las plataformas:
-‚Ä¢ Instagram: Stories, Reels, carousels, hashtags, timing √≥ptimo
-‚Ä¢ TikTok: Algoritmo FYP, trending sounds, hooks, edici√≥n
-‚Ä¢ LinkedIn: B2B strategy, thought leadership
-‚Ä¢ Twitter/X: Threading, engagement tactics
-‚Ä¢ Facebook: Groups, algoritmo, eventos
-‚Ä¢ YouTube: Community, Shorts
+ï Instagram: Stories, Reels, carousels, hashtags, timing Ûptimo
+ï TikTok: Algoritmo FYP, trending sounds, hooks, ediciÛn
+ï LinkedIn: B2B strategy, thought leadership
+ï Twitter/X: Threading, engagement tactics
+ï Facebook: Groups, algoritmo, eventos
+ï YouTube: Community, Shorts
 
-**COPYWRITING PROFESIONAL (25 a√±os):**
+**COPYWRITING PROFESIONAL (25 aÒos):**
 
 Frameworks maestros: AIDA, PAS, BAB, 4Ps, StoryBrand
 
-S√© crear:
-‚Ä¢ Hooks potentes (primeras 3 palabras que detienen scroll)
-‚Ä¢ Storytelling emocional (3 actos, hero's journey)
-‚Ä¢ CTAs efectivos ("Doble tap si...", "Guarda esto...")
-‚Ä¢ Copy por plataforma (Instagram, TikTok, LinkedIn, Twitter/X)
-‚Ä¢ Copy persuasivo (Cialdini's principles, power words, FOMO)
-‚Ä¢ Emotional triggers (urgencia, exclusividad, pertenencia)
+SÈ crear:
+ï Hooks potentes (primeras 3 palabras que detienen scroll)
+ï Storytelling emocional (3 actos, hero's journey)
+ï CTAs efectivos ("Doble tap si...", "Guarda esto...")
+ï Copy por plataforma (Instagram, TikTok, LinkedIn, Twitter/X)
+ï Copy persuasivo (Cialdini's principles, power words, FOMO)
+ï Emotional triggers (urgencia, exclusividad, pertenencia)
 
-Copy espec√≠fico por formato:
-‚Ä¢ Instagram captions: Hook + historia + valor + CTA (primeros 125 caracteres cr√≠ticos)
-‚Ä¢ TikTok: Corto, intrigante (max 150 caracteres)
-‚Ä¢ Reels: Texto en pantalla, hook en 1er segundo
-‚Ä¢ Ads: Headline + primary text + CTA button
+Copy especÌfico por formato:
+ï Instagram captions: Hook + historia + valor + CTA (primeros 125 caracteres crÌticos)
+ï TikTok: Corto, intrigante (max 150 caracteres)
+ï Reels: Texto en pantalla, hook en 1er segundo
+ï Ads: Headline + primary text + CTA button
 
-**HASHTAGS ESTRAT√âGICOS:**
+**HASHTAGS ESTRAT…GICOS:**
 
-S√© crear estrategias completas:
-‚Ä¢ Mix 15-30 hashtags: 5 alto volumen + 10 medio + 10-15 nicho
-‚Ä¢ Rotaci√≥n semanal de sets
-‚Ä¢ An√°lisis de competencia
-‚Ä¢ Hashtags espec√≠ficos vs gen√©ricos
-‚Ä¢ Branded hashtags para campa√±as
-‚Ä¢ Por plataforma: Instagram (20-30), TikTok (3-5), Twitter (1-2), LinkedIn (3-5)
+SÈ crear estrategias completas:
+ï Mix 15-30 hashtags: 5 alto volumen + 10 medio + 10-15 nicho
+ï RotaciÛn semanal de sets
+ï An·lisis de competencia
+ï Hashtags especÌficos vs genÈricos
+ï Branded hashtags para campaÒas
+ï Por plataforma: Instagram (20-30), TikTok (3-5), Twitter (1-2), LinkedIn (3-5)
 
 Herramientas: Instagram Insights, Hashtagify, RiteTag, Display Purposes
 
-**M√âTRICAS Y ANALYTICS:**
-‚Ä¢ Engagement rate: (Likes + Comments + Shares) / Followers √ó 100
-‚Ä¢ Best time to post
-‚Ä¢ Content performance
-‚Ä¢ Follower growth rate
-‚Ä¢ CTR, conversion tracking
+**M…TRICAS Y ANALYTICS:**
+ï Engagement rate: (Likes + Comments + Shares) / Followers ◊ 100
+ï Best time to post
+ï Content performance
+ï Follower growth rate
+ï CTR, conversion tracking
 
-**GESTI√ìN DE CRISIS:**
-‚Ä¢ Protocolo <1 hora
-‚Ä¢ Templates de disculpas
-‚Ä¢ Escalaci√≥n a legal/PR/CEO
-‚Ä¢ Dark posting
+**GESTI”N DE CRISIS:**
+ï Protocolo <1 hora
+ï Templates de disculpas
+ï EscalaciÛn a legal/PR/CEO
+ï Dark posting
 
 **TENDENCIAS 2024:**
-‚Ä¢ AI tools (ChatGPT, MidJourney, CapCut)
-‚Ä¢ Short-form video dominance
-‚Ä¢ Authenticity > perfection
-‚Ä¢ Social commerce
-‚Ä¢ Micro-communities
+ï AI tools (ChatGPT, MidJourney, CapCut)
+ï Short-form video dominance
+ï Authenticity > perfection
+ï Social commerce
+ï Micro-communities
 
 **HERRAMIENTAS:**
 Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InShot), Analytics (Sprout Social), Listening (Brand24)
 
-‚úÖ PUEDO AYUDARTE CON:
+? PUEDO AYUDARTE CON:
 - Generar posts, captions, hashtags
 - Crear estrategias de contenido
 - Calendarios editoriales
 - Revisar y mejorar copy
 - Explicar algoritmos y tendencias
 - Ideas de Reels/TikToks virales
-- **Analizar tracks virales (m√©tricas, engagement, performance)**
-- **Predecir viralidad de m√∫sica (score, timeframe, probabilidad)**
-- **Crear contenido con m√∫sica trending (captions, guiones, estrategias)**
-- **Dise√±ar estrategias sociales (hashtags, influencers, UGC, challenges)**
+- **Analizar tracks virales (mÈtricas, engagement, performance)**
+- **Predecir viralidad de m˙sica (score, timeframe, probabilidad)**
+- **Crear contenido con m˙sica trending (captions, guiones, estrategias)**
+- **DiseÒar estrategias sociales (hashtags, influencers, UGC, challenges)**
 - Crisis management
-- An√°lisis de m√©tricas
+- An·lisis de mÈtricas
 - Copywriting persuasivo
 - Responder TODAS tus preguntas sobre CM y Marketing Digital
 
-‚ùå SOLO temas de: Community Management, Copywriting, Hashtags, Marketing Digital, Redes Sociales, M√∫sica Viral
+? SOLO temas de: Community Management, Copywriting, Hashtags, Marketing Digital, Redes Sociales, M˙sica Viral
 
-¬°Habla conmigo como lo haces con ChatGPT! P√≠deme lo que necesites sobre CM o Marketing Digital. üöÄ`,
+°Habla conmigo como lo haces con ChatGPT! PÌdeme lo que necesites sobre CM o Marketing Digital. ??`,
     model: 'predix-unified',
     streaming: true
   });
@@ -231,7 +231,7 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
     const successMsg = {
       id: Date.now(),
       type: 'ai',
-      content: `üéâ **¬°Bienvenido a PREDIX PRO!**\n\n‚úÖ L√≠mite de mensajes eliminado.\n‚úÖ Modelo **Predix Advanced** activado.\n‚úÖ Experto en Estrategia desbloqueado.`,
+      content: `?? **°Bienvenido a PREDIX PRO!**\n\n? LÌmite de mensajes eliminado.\n? Modelo **Predix Advanced** activado.\n? Experto en Estrategia desbloqueado.`,
       timestamp: new Date().toISOString()
     };
     setMessages(prev => [...prev, successMsg]);
@@ -244,15 +244,15 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
       if (aiProvider === 'openai') {
         status = await checkAPIStatus();
       } else {
-        // Para Predix AI, confiamos en la configuraci√≥n del servidor/env
+        // Para Predix AI, confiamos en la configuraciÛn del servidor/env
         status = await checkGeminiStatus();
       }
 
       // Si recibimos 'no_key', 'inactive' O 'error' (por red), pero estamos en modo Pro (Gemini default), 
-      // forzamos activo asumiendo que el server tiene la key aunque no est√© en localStorage
+      // forzamos activo asumiendo que el server tiene la key aunque no estÈ en localStorage
       if (aiProvider === 'gemini' && (status.status === 'no_key' || status.status === 'inactive' || status.status === 'error')) {
         // Fallback extra por si el helper falla o la red bloquea el check
-        if (process.env.REACT_APP_GEMINI_API_KEY) {
+        if (import.meta.env.VITE_GEMINI_API_KEY) {
           status = { status: 'active', message: 'Predix AI System Active' };
         }
       }
@@ -272,7 +272,7 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
     setApiKeys(prev => ({ ...prev, [provider]: key }));
     setShowConfigModal(false);
 
-    // Forzar re-verificaci√≥n
+    // Forzar re-verificaciÛn
     window.location.reload();
   };
 
@@ -329,10 +329,10 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
       );
 
       moduleConnector.notifyConnection('chat-ia', 'calendario', 'content-generated');
-      alert('‚úÖ Contenido enviado al Calendario. Ve a la secci√≥n Calendario para programarlo.');
+      alert('? Contenido enviado al Calendario. Ve a la secciÛn Calendario para programarlo.');
     } catch (error) {
       console.error(' Error al enviar al calendario:', error);
-      alert('‚ùå Error al enviar contenido al calendario');
+      alert('? Error al enviar contenido al calendario');
     }
   };
 
@@ -348,7 +348,7 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
     name: 'Predix AI',
     description: 'Community Manager & Marketing Digital',
     icon: Rocket,
-    capabilities: ['Gesti√≥n de Redes', 'Contenido Viral', 'Engagement & M√©tricas']
+    capabilities: ['GestiÛn de Redes', 'Contenido Viral', 'Engagement & MÈtricas']
   };
 
   const quickActions = [
@@ -356,7 +356,7 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
     { icon: Image, label: 'Thumbnail', color: 'from-blue-500 to-cyan-500' },
     { icon: Palette, label: 'Carousel', color: 'from-purple-500 to-indigo-500' },
     { icon: Hash, label: 'Hashtags', color: 'from-green-500 to-emerald-500' },
-    { icon: Target, label: 'Predicci√≥n', color: 'from-orange-500 to-red-500' },
+    { icon: Target, label: 'PredicciÛn', color: 'from-orange-500 to-red-500' },
     { icon: Sparkles, label: 'Template', color: 'from-pink-500 to-purple-500' }
   ];
 
@@ -369,7 +369,7 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
       const limitMessage = {
         id: Date.now(),
         type: 'ai',
-        content: `üõë **L√≠mite Diario Alcanzado**\n\nHas usado tus ${FREE_DAILY_LIMIT} mensajes gratuitos de hoy.\n\n‚ö° **Actualiza a PRO** para continuar sin l√≠mites y usar el modelo avanzado.`,
+        content: `?? **LÌmite Diario Alcanzado**\n\nHas usado tus ${FREE_DAILY_LIMIT} mensajes gratuitos de hoy.\n\n? **Actualiza a PRO** para continuar sin lÌmites y usar el modelo avanzado.`,
         timestamp: new Date().toISOString()
       };
       setMessages(prev => [...prev, limitMessage]);
@@ -418,10 +418,10 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
           content: result.response,
           timestamp: new Date().toISOString(),
           suggestions: [
-            'üéØ Profundizar',
-            '‚úçÔ∏è M√°s ideas',
-            'üìä M√©tricas',
-            'üí° Otra estrategia'
+            '?? Profundizar',
+            '?? M·s ideas',
+            '?? MÈtricas',
+            '?? Otra estrategia'
           ]
         };
         setMessages(prev => [...prev, aiResponseMsg]);
@@ -429,9 +429,9 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
         const errorMsg = {
           id: Date.now(),
           type: 'ai',
-          content: result.fallbackResponse || `‚ùå ** ERROR GENERAL **\n\nHubo un problema.`,
+          content: result.fallbackResponse || `? ** ERROR GENERAL **\n\nHubo un problema.`,
           timestamp: new Date().toISOString(),
-          suggestions: ['üîÑ Reintentar']
+          suggestions: ['?? Reintentar']
         };
         setMessages(prev => [...prev, errorMsg]);
       }
@@ -441,9 +441,9 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
       const errorResponse = {
         id: Date.now(),
         type: 'ai',
-        content: `‚ùå ** ERROR CR√çTICO **\n\n${error.message}`,
+        content: `? ** ERROR CRÕTICO **\n\n${error.message}`,
         timestamp: new Date().toISOString(),
-        suggestions: ['üîÑ Reintentar', 'üîß Verificar red']
+        suggestions: ['?? Reintentar', '?? Verificar red']
       };
       setMessages(prev => [...prev, errorResponse]);
     } finally {
@@ -451,14 +451,14 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
     }
   };
 
-  // Sistema NLP avanzado para an√°lisis de intenci√≥n
+  // Sistema NLP avanzado para an·lisis de intenciÛn
   const analyzeIntent = (input) => {
     const lowerInput = input.toLowerCase().trim();
 
-    // Detectar saludos y conversaci√≥n casual
-    const casualGreetings = ['hola', 'hello', 'hi', 'hey', 'buenas', 'buenos d√≠as', 'buenas tardes', 'buenas noches'];
-    const casualResponses = ['gracias', 'ok', 'vale', 'bien', 'perfecto', 'genial', 'excelente', 's√≠', 'no', 'claro'];
-    const questions = ['c√≥mo', 'qu√©', 'cu√°l', 'd√≥nde', 'cu√°ndo', 'por qu√©', 'para qu√©'];
+    // Detectar saludos y conversaciÛn casual
+    const casualGreetings = ['hola', 'hello', 'hi', 'hey', 'buenas', 'buenos dÌas', 'buenas tardes', 'buenas noches'];
+    const casualResponses = ['gracias', 'ok', 'vale', 'bien', 'perfecto', 'genial', 'excelente', 'sÌ', 'no', 'claro'];
+    const questions = ['cÛmo', 'quÈ', 'cu·l', 'dÛnde', 'cu·ndo', 'por quÈ', 'para quÈ'];
 
     // Si es un saludo simple
     if (casualGreetings.some(greeting => lowerInput === greeting || lowerInput.includes(greeting))) {
@@ -480,21 +480,21 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
       return 'short';
     }
 
-    // An√°lisis de intenci√≥n por palabras clave para consultas espec√≠ficas
+    // An·lisis de intenciÛn por palabras clave para consultas especÌficas
     const intents = {
-      strategy: ['estrategia', 'plan', 'planificar', 'estrat√©gico', 't√°ctica', 'approach'],
+      strategy: ['estrategia', 'plan', 'planificar', 'estratÈgico', 't·ctica', 'approach'],
       content: ['contenido', 'copy', 'texto', 'escribir', 'redactar', 'copywriting'],
       hashtags: ['hashtag', 'etiqueta', 'tag', '#', 'trending', 'viral'],
       video: ['video', 'tiktok', 'reel', 'youtube', 'concepto', 'guion'],
-      analytics: ['m√©tricas', 'anal√≠tica', 'datos', 'kpi', 'roi', 'conversi√≥n'],
-      ads: ['publicidad', 'anuncio', 'campa√±a', 'facebook ads', 'google ads'],
+      analytics: ['mÈtricas', 'analÌtica', 'datos', 'kpi', 'roi', 'conversiÛn'],
+      ads: ['publicidad', 'anuncio', 'campaÒa', 'facebook ads', 'google ads'],
       email: ['email', 'correo', 'newsletter', 'automation', 'secuencia'],
-      seo: ['seo', 'posicionamiento', 'google', 'keywords', 'b√∫squeda'],
+      seo: ['seo', 'posicionamiento', 'google', 'keywords', 'b˙squeda'],
       social: ['redes sociales', 'instagram', 'facebook', 'twitter', 'linkedin'],
-      ecommerce: ['tienda', 'venta', 'producto', 'ecommerce', 'conversi√≥n']
+      ecommerce: ['tienda', 'venta', 'producto', 'ecommerce', 'conversiÛn']
     };
 
-    // Detectar intenci√≥n principal para consultas espec√≠ficas
+    // Detectar intenciÛn principal para consultas especÌficas
     for (const [intent, keywords] of Object.entries(intents)) {
       if (keywords.some(keyword => lowerInput.includes(keyword))) {
         return intent;
@@ -506,9 +506,9 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
 
   const generateAIResponse = async (input) => {
     const intent = analyzeIntent(input);
-    const country = countryData?.name || 'M√©xico';
+    const country = countryData?.name || 'MÈxico';
 
-    // Si ChatGPT/Gemini est√° disponible, usarlo
+    // Si ChatGPT/Gemini est· disponible, usarlo
     if (isUsingChatGPT || aiProvider === 'gemini') {
       try {
         let result;
@@ -528,12 +528,12 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
             content: result.response,
             timestamp: new Date(),
             suggestions: [
-              'üéØ Profundizar en estrategia',
-              '‚úçÔ∏è Generar m√°s copy',
-              '#Ô∏è‚É£ M√°s hashtags',
-              'üìä Analizar m√©tricas',
-              'üé¨ Crear otro video',
-              'üí° Nueva consulta'
+              '?? Profundizar en estrategia',
+              '?? Generar m·s copy',
+              '#?? M·s hashtags',
+              '?? Analizar mÈtricas',
+              '?? Crear otro video',
+              '?? Nueva consulta'
             ]
           };
         } else {
@@ -544,9 +544,9 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
             content: result.fallbackResponse || 'Error al conectar con la IA.',
             timestamp: new Date(),
             suggestions: [
-              'üîß Configurar API Key',
-              'üîÑ Intentar nuevamente',
-              'üí° Consulta diferente'
+              '?? Configurar API Key',
+              '?? Intentar nuevamente',
+              '?? Consulta diferente'
             ]
           };
         }
@@ -558,390 +558,390 @@ Scheduling (Hootsuite, Buffer, Later), Design (Canva, Figma), Video (CapCut, InS
     // Respuesta de respaldo con el sistema original
 
     const responses = {
-      greeting: `¬°Hola! üëã ¬øC√≥mo est√°s ?
+      greeting: `°Hola! ?? øCÛmo est·s ?
 
   Soy Predix AI, tu asistente de marketing digital para ${country}. 
 
-¬øEn qu√© puedo ayudarte hoy ? Puedo ayudarte con:
-‚Ä¢ üéØ Estrategias de marketing
-‚Ä¢ ‚úçÔ∏è Copywriting persuasivo  
-‚Ä¢ #Ô∏è‚É£ Hashtags trending
-‚Ä¢ üé¨ Videos virales
-‚Ä¢ üìä An√°lisis de m√©tricas
+øEn quÈ puedo ayudarte hoy ? Puedo ayudarte con:
+ï ?? Estrategias de marketing
+ï ?? Copywriting persuasivo  
+ï #?? Hashtags trending
+ï ?? Videos virales
+ï ?? An·lisis de mÈtricas
 
-¬øQu√© te interesa m√°s ? `,
+øQuÈ te interesa m·s ? `,
 
-      casual: `¬°Perfecto! üòä 
+      casual: `°Perfecto! ?? 
 
-¬øHay algo espec√≠fico de marketing digital en lo que te pueda ayudar ?
+øHay algo especÌfico de marketing digital en lo que te pueda ayudar ?
 
-  Estoy aqu√≠ para cualquier cosa que necesites sobre:
-‚Ä¢ Estrategias para hacer crecer tu negocio
-‚Ä¢ Contenido que convierta
-‚Ä¢ Ideas para redes sociales
-‚Ä¢ An√°lisis de tu competencia
+  Estoy aquÌ para cualquier cosa que necesites sobre:
+ï Estrategias para hacer crecer tu negocio
+ï Contenido que convierta
+ï Ideas para redes sociales
+ï An·lisis de tu competencia
 
-¬°Solo dime qu√© tienes en mente!`,
+°Solo dime quÈ tienes en mente!`,
 
-      question: `ü§î Interesante pregunta...
+      question: `?? Interesante pregunta...
 
-Para darte la mejor respuesta, ¬øpodr√≠as contarme un poco m√°s de contexto ?
+Para darte la mejor respuesta, øpodrÌas contarme un poco m·s de contexto ?
 
   Por ejemplo:
-‚Ä¢ ¬øEs sobre tu negocio o proyecto ?
-‚Ä¢ ¬øQu√© tipo de audiencia tienes ?
-‚Ä¢ ¬øEn qu√© redes sociales est√°s activo ?
+ï øEs sobre tu negocio o proyecto ?
+ï øQuÈ tipo de audiencia tienes ?
+ï øEn quÈ redes sociales est·s activo ?
 
-  Mientras m√°s detalles me des, mejor te podr√© ayudar con una estrategia personalizada para ${country}. üéØ`,
+  Mientras m·s detalles me des, mejor te podrÈ ayudar con una estrategia personalizada para ${country}. ??`,
 
-      short: `¬°Entendido! üëç
+      short: `°Entendido! ??
 
-¬øTe gustar√≠a que profundice en algo espec√≠fico ?
+øTe gustarÌa que profundice en algo especÌfico ?
 
   Puedo ayudarte con:
-‚Ä¢ Ideas r√°pidas para contenido
-‚Ä¢ Tips de marketing digital
-‚Ä¢ Estrategias para tu nicho
-‚Ä¢ An√°lisis de tendencias en ${country}
+ï Ideas r·pidas para contenido
+ï Tips de marketing digital
+ï Estrategias para tu nicho
+ï An·lisis de tendencias en ${country}
 
-¬øQu√© prefieres ? `,
-      strategy: `üéØ ** ESTRATEGIA DE MARKETING DIGITAL COMPLETA **
+øQuÈ prefieres ? `,
+      strategy: `?? ** ESTRATEGIA DE MARKETING DIGITAL COMPLETA **
 
-**üìä AN√ÅLISIS SITUACIONAL:**
-‚Ä¢ ** Mercado objetivo:** ${country} - ${Math.floor(Math.random() * 50 + 10)}M usuarios activos
-‚Ä¢ ** Competencia:** Nivel ${['Bajo', 'Medio', 'Alto'][Math.floor(Math.random() * 3)]}
-‚Ä¢ ** Oportunidad:** ${Math.floor(Math.random() * 40 + 60)}% de potencial de crecimiento
+**?? AN¡LISIS SITUACIONAL:**
+ï ** Mercado objetivo:** ${country} - ${Math.floor(Math.random() * 50 + 10)}M usuarios activos
+ï ** Competencia:** Nivel ${['Bajo', 'Medio', 'Alto'][Math.floor(Math.random() * 3)]}
+ï ** Oportunidad:** ${Math.floor(Math.random() * 40 + 60)}% de potencial de crecimiento
 
-  **üöÄ ESTRATEGIA RECOMENDADA:**
-‚Ä¢ ** Fase 1(0 - 30 d√≠as):** Construcci√≥n de audiencia base
-‚Ä¢ ** Fase 2(30 - 90 d√≠as):** Optimizaci√≥n y escalamiento  
-‚Ä¢ ** Fase 3(90 + d√≠as):** Diversificaci√≥n y retenci√≥n
+  **?? ESTRATEGIA RECOMENDADA:**
+ï ** Fase 1(0 - 30 dÌas):** ConstrucciÛn de audiencia base
+ï ** Fase 2(30 - 90 dÌas):** OptimizaciÛn y escalamiento  
+ï ** Fase 3(90 + dÌas):** DiversificaciÛn y retenciÛn
 
-  **üì± MIX DE CANALES:**
-‚Ä¢ ** TikTok:** 40 % del presupuesto(audiencia joven)
-‚Ä¢ ** Instagram:** 30 % (engagement visual)
-‚Ä¢ ** Facebook:** 20 % (conversiones)
-‚Ä¢ ** YouTube:** 10 % (contenido long - form)
+  **?? MIX DE CANALES:**
+ï ** TikTok:** 40 % del presupuesto(audiencia joven)
+ï ** Instagram:** 30 % (engagement visual)
+ï ** Facebook:** 20 % (conversiones)
+ï ** YouTube:** 10 % (contenido long - form)
 
-**üí∞ PRESUPUESTO SUGERIDO:**
-‚Ä¢ ** Contenido:** 50 % ($X / mes)
-‚Ä¢ ** Publicidad:** 35 % ($Y / mes)
-‚Ä¢ ** Herramientas:** 15 % ($Z / mes)`,
+**?? PRESUPUESTO SUGERIDO:**
+ï ** Contenido:** 50 % ($X / mes)
+ï ** Publicidad:** 35 % ($Y / mes)
+ï ** Herramientas:** 15 % ($Z / mes)`,
 
-      content: `‚úçÔ∏è ** COPY OPTIMIZADO GENERADO **
+      content: `?? ** COPY OPTIMIZADO GENERADO **
 
-**üéØ HEADLINE PRINCIPAL:**
-  "${input.slice(0, 50)}... - La Soluci√≥n que ${country} Estaba Esperando"
+**?? HEADLINE PRINCIPAL:**
+  "${input.slice(0, 50)}... - La SoluciÛn que ${country} Estaba Esperando"
 
-  **üìù ESTRUCTURA DE COPY:**
-‚Ä¢ ** Hook:** ¬øSab√≠as que el 87 % de personas en ${country} buscan esto ?
-‚Ä¢ ** Problema:** Identifica el dolor espec√≠fico
-‚Ä¢ ** Soluci√≥n:** Presenta tu propuesta de valor √∫nica
-‚Ä¢ ** Beneficios:** 3 beneficios clave con prueba social
-‚Ä¢ ** CTA:** "√önete a los +10,000 ${country}nos que ya lo probaron"
+  **?? ESTRUCTURA DE COPY:**
+ï ** Hook:** øSabÌas que el 87 % de personas en ${country} buscan esto ?
+ï ** Problema:** Identifica el dolor especÌfico
+ï ** SoluciÛn:** Presenta tu propuesta de valor ˙nica
+ï ** Beneficios:** 3 beneficios clave con prueba social
+ï ** CTA:** "⁄nete a los +10,000 ${country}nos que ya lo probaron"
 
-  **üß† TRIGGERS PSICOL√ìGICOS:**
-‚Ä¢ ** Escasez:** "Solo para los primeros 100"
-‚Ä¢ ** Urgencia:** "Oferta v√°lida hasta ma√±ana"
-‚Ä¢ ** Autoridad:** "Recomendado por expertos"
-‚Ä¢ ** Prueba social:** "‚≠ê‚≠ê‚≠ê‚≠ê‚≠ê (4.8/5) - 2,847 rese√±as"
+  **?? TRIGGERS PSICOL”GICOS:**
+ï ** Escasez:** "Solo para los primeros 100"
+ï ** Urgencia:** "Oferta v·lida hasta maÒana"
+ï ** Autoridad:** "Recomendado por expertos"
+ï ** Prueba social:** "????? (4.8/5) - 2,847 reseÒas"
 
-  **üìä PREDICCI√ìN DE CONVERSI√ìN: 12.3 %** `,
+  **?? PREDICCI”N DE CONVERSI”N: 12.3 %** `,
 
-      hashtags: `#Ô∏è‚É£ ** HASHTAGS ESTRAT√âGICOS ${country.toUpperCase()}**
+      hashtags: `#?? ** HASHTAGS ESTRAT…GICOS ${country.toUpperCase()}**
 
-**üî• HASHTAGS PRIMARIOS(Alto volumen):**
-‚Ä¢ #${country} Viral - 2.3M posts
-‚Ä¢ #Trending${country} - 1.8M posts  
-‚Ä¢ #${country} TikTok - 1.5M posts
-‚Ä¢ #ViralContent - 890K posts
-‚Ä¢ #ContentCreator${country} - 650K posts
+**?? HASHTAGS PRIMARIOS(Alto volumen):**
+ï #${country} Viral - 2.3M posts
+ï #Trending${country} - 1.8M posts  
+ï #${country} TikTok - 1.5M posts
+ï #ViralContent - 890K posts
+ï #ContentCreator${country} - 650K posts
 
-  **üéØ HASHTAGS SECUNDARIOS(Medio volumen):**
-‚Ä¢ #${country} Influencer - 340K posts
-‚Ä¢ #Marketing${country} - 280K posts
-‚Ä¢ #Emprendedor${country} - 220K posts
-‚Ä¢ #${country} Business - 180K posts
-‚Ä¢ #CreativeContent - 150K posts
+  **?? HASHTAGS SECUNDARIOS(Medio volumen):**
+ï #${country} Influencer - 340K posts
+ï #Marketing${country} - 280K posts
+ï #Emprendedor${country} - 220K posts
+ï #${country} Business - 180K posts
+ï #CreativeContent - 150K posts
 
-  **üíé HASHTAGS NICHO(Bajo volumen, alta conversi√≥n):**
-‚Ä¢ #${country} Startup - 45K posts
-‚Ä¢ #Innovaci√≥nDigital - 32K posts
-‚Ä¢ #TechTrends${country} - 28K posts
-‚Ä¢ #DigitalNomad${country} - 18K posts
-‚Ä¢ #FuturoDigital - 12K posts
+  **?? HASHTAGS NICHO(Bajo volumen, alta conversiÛn):**
+ï #${country} Startup - 45K posts
+ï #InnovaciÛnDigital - 32K posts
+ï #TechTrends${country} - 28K posts
+ï #DigitalNomad${country} - 18K posts
+ï #FuturoDigital - 12K posts
 
-  **üìä ESTRATEGIA RECOMENDADA:**
-‚Ä¢ Usar 3 - 5 hashtags primarios
-‚Ä¢ Combinar con 2 - 3 secundarios  
-‚Ä¢ Agregar 1 - 2 hashtags nicho
-‚Ä¢ ** Mejor horario:** 7 - 9 PM ${country} time`,
+  **?? ESTRATEGIA RECOMENDADA:**
+ï Usar 3 - 5 hashtags primarios
+ï Combinar con 2 - 3 secundarios  
+ï Agregar 1 - 2 hashtags nicho
+ï ** Mejor horario:** 7 - 9 PM ${country} time`,
 
-      video: `üé¨ ** GUI√ìN DE VIDEO VIRAL COMPLETO **
+      video: `?? ** GUI”N DE VIDEO VIRAL COMPLETO **
 
-**üìã ESTRUCTURA PROBADA(30 segundos):**
+**?? ESTRUCTURA PROBADA(30 segundos):**
 
-**üé£ HOOK(0 - 3s):**
-  "Esto que voy a ense√±arte cambi√≥ mi vida en ${country}..."
+**?? HOOK(0 - 3s):**
+  "Esto que voy a enseÒarte cambiÛ mi vida en ${country}..."
 
-  **üìñ DESARROLLO(3 - 25s):**
-‚Ä¢ ** Punto 1:** El problema que todos tienen
-‚Ä¢ ** Punto 2:** La soluci√≥n inesperada  
-‚Ä¢ ** Punto 3:** El resultado sorprendente
+  **?? DESARROLLO(3 - 25s):**
+ï ** Punto 1:** El problema que todos tienen
+ï ** Punto 2:** La soluciÛn inesperada  
+ï ** Punto 3:** El resultado sorprendente
 
-  **üéØ CTA(25 - 30s):**
-    "Comenta 'YO QUIERO' si esto te sirvi√≥"
+  **?? CTA(25 - 30s):**
+    "Comenta 'YO QUIERO' si esto te sirviÛ"
 
-    **üéµ ELEMENTOS T√âCNICOS:**
-‚Ä¢ ** M√∫sica:** Trending audio ${country} (cambiar cada 7 d√≠as)
-‚Ä¢ ** Formato:** Vertical 9: 16(1080x1920)
-‚Ä¢ ** Transiciones:** Cortes cada 2 - 3 segundos
-‚Ä¢ ** Texto:** Subt√≠tulos grandes y coloridos
+    **?? ELEMENTOS T…CNICOS:**
+ï ** M˙sica:** Trending audio ${country} (cambiar cada 7 dÌas)
+ï ** Formato:** Vertical 9: 16(1080x1920)
+ï ** Transiciones:** Cortes cada 2 - 3 segundos
+ï ** Texto:** SubtÌtulos grandes y coloridos
 
-  **üìä PREDICCI√ìN DE PERFORMANCE:**
-‚Ä¢ ** Views estimadas:** 250K - 1.2M
-‚Ä¢ ** Engagement rate:** 8.5 % - 15 %
-‚Ä¢ ** Shares:** 2, 500 - 12,000
-‚Ä¢ ** Probabilidad viral:** 73 % `,
+  **?? PREDICCI”N DE PERFORMANCE:**
+ï ** Views estimadas:** 250K - 1.2M
+ï ** Engagement rate:** 8.5 % - 15 %
+ï ** Shares:** 2, 500 - 12,000
+ï ** Probabilidad viral:** 73 % `,
 
-      analytics: `üìä ** AN√ÅLISIS DE M√âTRICAS COMPLETO **
+      analytics: `?? ** AN¡LISIS DE M…TRICAS COMPLETO **
 
-**üéØ KPIs PRINCIPALES:**
-‚Ä¢ ** CAC(Costo Adquisici√≥n Cliente):** $${Math.floor(Math.random() * 50 + 10)}
-‚Ä¢ ** LTV(Valor Vida Cliente):** $${Math.floor(Math.random() * 500 + 200)}
-‚Ä¢ ** ROAS(Return on Ad Spend):** ${(Math.random() * 3 + 2).toFixed(1)}: 1
-‚Ä¢ ** Conversion Rate:** ${(Math.random() * 5 + 3).toFixed(1)}%
+**?? KPIs PRINCIPALES:**
+ï ** CAC(Costo AdquisiciÛn Cliente):** $${Math.floor(Math.random() * 50 + 10)}
+ï ** LTV(Valor Vida Cliente):** $${Math.floor(Math.random() * 500 + 200)}
+ï ** ROAS(Return on Ad Spend):** ${(Math.random() * 3 + 2).toFixed(1)}: 1
+ï ** Conversion Rate:** ${(Math.random() * 5 + 3).toFixed(1)}%
 
-**üì± PERFORMANCE POR CANAL:**
-‚Ä¢ ** TikTok:** CTR 4.2 % | CPC $0.15 | CPM $2.80
-‚Ä¢ ** Instagram:** CTR 2.8 % | CPC $0.35 | CPM $5.20  
-‚Ä¢ ** Facebook:** CTR 1.9 % | CPC $0.45 | CPM $7.10
-‚Ä¢ ** YouTube:** CTR 3.1 % | CPC $0.25 | CPM $4.50
+**?? PERFORMANCE POR CANAL:**
+ï ** TikTok:** CTR 4.2 % | CPC $0.15 | CPM $2.80
+ï ** Instagram:** CTR 2.8 % | CPC $0.35 | CPM $5.20  
+ï ** Facebook:** CTR 1.9 % | CPC $0.45 | CPM $7.10
+ï ** YouTube:** CTR 3.1 % | CPC $0.25 | CPM $4.50
 
-  **üéØ AUDIENCIA ${country}:**
-‚Ä¢ ** Edad principal:** 25 - 34 a√±os(38 %)
-‚Ä¢ ** G√©nero:** 52 % mujeres, 48 % hombres
-‚Ä¢ ** Dispositivo:** 89 % m√≥vil, 11 % desktop
-‚Ä¢ ** Horario pico:** 7 - 9 PM y 12 - 2 PM
+  **?? AUDIENCIA ${country}:**
+ï ** Edad principal:** 25 - 34 aÒos(38 %)
+ï ** GÈnero:** 52 % mujeres, 48 % hombres
+ï ** Dispositivo:** 89 % mÛvil, 11 % desktop
+ï ** Horario pico:** 7 - 9 PM y 12 - 2 PM
 
-  **üìà RECOMENDACIONES:**
-‚Ä¢ Incrementar presupuesto en TikTok(+40 %)
-‚Ä¢ Optimizar creativos para m√≥vil
-‚Ä¢ Testear nuevos horarios de publicaci√≥n`,
+  **?? RECOMENDACIONES:**
+ï Incrementar presupuesto en TikTok(+40 %)
+ï Optimizar creativos para mÛvil
+ï Testear nuevos horarios de publicaciÛn`,
 
-      ads: `üéØ ** CAMPA√ëA PUBLICITARIA OPTIMIZADA **
+      ads: `?? ** CAMPA—A PUBLICITARIA OPTIMIZADA **
 
-**üì± FACEBOOK / INSTAGRAM ADS:**
+**?? FACEBOOK / INSTAGRAM ADS:**
 
-**üéØ TARGETING:**
-‚Ä¢ ** Ubicaci√≥n:** ${country} (principales ciudades)
-‚Ä¢ ** Edad:** 25 - 45 a√±os
-‚Ä¢ ** Intereses:** Marketing digital, emprendimiento, tecnolog√≠a
-‚Ä¢ ** Comportamientos:** Compradores online frecuentes
+**?? TARGETING:**
+ï ** UbicaciÛn:** ${country} (principales ciudades)
+ï ** Edad:** 25 - 45 aÒos
+ï ** Intereses:** Marketing digital, emprendimiento, tecnologÌa
+ï ** Comportamientos:** Compradores online frecuentes
 
-  **üí∞ ESTRUCTURA DE CAMPA√ëA:**
-‚Ä¢ ** Presupuesto diario:** $50 - 100
-‚Ä¢ ** Objetivo:** Conversiones
-‚Ä¢ ** Bid strategy:** Lowest cost
-‚Ä¢ ** Placement:** Feed + Stories + Reels
+  **?? ESTRUCTURA DE CAMPA—A:**
+ï ** Presupuesto diario:** $50 - 100
+ï ** Objetivo:** Conversiones
+ï ** Bid strategy:** Lowest cost
+ï ** Placement:** Feed + Stories + Reels
 
-  **üé® CREATIVOS(A / B Testing):**
-‚Ä¢ ** Variante A:** Video testimonial cliente
-‚Ä¢ ** Variante B:** Carousel beneficios
-‚Ä¢ ** Variante C:** Single image + copy fuerte
+  **?? CREATIVOS(A / B Testing):**
+ï ** Variante A:** Video testimonial cliente
+ï ** Variante B:** Carousel beneficios
+ï ** Variante C:** Single image + copy fuerte
 
-  **üìä M√âTRICAS OBJETIVO:**
-‚Ä¢ ** CTR:** > 2.5 %
-‚Ä¢ ** CPC:** <$0.40
-‚Ä¢ ** CPM:** <$6.00
-‚Ä¢ ** ROAS:** > 3: 1
+  **?? M…TRICAS OBJETIVO:**
+ï ** CTR:** > 2.5 %
+ï ** CPC:** <$0.40
+ï ** CPM:** <$6.00
+ï ** ROAS:** > 3: 1
 
-  **üîÑ OPTIMIZACI√ìN:**
-‚Ä¢ Pausar ads con CTR < 1.5 %
-‚Ä¢ Escalar ads con ROAS > 4: 1
-‚Ä¢ Testear nuevos p√∫blicos semanalmente`,
+  **?? OPTIMIZACI”N:**
+ï Pausar ads con CTR < 1.5 %
+ï Escalar ads con ROAS > 4: 1
+ï Testear nuevos p˙blicos semanalmente`,
 
-      email: `üìß ** SECUENCIA DE EMAIL MARKETING **
+      email: `?? ** SECUENCIA DE EMAIL MARKETING **
 
-**üéØ WELCOME SERIES(7 emails):**
+**?? WELCOME SERIES(7 emails):**
 
-**üìß Email 1(Inmediato):** Bienvenida + Regalo
-  ** Subject:** "üéÅ Tu regalo est√° aqu√≠ (${country} exclusivo)"
+**?? Email 1(Inmediato):** Bienvenida + Regalo
+  ** Subject:** "?? Tu regalo est· aquÌ (${country} exclusivo)"
 
-    **üìß Email 2(D√≠a 2):** Historia personal
-      ** Subject:** "Por qu√© empec√© esto en ${country}..."
+    **?? Email 2(DÌa 2):** Historia personal
+      ** Subject:** "Por quÈ empecÈ esto en ${country}..."
 
-        **üìß Email 3(D√≠a 4):** Caso de √©xito
-          ** Subject:** "Mar√≠a de ${country} logr√≥ esto en 30 d√≠as"
+        **?? Email 3(DÌa 4):** Caso de Èxito
+          ** Subject:** "MarÌa de ${country} logrÛ esto en 30 dÌas"
 
-            **üìß Email 4(D√≠a 7):** Contenido educativo
+            **?? Email 4(DÌa 7):** Contenido educativo
               ** Subject:** "El secreto que usan en ${country} (gratis)"
 
-                **üìß Email 5(D√≠a 10):** Oferta suave
-                  ** Subject:** "¬øListo para el siguiente nivel?"
+                **?? Email 5(DÌa 10):** Oferta suave
+                  ** Subject:** "øListo para el siguiente nivel?"
 
-                    **üìß Email 6(D√≠a 14):** Urgencia
-                      ** Subject:** "√öltima oportunidad (${country} only)"
+                    **?? Email 6(DÌa 14):** Urgencia
+                      ** Subject:** "⁄ltima oportunidad (${country} only)"
 
-                        **üìß Email 7(D√≠a 21):** Re - engagement
-                          ** Subject:** "¬øNos vemos pronto?"
+                        **?? Email 7(DÌa 21):** Re - engagement
+                          ** Subject:** "øNos vemos pronto?"
 
-                            **üìä M√âTRICAS ESPERADAS:**
-‚Ä¢ ** Open rate:** 35 - 45 %
-‚Ä¢ ** Click rate:** 8 - 12 %
-‚Ä¢ ** Conversion rate:** 3 - 7 % `,
+                            **?? M…TRICAS ESPERADAS:**
+ï ** Open rate:** 35 - 45 %
+ï ** Click rate:** 8 - 12 %
+ï ** Conversion rate:** 3 - 7 % `,
 
-      seo: `üîç ** ESTRATEGIA SEO COMPLETA **
+      seo: `?? ** ESTRATEGIA SEO COMPLETA **
 
-**üéØ KEYWORDS PRINCIPALES ${country}:**
-‚Ä¢ "marketing digital ${country}" - 2, 400 b√∫squedas / mes
-‚Ä¢ "como vender online ${country}" - 1, 900 b√∫squedas / mes
-‚Ä¢ "redes sociales ${country}" - 1, 600 b√∫squedas / mes
-‚Ä¢ "publicidad digital" - 1, 200 b√∫squedas / mes
+**?? KEYWORDS PRINCIPALES ${country}:**
+ï "marketing digital ${country}" - 2, 400 b˙squedas / mes
+ï "como vender online ${country}" - 1, 900 b˙squedas / mes
+ï "redes sociales ${country}" - 1, 600 b˙squedas / mes
+ï "publicidad digital" - 1, 200 b˙squedas / mes
 
-  **üìù CONTENIDO RECOMENDADO:**
-‚Ä¢ ** Blog post 1:** "Gu√≠a Completa Marketing Digital ${country} 2024"
-‚Ä¢ ** Blog post 2:** "10 Estrategias que Funcionan en ${country}"
-‚Ä¢ ** Blog post 3:** "Casos de √âxito: Empresas ${country}nas"
-‚Ä¢ ** Landing page:** "Servicios Marketing Digital ${country}"
+  **?? CONTENIDO RECOMENDADO:**
+ï ** Blog post 1:** "GuÌa Completa Marketing Digital ${country} 2024"
+ï ** Blog post 2:** "10 Estrategias que Funcionan en ${country}"
+ï ** Blog post 3:** "Casos de …xito: Empresas ${country}nas"
+ï ** Landing page:** "Servicios Marketing Digital ${country}"
 
-  **üîß SEO T√âCNICO:**
-‚Ä¢ ** Page speed:** < 3 segundos
-‚Ä¢ ** Mobile - first:** 100 % responsive
-‚Ä¢ ** Core Web Vitals:** Optimizados
-‚Ä¢ ** Schema markup:** LocalBusiness + Service
+  **?? SEO T…CNICO:**
+ï ** Page speed:** < 3 segundos
+ï ** Mobile - first:** 100 % responsive
+ï ** Core Web Vitals:** Optimizados
+ï ** Schema markup:** LocalBusiness + Service
 
-  **üìä PROYECCI√ìN 6 MESES:**
-‚Ä¢ ** Tr√°fico org√°nico:** +250 %
-‚Ä¢ ** Keywords ranking:** Top 10 para 15 + t√©rminos
-‚Ä¢ ** Conversiones SEO:** 35 - 50 / mes`,
+  **?? PROYECCI”N 6 MESES:**
+ï ** Tr·fico org·nico:** +250 %
+ï ** Keywords ranking:** Top 10 para 15 + tÈrminos
+ï ** Conversiones SEO:** 35 - 50 / mes`,
 
-      social: `üì± ** ESTRATEGIA REDES SOCIALES 360¬∞**
+      social: `?? ** ESTRATEGIA REDES SOCIALES 360∞**
 
-**üéØ CONTENIDO POR PLATAFORMA:**
+**?? CONTENIDO POR PLATAFORMA:**
 
-**üì∏ INSTAGRAM:**
-‚Ä¢ ** Feed:** 1 post / d√≠a(70 % educativo, 30 % personal)
-‚Ä¢ ** Stories:** 3 - 5 stories / d√≠a(behind scenes)
-‚Ä¢ ** Reels:** 4 - 5 / semana(trending + educativo)
-‚Ä¢ ** IGTV:** 1 / semana(contenido largo)
+**?? INSTAGRAM:**
+ï ** Feed:** 1 post / dÌa(70 % educativo, 30 % personal)
+ï ** Stories:** 3 - 5 stories / dÌa(behind scenes)
+ï ** Reels:** 4 - 5 / semana(trending + educativo)
+ï ** IGTV:** 1 / semana(contenido largo)
 
-  **üéµ TIKTOK:**
-‚Ä¢ ** Videos:** 1 - 2 / d√≠a(trends + tips)
-‚Ä¢ ** Duetos:** 2 - 3 / semana(engagement)
-‚Ä¢ ** Lives:** 1 / semana(Q & A)
+  **?? TIKTOK:**
+ï ** Videos:** 1 - 2 / dÌa(trends + tips)
+ï ** Duetos:** 2 - 3 / semana(engagement)
+ï ** Lives:** 1 / semana(Q & A)
 
-  **üëî LINKEDIN:**
-‚Ä¢ ** Posts:** 3 - 4 / semana(thought leadership)
-‚Ä¢ ** Art√≠culos:** 1 / semana(expertise)
-‚Ä¢ ** Comentarios:** Engagement diario
+  **?? LINKEDIN:**
+ï ** Posts:** 3 - 4 / semana(thought leadership)
+ï ** ArtÌculos:** 1 / semana(expertise)
+ï ** Comentarios:** Engagement diario
 
-  **üìä CALENDARIO CONTENIDO ${country}:**
-‚Ä¢ ** Lunes:** Motivaci√≥n + Tips
-‚Ä¢ ** Martes:** Caso de √©xito
-‚Ä¢ ** Mi√©rcoles:** Behind scenes
-‚Ä¢ ** Jueves:** Educativo / Tutorial
-‚Ä¢ ** Viernes:** Entretenimiento
-‚Ä¢ ** S√°bado:** User - generated content
-‚Ä¢ ** Domingo:** Reflexi√≥n / Personal
+  **?? CALENDARIO CONTENIDO ${country}:**
+ï ** Lunes:** MotivaciÛn + Tips
+ï ** Martes:** Caso de Èxito
+ï ** MiÈrcoles:** Behind scenes
+ï ** Jueves:** Educativo / Tutorial
+ï ** Viernes:** Entretenimiento
+ï ** S·bado:** User - generated content
+ï ** Domingo:** ReflexiÛn / Personal
 
-  **üéØ HASHTAGS ESTRAT√âGICOS:**
-    Mix de 15 - 20 hashtags por post con rotaci√≥n semanal`,
+  **?? HASHTAGS ESTRAT…GICOS:**
+    Mix de 15 - 20 hashtags por post con rotaciÛn semanal`,
 
-      ecommerce: `üõí ** ESTRATEGIA E - COMMERCE COMPLETA **
+      ecommerce: `?? ** ESTRATEGIA E - COMMERCE COMPLETA **
 
-**üí≥ OPTIMIZACI√ìN CONVERSI√ìN:**
+**?? OPTIMIZACI”N CONVERSI”N:**
 
-**üõçÔ∏è PRODUCTO:**
-‚Ä¢ ** Fotos:** 5 - 8 im√°genes HD + video 360¬∞
-‚Ä¢ ** Descripci√≥n:** Beneficios + especificaciones
-‚Ä¢ ** Reviews:** M√≠nimo 15 rese√±as 4 + estrellas
-‚Ä¢ ** Cross - selling:** "Frecuentemente comprados juntos"
+**??? PRODUCTO:**
+ï ** Fotos:** 5 - 8 im·genes HD + video 360∞
+ï ** DescripciÛn:** Beneficios + especificaciones
+ï ** Reviews:** MÌnimo 15 reseÒas 4 + estrellas
+ï ** Cross - selling:** "Frecuentemente comprados juntos"
 
-  **üöÄ CHECKOUT:**
-‚Ä¢ ** Guest checkout:** Habilitado
-‚Ä¢ ** M√©todos pago:** Tarjetas + PayPal + transferencia
-‚Ä¢ ** Env√≠o:** Gratis > $50 | Express disponible
-‚Ä¢ ** Garant√≠a:** 30 d√≠as devoluci√≥n
+  **?? CHECKOUT:**
+ï ** Guest checkout:** Habilitado
+ï ** MÈtodos pago:** Tarjetas + PayPal + transferencia
+ï ** EnvÌo:** Gratis > $50 | Express disponible
+ï ** GarantÌa:** 30 dÌas devoluciÛn
 
-  **üìß POST - COMPRA:**
-‚Ä¢ ** Email 1:** Confirmaci√≥n + tracking
-‚Ä¢ ** Email 2:** Env√≠o + expectativas
-‚Ä¢ ** Email 3:** Entrega + instrucciones uso
-‚Ä¢ ** Email 4:** Review request(7 d√≠as despu√©s)
-‚Ä¢ ** Email 5:** Cross - sell(14 d√≠as despu√©s)
+  **?? POST - COMPRA:**
+ï ** Email 1:** ConfirmaciÛn + tracking
+ï ** Email 2:** EnvÌo + expectativas
+ï ** Email 3:** Entrega + instrucciones uso
+ï ** Email 4:** Review request(7 dÌas despuÈs)
+ï ** Email 5:** Cross - sell(14 dÌas despuÈs)
 
-  **üìä M√âTRICAS ${country}:**
-‚Ä¢ ** Conversion rate:** 2.8 % (objetivo: 4.5 %)
-‚Ä¢ ** AOV:** $${Math.floor(Math.random() * 100 + 50)}
-‚Ä¢ ** Cart abandonment:** 68 % (recuperar 25 %)
-‚Ä¢ ** Customer LTV:** $${Math.floor(Math.random() * 300 + 150)}
+  **?? M…TRICAS ${country}:**
+ï ** Conversion rate:** 2.8 % (objetivo: 4.5 %)
+ï ** AOV:** $${Math.floor(Math.random() * 100 + 50)}
+ï ** Cart abandonment:** 68 % (recuperar 25 %)
+ï ** Customer LTV:** $${Math.floor(Math.random() * 300 + 150)}
 
-**üéØ ESTRATEGIAS RETENCI√ìN:**
-‚Ä¢ Programa lealtad(puntos)
-‚Ä¢ Email marketing personalizado
-‚Ä¢ Retargeting inteligente
-‚Ä¢ Ofertas exclusivas miembros`
+**?? ESTRATEGIAS RETENCI”N:**
+ï Programa lealtad(puntos)
+ï Email marketing personalizado
+ï Retargeting inteligente
+ï Ofertas exclusivas miembros`
     };
 
-    // Generar respuesta basada en intenci√≥n detectada
-    const response = responses[intent] || `ü§ñ ** AN√ÅLISIS COMPLETO DE TU CONSULTA **
+    // Generar respuesta basada en intenciÛn detectada
+    const response = responses[intent] || `?? ** AN¡LISIS COMPLETO DE TU CONSULTA **
 
-**üéØ He detectado que necesitas ayuda con:** "${input}"
+**?? He detectado que necesitas ayuda con:** "${input}"
 
-  **üìä RECOMENDACIONES PARA ${country}:**
-‚Ä¢ ** Estrategia:** Enfoque multi - canal adaptado al mercado local
-‚Ä¢ ** Contenido:** Localizaci√≥n cultural y trending topics
-‚Ä¢ ** Timing:** Horarios √≥ptimos ${country} (7 - 9 PM, 12 - 2 PM)
-‚Ä¢ ** Budget:** Distribuci√≥n 40 % org√°nico, 60 % paid
+  **?? RECOMENDACIONES PARA ${country}:**
+ï ** Estrategia:** Enfoque multi - canal adaptado al mercado local
+ï ** Contenido:** LocalizaciÛn cultural y trending topics
+ï ** Timing:** Horarios Ûptimos ${country} (7 - 9 PM, 12 - 2 PM)
+ï ** Budget:** DistribuciÛn 40 % org·nico, 60 % paid
 
-  **üöÄ PR√ìXIMOS PASOS:**
-    1. Define objetivos SMART espec√≠ficos
+  **?? PR”XIMOS PASOS:**
+    1. Define objetivos SMART especÌficos
 2. Identifica audiencia target precisa
 3. Crea calendario contenido mensual
-4. Implementa tracking y m√©tricas
+4. Implementa tracking y mÈtricas
 5. Optimiza basado en datos
 
-  **üí° ¬øTe gustar√≠a que profundice en alg√∫n aspecto espec√≠fico ?** `;
+  **?? øTe gustarÌa que profundice en alg˙n aspecto especÌfico ?** `;
 
-    // Sugerencias personalizadas seg√∫n el tipo de intenci√≥n
+    // Sugerencias personalizadas seg˙n el tipo de intenciÛn
     let suggestions = [];
 
     if (intent === 'greeting') {
       suggestions = [
-        'üéØ Ay√∫dame con mi estrategia',
-        '‚úçÔ∏è Necesito copywriting',
-        '#Ô∏è‚É£ Hashtags para mi negocio',
-        'üé¨ Ideas para videos',
-        'üìä ¬øC√≥mo analizar m√©tricas?',
-        'üí° Cu√©ntame sobre tendencias'
+        '?? Ay˙dame con mi estrategia',
+        '?? Necesito copywriting',
+        '#?? Hashtags para mi negocio',
+        '?? Ideas para videos',
+        '?? øCÛmo analizar mÈtricas?',
+        '?? CuÈntame sobre tendencias'
       ];
     } else if (intent === 'casual' || intent === 'short') {
       suggestions = [
-        'üöÄ Tips r√°pidos de marketing',
-        'üì± Ideas para redes sociales',
-        'üí∞ C√≥mo monetizar mi contenido',
-        'üéØ Estrategias para mi nicho',
-        'üìà Hacer crecer mi audiencia',
-        '‚ú® Contenido que convierta'
+        '?? Tips r·pidos de marketing',
+        '?? Ideas para redes sociales',
+        '?? CÛmo monetizar mi contenido',
+        '?? Estrategias para mi nicho',
+        '?? Hacer crecer mi audiencia',
+        '? Contenido que convierta'
       ];
     } else if (intent === 'question') {
       suggestions = [
-        'üíº Cu√©ntame sobre mi negocio',
-        'üë• Definir mi audiencia',
-        'üì± Mis redes sociales actuales',
-        'üéØ Mis objetivos de marketing',
-        'üí∞ Mi presupuesto disponible',
-        'üìä Mis m√©tricas actuales'
+        '?? CuÈntame sobre mi negocio',
+        '?? Definir mi audiencia',
+        '?? Mis redes sociales actuales',
+        '?? Mis objetivos de marketing',
+        '?? Mi presupuesto disponible',
+        '?? Mis mÈtricas actuales'
       ];
     } else {
       suggestions = [
-        'üéØ Crear estrategia completa',
-        '‚úçÔ∏è Generar copy persuasivo',
-        '#Ô∏è‚É£ Hashtags trending',
-        'üìä Analizar m√©tricas',
-        'üé¨ Gui√≥n de video viral',
-        'üìß Secuencia de emails'
+        '?? Crear estrategia completa',
+        '?? Generar copy persuasivo',
+        '#?? Hashtags trending',
+        '?? Analizar mÈtricas',
+        '?? GuiÛn de video viral',
+        '?? Secuencia de emails'
       ];
     }
 
@@ -955,7 +955,7 @@ Para darte la mejor respuesta, ¬øpodr√≠as contarme un poco m√°s de contexto ?
   };
 
   const handleSuggestionClick = (suggestion) => {
-    if (suggestion === '‚öôÔ∏è Configurar Gemini Ahora') {
+    if (suggestion === '?? Configurar Gemini Ahora') {
       setShowConfigModal(true);
       return;
     }
@@ -1078,7 +1078,7 @@ Para darte la mejor respuesta, ¬øpodr√≠as contarme un poco m√°s de contexto ?
                 onClick={handleUpgrade}
                 className="hidden sm:block text-xs bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded-full transition-all animate-pulse mr-2"
               >
-                Simular Pago üí≥
+                Simular Pago ??
               </button>
             )}
 
@@ -1110,7 +1110,7 @@ Para darte la mejor respuesta, ¬øpodr√≠as contarme un poco m√°s de contexto ?
                     Hola, Predix Admin
                   </h1>
                   <p className="text-lg text-gray-400 mb-12 max-w-lg mx-auto font-light leading-relaxed">
-                    Estoy listo para potenciar tu estrategia digital. ¬øPor d√≥nde empezamos hoy?
+                    Estoy listo para potenciar tu estrategia digital. øPor dÛnde empezamos hoy?
                   </p>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl px-2">
@@ -1119,7 +1119,7 @@ Para darte la mejor respuesta, ¬øpodr√≠as contarme un poco m√°s de contexto ?
                         key={idx}
                         whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.03)" }}
                         whileTap={{ scale: 0.98 }}
-                        onClick={() => setInputMessage(action.label === 'Video Concept' ? 'Dame una idea viral para un video de TikTok' : `Ay√∫dame con ${action.label}`)}
+                        onClick={() => setInputMessage(action.label === 'Video Concept' ? 'Dame una idea viral para un video de TikTok' : `Ay˙dame con ${action.label}`)}
                         className="p-4 rounded-xl border border-white/5 bg-[#181a20] hover:border-indigo-500/30 transition-all group flex items-start gap-4 text-left"
                       >
                         <div className={`p-2.5 rounded-lg bg-gradient-to-br ${action.color} bg-opacity-10 transform group-hover:scale-110 transition-transform`}>
@@ -1216,7 +1216,7 @@ Para darte la mejor respuesta, ¬øpodr√≠as contarme un poco m√°s de contexto ?
                       handleSendMessage();
                     }
                   }}
-                  placeholder="Env√≠a un mensaje a Predix AI..."
+                  placeholder="EnvÌa un mensaje a Predix AI..."
                   className="flex-1 max-h-[200px] min-h-[52px] py-3.5 bg-transparent border-none focus:ring-0 text-gray-100 placeholder-gray-500 resize-none custom-scrollbar text-[15px] leading-relaxed"
                   style={{ height: 'auto', overflow: 'hidden' }}
                   rows={1}
@@ -1242,7 +1242,7 @@ Para darte la mejor respuesta, ¬øpodr√≠as contarme un poco m√°s de contexto ?
               </div>
             </div>
             <div className="text-center mt-3">
-              <p className="text-[10px] text-gray-600">Predix AI puede cometer errores. Verifica la informaci√≥n importante.</p>
+              <p className="text-[10px] text-gray-600">Predix AI puede cometer errores. Verifica la informaciÛn importante.</p>
             </div>
           </div>
         </div>

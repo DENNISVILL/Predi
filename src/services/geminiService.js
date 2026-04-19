@@ -6,7 +6,7 @@ const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/
 const getApiKey = () => {
     // 🔒 PRIORIDAD ABSOLUTA: PRO API KEY (Environment)
     // El usuario final NO debe poner su key. Usamos la key "Pro" del sistema.
-    const key = process.env.REACT_APP_GEMINI_API_KEY || localStorage.getItem('predix_gemini_key');
+    const key = import.meta.env.VITE_GEMINI_API_KEY || localStorage.getItem('predix_gemini_key');
     return key ? key.trim() : null;
 };
 
@@ -36,7 +36,7 @@ const SYSTEM_INSTRUCTIONS = {
 };
 
 export const checkGeminiStatus = async () => {
-    const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    const BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || 'http://localhost:8000/api/v1';
 
     try {
         const response = await fetch(`${BASE_URL}/api/chat`, {
@@ -63,9 +63,9 @@ export const checkGeminiStatus = async () => {
 
 
 export const generateGeminiResponse = async (input, intent, country = 'México', isPro = false, previousMessages = []) => {
-    // BACKEND PROXY URL (Change to production URL when deployed)
-    const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-    const BACKEND_URL = `${BASE_URL}/api/chat`;
+    // BACKEND PROXY URL
+    const BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || 'http://localhost:8000/api/v1';
+    const BACKEND_URL = `${BASE_URL}/integrations/chat`;
 
     try {
         // Build the prompt locally (or move this logic to backend later)

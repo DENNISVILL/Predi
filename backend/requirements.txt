@@ -1,56 +1,57 @@
 # FastAPI and ASGI server
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-gunicorn==21.2.0
+fastapi
+uvicorn[standard]
+gunicorn
 
 # Database
-sqlalchemy==2.0.23
-psycopg2-binary==2.9.9
-alembic==1.12.1
+sqlalchemy
+alembic
 
 # Redis
-redis==5.0.1
-aioredis==2.0.1
+redis
+aioredis
 
 # Authentication and Security
-python-jose[cryptography]==3.3.0
-passlib[bcrypt]==1.7.4
-bcrypt==4.1.2
-python-multipart==0.0.6
+python-jose[cryptography]
+passlib[bcrypt]
+bcrypt
+python-multipart
 
 # Two-Factor Authentication
-pyotp==2.9.0
-qrcode[pil]==7.4.2
-pillow==10.1.0
+pyotp
+qrcode[pil]
+pillow
 
 # HTTP Client
-httpx==0.25.2
-aiohttp==3.9.1
+httpx
+aiohttp
+
+# Google Gemini AI (Direct integration - replaces Node.js server.js)
+google-generativeai
 
 # Data Validation
-pydantic==2.5.0
-pydantic-settings==2.1.0
-email-validator==2.1.0
+pydantic
+pydantic-settings
+email-validator
 
 # Environment and Configuration
-python-dotenv==1.0.0
+python-dotenv
 
 # Monitoring and Logging
-prometheus-client==0.19.0
-structlog==23.2.0
+prometheus-client
+structlog
 
 # Date and Time
-python-dateutil==2.8.2
+python-dateutil
 
 # Utilities
-click==8.1.7
-rich==13.7.0
+click
+rich
 
 # Development and Testing (optional)
-pytest==7.4.3
-pytest-asyncio==0.21.1
-httpx==0.25.2
-pytest-cov==4.1.0
+pytest
+pytest-asyncio
+pytest-cov
 
 # Production dependencies
-sentry-sdk[fastapi]==1.38.0
+sentry-sdk[fastapi]

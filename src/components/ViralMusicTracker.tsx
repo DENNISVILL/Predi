@@ -45,7 +45,7 @@ const ViralMusicTracker: React.FC<ViralMusicTrackerProps> = ({ activeTab = 'brow
         const fetchTrends = async () => {
             setLoading(true);
             try {
-                const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+                const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
                 // Fetch from Spotify Service (Backend Proxy)
                 const targetCountry = selectedCountry || 'Global';
