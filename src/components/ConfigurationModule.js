@@ -27,7 +27,10 @@ import {
   BellRing,
   Clock, // Added for billing history
   MapPin,
-  Laptop
+  Laptop,
+  Users,
+  Upload,
+  Palette
 } from 'lucide-react';
 import useStore from '../store/useStore';
 import { useNotifications } from '../hooks/useNotifications';
@@ -109,6 +112,13 @@ const ConfigurationModule = () => {
 
   const [billingCycle, setBillingCycle] = useState('monthly'); // 'monthly' or 'yearly'
 
+  // White Label State
+  const [whiteLabel, setWhiteLabel] = useState({
+    agencyName: 'Mi Agencia Virtual',
+    primaryColor: '#00ff9d',
+    logoUrl: null
+  });
+
   // Security & Privacy State
   const [securitySettings, setSecuritySettings] = useState({
     twoFactor: false,
@@ -166,36 +176,87 @@ const ConfigurationModule = () => {
       price: 0,
       period: 'para siempre',
       current: true,
-      features: ['3 predicciones diarias', 'Dashboard básico', '1 plataforma', 'Soporte estándar'],
+      features: ['1 Usuario', 'Acceso a Centro de Mando', 'Límites de uso estrictos', 'Soporte comunitario'],
       color: 'gray'
     },
     {
-      name: 'Básico',
-      price: 19,
+      name: 'Starter',
+      price: 29,
       period: 'mes',
       current: false,
-      features: ['50 predicciones diarias', '3 plataformas', 'Reportes PDF', 'Alertas por email'],
+      features: ['1 Usuario', 'Planificador y Estudio Básico', 'Base Prompts Limitada', 'Soporte estándar'],
       color: 'blue',
-      paddlePriceId: 'pri_basic_monthly' // Placeholder
+      paddlePriceId: 'pri_starter_monthly'
     },
     {
-      name: 'Pro',
-      price: 49,
-      period: 'mes',
-      current: false,
-      popular: true,
-      features: ['Predicciones ilimitadas', 'IA avanzada (GPT-4)', 'Acceso a API', 'Soporte prioritario 24/7'],
-      color: 'green',
-      paddlePriceId: 'pri_pro_monthly' // Placeholder
-    },
-    {
-      name: 'Premium',
+      name: 'Agency Pro',
       price: 99,
       period: 'mes',
       current: false,
-      features: ['IA personalizada', 'Multi-usuario (5)', 'Consultoría mensual', 'Early access a betas'],
+      popular: true,
+      features: ['Hasta 5 Usuarios', 'Acceso total a 6 Departamentos', 'Máquina B2B (LinkedIn)', 'IA Avanzada (GPT-4)'],
+      color: 'green',
+      paddlePriceId: 'pri_pro_monthly'
+    },
+    {
+      name: 'Enterprise',
+      price: 299,
+      period: 'mes',
+      current: false,
+      features: ['Usuarios Ilimitados', 'Modelos IA Personalizados', 'Acceso API y Marca Blanca', 'Consultoría mensual'],
       color: 'purple',
-      paddlePriceId: 'pri_premium_monthly' // Placeholder
+      paddlePriceId: 'pri_enterprise_monthly'
+    }
+  ];
+
+  const alacarteModules = [
+    {
+      id: 'mod_direccion',
+      name: 'Dirección y Estrategia',
+      desc: 'Finanzas, CRM y Estratega IA',
+      price: 19,
+      icon: Crown,
+      features: ['Dashboard Financiero', 'IA Estratégica', 'Radar de Tendencias']
+    },
+    {
+      id: 'mod_creatividad',
+      name: 'Creatividad y Diseño',
+      desc: 'Tu estudio creativo personal',
+      price: 19,
+      icon: Camera,
+      features: ['Generador de Imágenes', 'Edición Avanzada', 'Assets Ilimitados']
+    },
+    {
+      id: 'mod_contenido',
+      name: 'Contenido y Copywriting',
+      desc: 'Genera contenido a escala',
+      price: 24,
+      icon: Edit,
+      features: ['Planificador Omni', 'Funnels de Email', 'Base de Prompts (10k+)']
+    },
+    {
+      id: 'mod_performance',
+      name: 'Performance y Paid Media',
+      desc: 'Optimiza tu ROAS con IA',
+      price: 19,
+      icon: Zap,
+      features: ['Gestor de Ads', 'Optimización Automática', 'Métricas en Tiempo Real']
+    },
+    {
+      id: 'mod_seo',
+      name: 'SEO y Tecnología',
+      desc: 'Domina los buscadores',
+      price: 24,
+      icon: Globe,
+      features: ['Auditorías SEO', 'Topical Maps', 'Analítica Web']
+    },
+    {
+      id: 'mod_b2b',
+      name: 'Comercial y B2B',
+      desc: 'Prospección en LinkedIn',
+      price: 29,
+      icon: Users,
+      features: ['Automatización LinkedIn', 'CRM de Leads', 'Scripts de Ventas']
     }
   ];
 
@@ -526,82 +587,224 @@ const ConfigurationModule = () => {
                       </div>
                     </div>
                   </div>
+
+                  {/* White Label Settings */}
+                  <div className="mt-8">
+                    <h2 className={`text-2xl font-bold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>Marca Blanca (Agency OS)</h2>
+                    <div className={`p-6 rounded-2xl border ${theme === 'dark' ? 'border-gray-800 bg-[#0b0c10]/50' : 'border-gray-200 bg-white shadow-sm'}`}>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {/* Logo Upload */}
+                        <div>
+                          <h3 className={`font-semibold mb-4 flex items-center gap-2 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                            <Camera className="w-5 h-5 text-purple-500" /> Logo de tu Agencia
+                          </h3>
+                          <div className={`border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center text-center transition-colors ${theme === 'dark' ? 'border-gray-700 hover:border-purple-500 bg-white/5' : 'border-gray-300 hover:border-purple-500 bg-gray-50'}`}>
+                            {whiteLabel.logoUrl ? (
+                              <img src={whiteLabel.logoUrl} alt="Agency Logo" className="h-12 object-contain mb-4" />
+                            ) : (
+                              <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center mb-4">
+                                <Upload className="w-6 h-6 text-purple-500" />
+                              </div>
+                            )}
+                            <p className={`text-sm mb-1 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Arrastra tu logo aquí o</p>
+                            <label className="text-sm text-purple-500 font-semibold cursor-pointer hover:underline">
+                              explora tus archivos
+                              <input 
+                                type="file" 
+                                className="hidden" 
+                                accept="image/*"
+                                onChange={(e) => {
+                                  if (e.target.files && e.target.files[0]) {
+                                    const reader = new FileReader();
+                                    reader.onload = (e) => setWhiteLabel({ ...whiteLabel, logoUrl: e.target.result });
+                                    reader.readAsDataURL(e.target.files[0]);
+                                    showToast('Logo actualizado', 'success');
+                                  }
+                                }}
+                              />
+                            </label>
+                            <p className="text-xs text-gray-500 mt-2">PNG transparente recomendado. Máx 2MB.</p>
+                          </div>
+                        </div>
+
+                        {/* Brand Details */}
+                        <div className="space-y-4">
+                          <div>
+                            <label className={`text-sm mb-1 block font-medium ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>Nombre de la Agencia</label>
+                            <input
+                              type="text"
+                              value={whiteLabel.agencyName}
+                              onChange={(e) => setWhiteLabel({ ...whiteLabel, agencyName: e.target.value })}
+                              className={`w-full border rounded-lg px-4 py-3 focus:outline-none focus:border-purple-500 transition-all ${theme === 'dark'
+                                ? 'bg-[#0b0c10] border-gray-800 text-white'
+                                : 'bg-gray-50 border-gray-200 text-gray-900'
+                                }`}
+                            />
+                          </div>
+
+                          <div>
+                            <label className={`text-sm mb-1 block font-medium flex items-center gap-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                              <Palette className="w-4 h-4" /> Color Primario
+                            </label>
+                            <div className="flex items-center gap-3">
+                              <input
+                                type="color"
+                                value={whiteLabel.primaryColor}
+                                onChange={(e) => setWhiteLabel({ ...whiteLabel, primaryColor: e.target.value })}
+                                className="w-12 h-12 rounded cursor-pointer border-0 p-0"
+                              />
+                              <span className={`text-sm font-mono ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                                {whiteLabel.primaryColor.toUpperCase()}
+                              </span>
+                            </div>
+                            <p className="text-xs text-gray-500 mt-2">Este color reemplazará el verde esmeralda base de Predix.</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-6 flex justify-end">
+                         <button 
+                           onClick={() => showToast('Configuración de Marca Blanca guardada. Recarga para aplicar cambios.', 'success')}
+                           className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg text-sm font-bold transition-colors"
+                         >
+                           Aplicar Marca Blanca
+                         </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
 
             {activeTab === 'plan' && (
-              <div className="space-y-8">
-                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                  <div>
-                    <h2 className={`text-2xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Tu Plan Actual</h2>
-                    <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Gestiona tu suscripción y métodos de pago.</p>
+              <div className="space-y-12">
+                
+                {/* === TODO EN UNO === */}
+                <div>
+                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+                    <div>
+                      <h2 className={`text-2xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Suscripciones All-In-One</h2>
+                      <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Desbloquea toda la agencia virtual.</p>
+                    </div>
+                    <div className={`flex items-center gap-2 text-sm px-4 py-2 rounded-lg ${theme === 'dark' ? 'text-gray-400 bg-white/5' : 'text-gray-600 bg-gray-100'
+                      }`}>
+                      <CreditCard className="w-4 h-4" />
+                      Próxima facturación: <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>N/A</span>
+                    </div>
                   </div>
-                  <div className={`flex items-center gap-2 text-sm px-4 py-2 rounded-lg ${theme === 'dark' ? 'text-gray-400 bg-white/5' : 'text-gray-600 bg-gray-100'
-                    }`}>
-                    <CreditCard className="w-4 h-4" />
-                    Próxima facturación: <span className={`font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>N/A</span>
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-                  {plans.map((plan) => (
-                    <motion.div
-                      key={plan.name}
-                      className={`relative p-6 rounded-2xl border transition-all duration-300 flex flex-col ${plan.current
-                        ? theme === 'dark'
-                          ? 'bg-[#1f1f1f] border-gray-700'
-                          : 'bg-gray-50 border-gray-200'
-                        : plan.popular
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+                    {plans.map((plan) => (
+                      <motion.div
+                        key={plan.name}
+                        className={`relative p-6 rounded-2xl border transition-all duration-300 flex flex-col ${plan.current
                           ? theme === 'dark'
-                            ? 'bg-gradient-to-b from-[#1a1a2e] to-[#0d0d1a] border-[#007bff]/50 shadow-lg shadow-blue-500/10'
-                            : 'bg-white border-blue-200 shadow-xl shadow-blue-100 ring-1 ring-blue-100'
-                          : theme === 'dark'
-                            ? 'bg-[#0b0c10] border-gray-800 hover:border-gray-700'
-                            : 'bg-white border-gray-100 shadow-sm hover:border-gray-200 hover:shadow-md'
-                        }`}
-                      whileHover={{ y: -5 }}
-                    >
-                      {plan.popular && (
-                        <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#007bff] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
-                          Recomendado
-                        </div>
-                      )}
-
-                      <div className="mb-4">
-                        <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{plan.name}</h3>
-                        <div className="flex items-baseline gap-1 mt-1">
-                          <span className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{plan.price}</span>
-                          <span className="text-sm text-gray-500">/{plan.period}</span>
-                        </div>
-                      </div>
-
-                      <ul className="space-y-3 mb-8 flex-1">
-                        {plan.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-gray-500">
-                            <Check className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${plan.current
-                              ? 'text-gray-400'
-                              : theme === 'dark' ? 'text-[#00ff9d]' : 'text-[#00bb72]'
-                              }`} />
-                            <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <button
-                        onClick={() => handleUpgrade(plan)}
-                        className={`w-full py-2.5 rounded-lg text-sm font-bold transition-all ${plan.current
-                          ? 'bg-gray-200 dark:bg-gray-800 text-gray-500 cursor-not-allowed'
-                          : theme === 'dark'
-                            ? 'bg-white text-black hover:bg-gray-200'
-                            : 'bg-black text-white hover:bg-gray-800'
+                            ? 'bg-[#1f1f1f] border-gray-700'
+                            : 'bg-gray-50 border-gray-200'
+                          : plan.popular
+                            ? theme === 'dark'
+                              ? 'bg-gradient-to-b from-[#1a1a2e] to-[#0d0d1a] border-[#007bff]/50 shadow-lg shadow-blue-500/10'
+                              : 'bg-white border-blue-200 shadow-xl shadow-blue-100 ring-1 ring-blue-100'
+                            : theme === 'dark'
+                              ? 'bg-[#0b0c10] border-gray-800 hover:border-gray-700'
+                              : 'bg-white border-gray-100 shadow-sm hover:border-gray-200 hover:shadow-md'
                           }`}
+                        whileHover={{ y: -5 }}
                       >
-                        {plan.current ? 'Plan Actual' : 'Actualizar'}
-                      </button>
-                    </motion.div>
-                  ))}
+                        {plan.popular && (
+                          <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#007bff] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-lg">
+                            Recomendado
+                          </div>
+                        )}
+
+                        <div className="mb-4">
+                          <h3 className={`text-lg font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{plan.name}</h3>
+                          <div className="flex items-baseline gap-1 mt-1">
+                            <span className={`text-2xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>${plan.price}</span>
+                            <span className="text-sm text-gray-500">/{plan.period}</span>
+                          </div>
+                        </div>
+
+                        <ul className="space-y-3 mb-8 flex-1">
+                          {plan.features.map((feature, i) => (
+                            <li key={i} className="flex items-start gap-2 text-xs text-gray-500">
+                              <Check className={`w-3.5 h-3.5 mt-0.5 flex-shrink-0 ${plan.current
+                                ? 'text-gray-400'
+                                : theme === 'dark' ? 'text-[#00ff9d]' : 'text-[#00bb72]'
+                                }`} />
+                              <span className={theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <button
+                          onClick={() => handleUpgrade(plan)}
+                          className={`w-full py-2.5 rounded-lg text-sm font-bold transition-all ${plan.current
+                            ? 'bg-gray-200 dark:bg-gray-800 text-gray-500 cursor-not-allowed'
+                            : theme === 'dark'
+                              ? 'bg-white text-black hover:bg-gray-200'
+                              : 'bg-black text-white hover:bg-gray-800'
+                            }`}
+                        >
+                          {plan.current ? 'Plan Actual' : 'Actualizar'}
+                        </button>
+                      </motion.div>
+                    ))}
+                  </div>
                 </div>
+
+                <div className={`h-px w-full ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-200'}`} />
+
+                {/* === MÓDULOS A LA CARTA === */}
+                <div>
+                  <div className="mb-6">
+                    <h2 className={`text-2xl font-bold mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Mercado de Módulos</h2>
+                    <p className={`${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>¿No necesitas todo? Compra acceso individual por departamento.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    {alacarteModules.map((mod) => (
+                      <motion.div
+                        key={mod.id}
+                        className={`p-5 rounded-2xl border transition-all duration-300 flex flex-col group ${theme === 'dark' ? 'bg-[#0b0c10] border-gray-800 hover:border-gray-700' : 'bg-white border-gray-100 hover:border-gray-300 shadow-sm'}`}
+                        whileHover={{ y: -3 }}
+                      >
+                        <div className="flex justify-between items-start mb-3">
+                          <div className={`p-2.5 rounded-xl ${theme === 'dark' ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
+                            <mod.icon className="w-5 h-5" />
+                          </div>
+                          <div className="text-right">
+                            <span className={`text-xl font-bold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>${mod.price}</span>
+                            <span className="text-xs text-gray-500">/mes</span>
+                          </div>
+                        </div>
+                        
+                        <h3 className={`font-bold mb-1 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{mod.name}</h3>
+                        <p className={`text-xs mb-4 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>{mod.desc}</p>
+                        
+                        <ul className="space-y-2 mb-6 flex-1">
+                          {mod.features.map((feature, i) => (
+                            <li key={i} className="flex items-center gap-2 text-xs text-gray-500">
+                              <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d]" />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+
+                        <button
+                          onClick={() => handleUpgrade({ name: mod.name, paddlePriceId: mod.id })}
+                          className={`w-full py-2 rounded-lg text-sm font-semibold transition-all border ${theme === 'dark'
+                              ? 'border-gray-700 text-gray-300 hover:bg-white/5'
+                              : 'border-gray-200 text-gray-700 hover:bg-gray-50'
+                            }`}
+                        >
+                          Comprar Módulo
+                        </button>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+
               </div>
             )}
 

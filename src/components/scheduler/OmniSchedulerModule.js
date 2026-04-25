@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Calendar, List, Plus, Clock, CheckCircle2, AlertCircle,
-  ChevronLeft, ChevronRight, Sparkles, Zap, Layout
+  ChevronLeft, ChevronRight, Sparkles, Zap, Layout, BarChart2
 } from 'lucide-react';
+import AnnualForecast from './AnnualForecast';
 
 const publicaciones = [
   { id: 1, dia: 1, plataforma: 'instagram', titulo: 'Lanzamiento Colección Q2', hora: '18:00', estado: 'programado', tipo: 'Reel' },
@@ -103,6 +104,10 @@ const OmniSchedulerModule = ({ onNavigateToCreate, scheduledReminders = [] }) =>
           <button onClick={() => setVista('kanban')}
             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${vista === 'kanban' ? 'bg-indigo-500 text-white' : 'text-gray-400 hover:text-white'}`}>
             <Layout className="w-4 h-4" /> Kanban
+          </button>
+          <button onClick={() => setVista('forecast')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-bold transition-all ${vista === 'forecast' ? 'bg-blue-500 text-white' : 'text-gray-400 hover:text-white'}`}>
+            <BarChart2 className="w-4 h-4" /> Pronóstico
           </button>
         </div>
         <div className="flex gap-2 overflow-x-auto pb-1">
@@ -273,6 +278,14 @@ const OmniSchedulerModule = ({ onNavigateToCreate, scheduledReminders = [] }) =>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Annual Forecast Tab */}
+      {vista === 'forecast' && (
+        <motion.div key="forecast" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+          className="bg-[#0e1117] rounded-2xl border border-white/5 overflow-hidden">
+          <AnnualForecast />
+        </motion.div>
+      )}
 
       {/* Banner IA */}
       <div className="bg-indigo-500/10 border border-indigo-500/25 rounded-2xl p-4 flex items-center gap-4">

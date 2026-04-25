@@ -38,7 +38,10 @@ import {
   Megaphone,
   Mail,
   Terminal,
-  Sparkles // Importar Lock icon
+  Sparkles,
+  ChevronDown,
+  Building,
+  Plus
 } from 'lucide-react';
 import { Line, Doughnut, Bar } from 'react-chartjs-2';
 import RadarGlobal from './RadarGlobal';
@@ -95,6 +98,8 @@ import SEOStudioModule from './seo/SEOStudioModule';
 import AdsManagerModule from './ads/AdsManagerModule';
 import EmailFunnelModule from './email/EmailFunnelModule';
 import PromptsLibraryModule from './knowledge/PromptsLibraryModule';
+import LinkedInB2BModule from './linkedin/LinkedInB2BModule';
+import DepartmentHub from './dashboard/DepartmentHub';
 
 ChartJS.register(
   CategoryScale,
@@ -116,6 +121,17 @@ const MainDashboard = () => {
   const { showToast } = useNotifications();
 
   const [activeSection, setActiveSection] = useState('inicio');
+  const [expandedCategories, setExpandedCategories] = useState(['1. Dirección y Estrategia', '3. Contenido y Copywriting']);
+  
+  // Workspace State
+  const [workspaces, setWorkspaces] = useState([
+    { id: 'ws_1', name: 'Mi Agencia Interna', role: 'Owner' },
+    { id: 'ws_2', name: 'TechCorp Inc.', role: 'Admin' },
+    { id: 'ws_3', name: 'Boutique Fashion', role: 'Editor' }
+  ]);
+  const [activeWorkspace, setActiveWorkspace] = useState(workspaces[0]);
+  const [showWorkspaceMenu, setShowWorkspaceMenu] = useState(false);
+
   const [dashboardKey, setDashboardKey] = useState(0);
   const [timeRange, setTimeRange] = useState('7d');
   const [showDashboardExportModal, setShowDashboardExportModal] = useState(false);
@@ -515,19 +531,63 @@ const MainDashboard = () => {
     }
   };
 
-  // Secciones del sidebar (AI Community Manager Pipeline)
-  const sidebarSections = [
-    { id: 'inicio', label: 'Centro de Mando', icon: Home },
-    { id: 'strategist', label: 'Estratega IA', icon: Brain },
-    { id: 'radar', label: 'Radar Tendencias', icon: Target },
-    { id: 'studio', label: 'Estudio Creativo', icon: Wand2 },
-    { id: 'scheduler', label: 'Planificador', icon: Calendar },
-    { id: 'analytics', label: 'Analítica & Agencia', icon: BarChart3 },
-    { id: 'seo', label: 'SEO Studio', icon: Search },
-    { id: 'ads', label: 'Gestor de Ads', icon: Megaphone },
-    { id: 'email', label: 'Email & Funnels', icon: Mail },
-    { id: 'prompts', label: '10K+ Prompts IA', icon: Terminal },
-    { id: 'configuracion', label: 'Configuración', icon: Settings }
+  // Secciones del sidebar (AI Community Manager Pipeline -> Agencia Virtual)
+  const homeSection = { id: 'inicio', label: 'Centro de Mando', icon: Home };
+  
+  const agencyDepartments = [
+    {
+      id: 'dept-1',
+      category: '1. Dirección y Estrategia',
+      roles: 'CEO · Estratega · Account Manager',
+      items: [
+        { id: 'analytics', label: 'Finanzas & CRM', icon: BarChart3 },
+        { id: 'strategist', label: 'Estrategia & Insights', icon: Brain },
+        { id: 'radar', label: 'Radar de Tendencias', icon: Target },
+      ]
+    },
+    {
+      id: 'dept-2',
+      category: '2. Creatividad y Diseño',
+      roles: 'Dir. Creativo · UI Designer · Videomaker',
+      items: [
+        { id: 'studio', label: 'Estudio Creativo', icon: Wand2 },
+      ]
+    },
+    {
+      id: 'dept-3',
+      category: '3. Contenido y Copywriting',
+      roles: 'Content Strategist · Copywriter · CM',
+      items: [
+        { id: 'scheduler', label: 'Planificador Omni', icon: Calendar },
+        { id: 'email', label: 'Email & Funnels', icon: Mail },
+        { id: 'prompts', label: 'Base de Conocimiento', icon: Terminal },
+      ]
+    },
+    {
+      id: 'dept-4',
+      category: '4. Performance y Paid Media',
+      roles: 'Media Buyer · SEM Specialist',
+      items: [
+        { id: 'ads', label: 'Gestor de Ads', icon: Megaphone },
+      ]
+    },
+    {
+      id: 'dept-5',
+      category: '5. SEO, Web y Tecnología',
+      roles: 'SEO Specialist · Web Dev · Data Analyst',
+      items: [
+        { id: 'seo', label: 'SEO Studio', icon: Search },
+        { id: 'configuracion', label: 'Configuración', icon: Settings }
+      ]
+    },
+    {
+      id: 'dept-6',
+      category: '6. Comercial y Operaciones',
+      roles: 'Head of Sales · Project Manager',
+      items: [
+        { id: 'linkedin', label: 'Máquina B2B', icon: Users },
+      ]
+    }
   ];
 
   // Submenu items for Música Viral
@@ -608,85 +668,194 @@ const MainDashboard = () => {
         initial={false} // Disable initial animation to prevent flash
       >
         {/* Logo */}
-        <div className={`px-5 h-[88px] flex items-center border-b ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
+        <div className={`px-5 h-[88px] flex items-center border-b ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'} shrink-0`}>
           <div className="flex items-center gap-2">
             <img src="/logo.png" alt="Predix Logo" className="w-24 h-12 object-contain rounded-lg" />
           </div>
         </div>
 
-        {/* Navigation */}
-        <nav className="flex-1 px-5 py-3 overflow-y-auto">
-          <div className="space-y-1">
-            {sidebarSections.map((section) => (
-              <div key={section.id}>
-                {/* Main Section Button */}
-                <motion.button
-                  onClick={() => {
-                    if (section.id === 'inicio') {
-                      navigate('/dashboard');
-                      setActiveSection('inicio');
-                    } else if (section.id === 'strategist') {
-                      setActiveSection('strategist');
-                    } else if (section.id === 'radar') {
-                      setActiveSection('radar');
-                    } else if (section.id === 'studio') {
-                      setActiveSection('studio');
-                    } else if (section.id === 'scheduler') {
-                      setActiveSection('scheduler');
-                    } else if (section.id === 'analytics') {
-                      setActiveSection('analytics');
-                    } else if (section.id === 'seo') {
-                      setActiveSection('seo');
-                    } else if (section.id === 'ads') {
-                      setActiveSection('ads');
-                    } else if (section.id === 'email') {
-                      setActiveSection('email');
-                    } else if (section.id === 'prompts') {
-                      setActiveSection('prompts');
-                    } else if (section.id === 'configuracion') {
-                      navigate('/settings');
-                      setActiveSection('configuracion');
-                    }
-                    // Auto-close on mobile selection
-                    if (window.innerWidth < 768) setSidebarOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-between gap-2 px-0 py-2 rounded-lg transition-all duration-200 ${activeSection === section.id
-                    ? 'bg-gradient-to-r from-[#007bff]/20 to-[#00ff9d]/20 text-[#00bb72] border border-[#00ff9d]/30 font-medium'
-                    : theme === 'dark'
-                      ? 'text-gray-400 hover:text-white hover:bg-gray-800/50'
-                      : 'text-gray-600 hover:text-black hover:bg-gray-100'
-                    }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <div className="flex items-center gap-2">
-                    <section.icon className="w-4 h-4 flex-shrink-0" />
-                    {sidebarOpen && (
-                      <span className="font-medium">
-                        {section.label}
-                        {activeSection === section.id && !section.hasSubmenu && <span className="ml-1 text-[#00bb72]">●</span>}
-                      </span>
-                    )}
-                  </div>
-                  {/* Submenu Arrow */}
-                  {sidebarOpen && section.hasSubmenu && (
-                    <span className={`text-xs transition-transform ${musicMenuExpanded ? 'rotate-90' : ''}`}>
-                      ▸
-                    </span>
-                  )}
-                </motion.button>
+        {/* Workspace Switcher */}
+        {sidebarOpen && (
+          <div className={`px-3 py-3 border-b relative ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
+            <button 
+              onClick={() => setShowWorkspaceMenu(!showWorkspaceMenu)}
+              className={`w-full flex items-center justify-between p-2 rounded-lg transition-colors border ${showWorkspaceMenu ? (theme === 'dark' ? 'bg-white/10 border-gray-600' : 'bg-gray-100 border-gray-300') : (theme === 'dark' ? 'bg-[#0b0c10] border-gray-800 hover:border-gray-700' : 'bg-white border-gray-200 hover:border-gray-300')}`}
+            >
+              <div className="flex items-center gap-2 overflow-hidden">
+                <div className="w-6 h-6 rounded bg-gradient-to-tr from-[#007bff] to-[#00ff9d] flex items-center justify-center text-[10px] font-bold text-white shrink-0">
+                  {activeWorkspace.name.charAt(0)}
+                </div>
+                <div className="text-left min-w-0">
+                  <p className={`text-xs font-bold truncate ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{activeWorkspace.name}</p>
+                  <p className="text-[9px] text-gray-500 truncate">Cliente</p>
+                </div>
+              </div>
+              <ChevronDown className={`w-3 h-3 text-gray-500 transition-transform ${showWorkspaceMenu ? 'rotate-180' : ''}`} />
+            </button>
 
+            <AnimatePresence>
+              {showWorkspaceMenu && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  className={`absolute top-full left-3 right-3 mt-1 py-2 rounded-xl border shadow-xl z-50 overflow-hidden ${theme === 'dark' ? 'bg-[#1a1a2e] border-gray-700' : 'bg-white border-gray-200'}`}
+                >
+                  <div className="px-3 pb-2 mb-2 border-b border-gray-800/50 dark:border-gray-800">
+                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">Tus Clientes</p>
+                  </div>
+                  <div className="max-h-40 overflow-y-auto custom-scrollbar">
+                    {workspaces.map(ws => (
+                      <button
+                        key={ws.id}
+                        onClick={() => {
+                          setActiveWorkspace(ws);
+                          setShowWorkspaceMenu(false);
+                          showToast(`Cambiaste al entorno de ${ws.name}`, 'success');
+                        }}
+                        className={`w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-white/5 transition-colors ${activeWorkspace.id === ws.id ? 'bg-[#007bff]/10' : ''}`}
+                      >
+                        <Building className={`w-4 h-4 ${activeWorkspace.id === ws.id ? 'text-[#00ff9d]' : 'text-gray-400'}`} />
+                        <span className={`text-sm truncate ${activeWorkspace.id === ws.id ? (theme === 'dark' ? 'text-[#00ff9d] font-bold' : 'text-[#00bb72] font-bold') : (theme === 'dark' ? 'text-gray-300' : 'text-gray-700')}`}>
+                          {ws.name}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                  <div className="px-2 pt-2 mt-1 border-t border-gray-800/50 dark:border-gray-800">
+                    <button 
+                      onClick={() => {
+                        setShowWorkspaceMenu(false);
+                        showToast('Próximamente: Añadir nuevo cliente', 'info');
+                      }}
+                      className={`w-full flex items-center gap-2 px-3 py-2 text-left rounded-lg transition-colors ${theme === 'dark' ? 'text-gray-400 hover:text-white hover:bg-white/5' : 'text-gray-600 hover:text-black hover:bg-gray-100'}`}
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span className="text-sm">Añadir Cliente</span>
+                    </button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+
+        {!sidebarOpen && (
+           <div className={`px-3 py-3 border-b flex justify-center ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
+              <div 
+                className="w-8 h-8 rounded bg-gradient-to-tr from-[#007bff] to-[#00ff9d] flex items-center justify-center text-xs font-bold text-white shrink-0 cursor-pointer hover:scale-105 transition-transform"
+                title={activeWorkspace.name}
+                onClick={() => setSidebarOpen(true)}
+              >
+                {activeWorkspace.name.charAt(0)}
+              </div>
+           </div>
+        )}
+
+        {/* Navigation */}
+        <nav className="flex-1 px-3 py-4 overflow-y-auto custom-scrollbar">
+          <div className="space-y-6">
+            
+            {/* Inicio Standalone */}
+            <div>
+              <motion.button
+                onClick={() => {
+                  navigate('/dashboard');
+                  setActiveSection('inicio');
+                  if (window.innerWidth < 768) setSidebarOpen(false);
+                }}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${activeSection === 'inicio'
+                  ? 'bg-gradient-to-r from-[#007bff]/20 to-[#00ff9d]/20 text-[#00bb72] border border-[#00ff9d]/30 font-bold shadow-lg'
+                  : theme === 'dark'
+                    ? 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                    : 'text-gray-600 hover:text-black hover:bg-gray-100'
+                  }`}
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+              >
+                <homeSection.icon className="w-5 h-5 flex-shrink-0" />
+                {sidebarOpen && <span className="font-semibold text-sm">{homeSection.label}</span>}
+              </motion.button>
+            </div>
+
+            {/* Departamentos */}
+            {agencyDepartments.map((dept, index) => (
+              <div key={index} className="flex flex-col mb-2">
+                {sidebarOpen && (
+                  <button 
+                    onClick={() => {
+                      setActiveSection(dept.id);
+                      if (window.innerWidth < 768) setSidebarOpen(false);
+                    }}
+                    className={`w-full text-left px-3 py-2 mt-1 rounded-lg transition-colors group flex items-center justify-between ${
+                      activeSection === dept.id || dept.items.some(i => i.id === activeSection)
+                        ? 'bg-[#007bff]/10 border border-[#007bff]/20 shadow-sm'
+                        : 'hover:bg-white/5'
+                    }`}
+                  >
+                    <div>
+                      <h4 className={`text-[11px] font-black uppercase tracking-wider mb-0.5 transition-colors ${
+                        activeSection === dept.id || dept.items.some(i => i.id === activeSection) ? 'text-[#00bb72]' : 'text-gray-400 group-hover:text-gray-300'
+                      }`}>
+                        {dept.category}
+                      </h4>
+                      <p className={`text-[9px] font-medium leading-tight ${
+                        activeSection === dept.id || dept.items.some(i => i.id === activeSection) ? 'text-[#00bb72]/80' : 'text-gray-500'
+                      }`}>
+                        {dept.roles}
+                      </p>
+                    </div>
+                  </button>
+                )}
+                {!sidebarOpen && (
+                  <button 
+                    onClick={() => setActiveSection(dept.id)}
+                    className={`w-full h-10 flex items-center justify-center my-1 rounded-lg ${
+                      activeSection === dept.id || dept.items.some(i => i.id === activeSection)
+                        ? 'bg-[#007bff]/10 border border-[#007bff]/20 text-[#00bb72]'
+                        : 'text-gray-400 hover:bg-white/5 hover:text-gray-300'
+                    }`}
+                  >
+                    <span className="text-xs font-black">{index + 1}</span>
+                  </button>
+                )}
               </div>
             ))}
+          </div>
+          
+          {/* Configuración Standalone */}
+          <div className="mt-6 border-t border-white/5 pt-4">
+            <motion.button
+              onClick={() => {
+                navigate('/settings');
+                setActiveSection('configuracion');
+                if (window.innerWidth < 768) setSidebarOpen(false);
+              }}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${activeSection === 'configuracion'
+                ? 'bg-[#007bff]/10 text-[#00bb72] font-bold'
+                : theme === 'dark'
+                  ? 'text-gray-400 hover:text-white hover:bg-gray-800/50'
+                  : 'text-gray-600 hover:text-black hover:bg-gray-100'
+                }`}
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+            >
+              <Settings className="w-5 h-5 flex-shrink-0" />
+              {sidebarOpen && <span className="font-semibold text-sm">Configuración</span>}
+            </motion.button>
           </div>
         </nav>
 
         {/* User Info / Logout */}
         <div className={`p-4 border-t ${theme === 'dark' ? 'border-gray-800' : 'border-gray-200'}`}>
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-xs">
-              {user?.name?.charAt(0) || 'U'}
-            </div>
+            <button 
+              onClick={() => !sidebarOpen ? handleLogout() : null}
+              className={`w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-xs flex-shrink-0 transition-transform ${!sidebarOpen ? 'hover:scale-110' : ''}`}
+              title={!sidebarOpen ? "Cerrar Sesión" : ""}
+            >
+              {!sidebarOpen ? <LogOut className="w-4 h-4" /> : (user?.name?.charAt(0) || 'U')}
+            </button>
             {sidebarOpen && (
               <div className="flex-1 min-w-0">
                 <p className={`text-sm font-medium truncate ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
@@ -700,7 +869,8 @@ const MainDashboard = () => {
             {sidebarOpen && (
               <button
                 onClick={handleLogout}
-                className="text-gray-500 hover:text-red-400 transition-colors"
+                className="text-gray-500 hover:text-red-400 transition-colors p-1"
+                title="Cerrar Sesión"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -1039,7 +1209,30 @@ const MainDashboard = () => {
 
 
 
-              {/* === AI STRATEGIST (FASE 2) === */}
+              {/* === HUBS DE DEPARTAMENTO === */}
+              {activeSection.startsWith('dept-') && (
+                <motion.div
+                  key={activeSection}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full h-full pb-20 md:pb-0"
+                >
+                  <DepartmentHub 
+                    department={agencyDepartments.find(d => d.id === activeSection)}
+                    onSelectTool={(toolId) => {
+                      if (toolId === 'configuracion') {
+                        navigate('/settings');
+                      } else {
+                        setActiveSection(toolId);
+                      }
+                    }}
+                  />
+                </motion.div>
+              )}
+
+              {/* === STRATEGIST === */}
               {activeSection === 'strategist' && (
                 <motion.div
                   key="strategist"
@@ -1140,6 +1333,20 @@ const MainDashboard = () => {
                   className="w-full h-full text-white pb-20 md:pb-0"
                 >
                   <SEOStudioModule />
+                </motion.div>
+              )}
+
+              {/* === LINKEDIN B2B === */}
+              {activeSection === 'linkedin' && (
+                <motion.div
+                  key="linkedin"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="w-full h-full text-white pb-20 md:pb-0"
+                >
+                  <LinkedInB2BModule />
                 </motion.div>
               )}
 

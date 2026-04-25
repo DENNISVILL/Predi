@@ -4,7 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import {
   Brain, Eye, Gauge, Clock, TrendingUp, Database, Target,
   Briefcase, Building, Users, Smartphone, Cpu, Network, Lock,
-  Award, Infinity, ArrowRight, Play, ChevronDown, Sparkles
+  Award, Infinity, ArrowRight, Play, ChevronDown, Sparkles,
+  Crown, Edit, Camera, Zap, Globe
 } from 'lucide-react';
 import PricingPlans from './PricingPlans';
 import EntrepreneurProgram from './EntrepreneurProgram';
@@ -16,10 +17,10 @@ const EnhancedLanding = () => {
   const [currentStat, setCurrentStat] = useState(0);
 
   const stats = [
-    { number: "24-72h", label: "Anticipación de tendencias", icon: Clock },
-    { number: "+300%", label: "Incremento en engagement", icon: TrendingUp },
-    { number: "15M+", label: "Datos procesados diariamente", icon: Database },
-    { number: "99.7%", label: "Precisión en predicciones", icon: Target }
+    { number: "6", label: "Departamentos Integrados", icon: Building },
+    { number: "100%", label: "Control Multi-Cliente", icon: Target },
+    { number: "+50h", label: "Ahorradas al mes", icon: Clock },
+    { number: "SaaS", label: "Marca Blanca Incluida", icon: Crown }
   ];
 
   useEffect(() => {
@@ -31,30 +32,48 @@ const EnhancedLanding = () => {
 
   const coreFeatures = [
     {
-      icon: Brain,
-      title: "Inteligencia Artificial Avanzada",
-      description: "Algoritmos de machine learning que procesan millones de datos en tiempo real para identificar patrones emergentes antes que la competencia.",
-      details: ["Deep Learning Neural Networks", "Procesamiento de Lenguaje Natural", "Análisis Predictivo Multivariable"]
+      icon: Crown,
+      title: "Dirección y Estrategia",
+      description: "Gestiona las finanzas de tu agencia, mantén a tus clientes organizados en el CRM y define la visión global con nuestro Estratega IA.",
+      details: ["Dashboard Financiero", "CRM Integrado", "Estratega IA (CEO Virtual)"]
     },
     {
-      icon: Eye,
-      title: "Monitoreo Multiplataforma",
-      description: "Vigilancia continua de TikTok, Instagram, Twitter, YouTube y más de 50 plataformas digitales para capturar microtendencias emergentes.",
-      details: ["API Integrations Nativas", "Scraping Inteligente", "Análisis Cross-Platform"]
+      icon: Camera,
+      title: "Creatividad y Diseño",
+      description: "Tu propio estudio de producción. Genera imágenes impactantes, edita contenido y mantén una identidad visual premium.",
+      details: ["Generador de Imágenes IA", "Edición Avanzada", "Assets Centralizados"]
     },
     {
-      icon: Gauge,
-      title: "Análisis en Tiempo Real",
-      description: "Dashboard ejecutivo con métricas actualizadas cada segundo, alertas inteligentes y reportes automatizados para toma de decisiones ágil.",
-      details: ["Real-time Analytics", "Custom KPIs", "Automated Reporting"]
+      icon: Edit,
+      title: "Contenido y Copy",
+      description: "El motor de tu agencia. Un planificador omnicanal y un generador de textos persuasivos (copywriting) para redes, emails y webs.",
+      details: ["Planificador Omni", "Funnels de Email", "Base de Prompts (10k+)"]
+    },
+    {
+      icon: Zap,
+      title: "Performance & Ads",
+      description: "Gestión avanzada de presupuestos publicitarios. Optimiza el ROAS en tiempo real y recibe alertas predictivas.",
+      details: ["Gestor Multi-Plataforma", "Optimización Automática", "Métricas en Tiempo Real"]
+    },
+    {
+      icon: Globe,
+      title: "SEO y Tecnología",
+      description: "Domina los buscadores y optimiza la infraestructura web de tus clientes. Auditorías instantáneas y mapas tópicos.",
+      details: ["Auditorías SEO", "Topical Maps Automáticos", "Analítica Web Avanzada"]
+    },
+    {
+      icon: Users,
+      title: "Comercial y B2B",
+      description: "Nunca te quedes sin leads. La Máquina B2B automatiza tu prospección en LinkedIn y te entrega clientes listos para cerrar.",
+      details: ["Automatización LinkedIn", "CRM de Leads B2B", "Scripts de Ventas Exitosos"]
     }
   ];
 
   const industries = [
-    { icon: Briefcase, title: "Marketing & Publicidad", description: "Anticipa campañas virales y optimiza presupuestos publicitarios", metrics: "ROI +250%" },
-    { icon: Building, title: "E-commerce & Retail", description: "Predice demanda de productos y optimiza inventarios", metrics: "Ventas +180%" },
-    { icon: Users, title: "Agencias Digitales", description: "Ofrece insights únicos a tus clientes y diferénciate", metrics: "Clientes +300%" },
-    { icon: Smartphone, title: "Creadores de Contenido", description: "Crea contenido viral antes que sea tendencia", metrics: "Engagement +400%" }
+    { icon: Briefcase, title: "Freelancers Independientes", description: "Multiplica tu capacidad operativa sin contratar empleados.", metrics: "Productividad +300%" },
+    { icon: Building, title: "Agencias en Crecimiento", description: "Unifica tus herramientas y centraliza el trabajo de tu equipo.", metrics: "Costos Operativos -40%" },
+    { icon: Users, title: "Equipos de Marketing", description: "El complemento perfecto para potenciar los resultados de tu marca.", metrics: "Velocidad +200%" },
+    { icon: Crown, title: "Consultores y Estrategas", description: "Entrega reportes de alto nivel y auditorías en segundos.", metrics: "Satisfacción +100%" }
   ];
 
   return (
@@ -78,10 +97,10 @@ const EnhancedLanding = () => {
 
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => navigate('/about')} className="text-gray-300 hover:text-[#00ff9d] transition-colors font-medium bg-transparent border-none cursor-pointer">
-                Quiénes Somos
+                El OS
               </button>
               <button onClick={() => navigate('/contact')} className="text-gray-300 hover:text-[#00ff9d] transition-colors font-medium bg-transparent border-none cursor-pointer">
-                Contáctanos
+                Agencias
               </button>
               <button onClick={() => navigate('/pricing')} className="text-gray-300 hover:text-[#00ff9d] transition-colors font-medium bg-transparent border-none cursor-pointer">
                 Precios
@@ -105,12 +124,12 @@ const EnhancedLanding = () => {
                 Registrarse
               </motion.button>
               <motion.button
-                className="bg-gradient-to-r from-[#007bff] to-[#00ff9d] text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+                className="bg-gradient-to-r from-[#007bff] to-[#00ff9d] text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 hidden md:block"
                 whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0, 255, 157, 0.3)" }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => navigate('/demo-interactive')}
               >
-                Demo Gratuito
+                Crear tu Agencia
               </motion.button>
 
               {/* Mobile Menu */}
@@ -137,21 +156,19 @@ const EnhancedLanding = () => {
           >
             <span className="inline-flex items-center gap-2 bg-gradient-to-r from-[#007bff]/20 to-[#00ff9d]/20 border border-[#00ff9d]/30 rounded-full px-6 py-3 text-[#00ff9d] font-semibold mb-6">
               <Sparkles className="w-4 h-4" />
-              Revoluciona tu estrategia digital con IA
+              Tu aliado definitivo. No reemplazamos, potenciamos.
             </span>
           </motion.div>
 
           <motion.h1
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight"
+            className="text-4xl md:text-5xl lg:text-7xl font-bold mb-6 leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-white">Predice el </span>
-            <span className="gradient-text">Futuro Digital</span>
-            <br />
-            <span className="text-white">Antes que </span>
-            <span className="text-gray-400">Suceda</span>
+            <span className="text-white">No contrates más herramientas.</span><br />
+            <span className="text-white">Contrata una </span>
+            <span className="gradient-text">Agencia Virtual.</span>
           </motion.h1>
 
           <motion.p
@@ -160,9 +177,9 @@ const EnhancedLanding = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            La primera plataforma de <strong className="text-[#00ff9d]">Inteligencia Artificial</strong> que analiza
-            <strong className="text-white"> 15 millones de datos diarios</strong> para predecir tendencias virales
-            <strong className="text-[#007bff]"> 24-72 horas antes</strong> que emerjan.
+            Predix es el primer <strong className="text-[#00ff9d]">Marketing OS</strong> diseñado para freelancers y agencias. 
+            Integra Dirección, SEO, Creatividad, Performance y B2B en un solo entorno unificado. 
+            <strong className="text-white"> Multiplica los resultados de tus clientes.</strong>
           </motion.p>
 
           {/* Dynamic Stats */}
@@ -192,23 +209,23 @@ const EnhancedLanding = () => {
             transition={{ duration: 0.8, delay: 0.8 }}
           >
             <motion.button
-              className="bg-gradient-to-r from-[#007bff] to-[#00ff9d] text-white px-6 py-3 rounded-xl font-bold text-base shadow-2xl hover:shadow-[#00ff9d]/25 transition-all duration-300 flex items-center gap-2"
+              className="bg-gradient-to-r from-[#007bff] to-[#00ff9d] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-2xl hover:shadow-[#00ff9d]/25 transition-all duration-300 flex items-center gap-2"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/register')}
             >
-              Comenzar Demo Gratuito
-              <ArrowRight className="w-4 h-4" />
+              Iniciar tu Agencia Gratis
+              <ArrowRight className="w-5 h-5" />
             </motion.button>
 
             <motion.button
-              className="border border-gray-600 text-white px-6 py-3 rounded-xl font-semibold text-base hover:bg-white/5 transition-all duration-300 flex items-center gap-2"
+              className="border border-gray-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-white/5 transition-all duration-300 flex items-center gap-2"
               whileHover={{ scale: 1.05, borderColor: '#00ff9d' }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/login')}
             >
-              <Play className="w-4 h-4" />
-              Iniciar Sesión
+              <Play className="w-5 h-5" />
+              Ver Demo de 2 Minutos
             </motion.button>
           </motion.div>
 
@@ -228,10 +245,10 @@ const EnhancedLanding = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Tecnología de <span className="gradient-text">Vanguardia</span>
+              6 Departamentos. <span className="gradient-text">1 Plataforma.</span>
             </h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Infraestructura enterprise construida por ex-ingenieros de Google, Meta y Microsoft
+              Todo lo que tu agencia necesita, organizado en Hubs departamentales de alto rendimiento.
             </p>
           </motion.div>
 
@@ -242,22 +259,22 @@ const EnhancedLanding = () => {
                 className="glass-effect rounded-2xl p-6 hover:border-[#00ff9d]/50 transition-all duration-300"
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5 }}
               >
-                <div className="w-14 h-14 bg-gradient-to-r from-[#007bff] to-[#00ff9d] rounded-2xl flex items-center justify-center mb-4">
+                <div className="w-14 h-14 bg-gradient-to-r from-[#007bff] to-[#00ff9d] rounded-2xl flex items-center justify-center mb-4 shadow-lg shadow-[#00ff9d]/20">
                   <feature.icon className="w-7 h-7 text-white" />
                 </div>
 
                 <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
                 <p className="text-gray-400 mb-4 leading-relaxed text-sm">{feature.description}</p>
 
-                <div className="space-y-2">
+                <div className="space-y-2 mt-auto">
                   {feature.details.map((detail, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <div className="w-1.5 h-1.5 bg-[#00ff9d] rounded-full"></div>
-                      <span className="text-gray-300 text-sm">{detail}</span>
+                      <span className="text-gray-300 text-sm font-medium">{detail}</span>
                     </div>
                   ))}
                 </div>
@@ -272,10 +289,10 @@ const EnhancedLanding = () => {
         <div className="max-w-6xl mx-auto">
           <motion.div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Impacto <span className="gradient-text">Comprobado</span>
+              Un aliado para <span className="gradient-text">Cada Profesional</span>
             </h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Resultados reales en las industrias más competitivas del mundo digital
+              No somos tu reemplazo. Somos la infraestructura que te permitirá escalar tu talento.
             </p>
           </motion.div>
 
@@ -297,8 +314,8 @@ const EnhancedLanding = () => {
                 <h3 className="text-base font-bold text-white mb-2">{industry.title}</h3>
                 <p className="text-gray-400 text-xs mb-3">{industry.description}</p>
 
-                <div className="bg-[#00ff9d]/10 border border-[#00ff9d]/30 rounded-lg py-2 px-4">
-                  <span className="text-[#00ff9d] font-bold">{industry.metrics}</span>
+                <div className="bg-[#00ff9d]/10 border border-[#00ff9d]/30 rounded-lg py-2 px-4 inline-block">
+                  <span className="text-[#00ff9d] font-bold text-sm">{industry.metrics}</span>
                 </div>
               </motion.div>
             ))}
@@ -321,27 +338,30 @@ const EnhancedLanding = () => {
       <section className="py-16 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
-            className="glass-effect rounded-3xl p-8"
+            className="glass-effect rounded-3xl p-10 border border-[#00ff9d]/20 relative overflow-hidden"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              ¿Listo para <span className="gradient-text">Liderar</span> tu Mercado?
-            </h2>
-            <p className="text-lg text-gray-400 mb-6">
-              Únete a las empresas que ya están usando el futuro para ganar hoy
-            </p>
+            <div className="absolute inset-0 bg-gradient-to-br from-[#007bff]/5 to-[#00ff9d]/5"></div>
+            <div className="relative z-10">
+              <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
+                ¿Listo para <span className="gradient-text">Escalar</span> tu Agencia?
+              </h2>
+              <p className="text-lg text-gray-400 mb-8 max-w-xl mx-auto">
+                Crea tu primer Workspace, personaliza tu Marca Blanca e invita a tus clientes hoy mismo.
+              </p>
 
-            <motion.button
-              className="bg-gradient-to-r from-[#007bff] to-[#00ff9d] text-white px-8 py-3 rounded-xl font-bold text-base shadow-2xl hover:shadow-[#00ff9d]/25 transition-all duration-300"
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => navigate('/register')}
-            >
-              Comenzar Ahora - Es Gratis
-            </motion.button>
+              <motion.button
+                className="bg-gradient-to-r from-[#007bff] to-[#00ff9d] text-white px-10 py-4 rounded-xl font-bold text-lg shadow-2xl hover:shadow-[#00ff9d]/25 transition-all duration-300"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => navigate('/register')}
+              >
+                Comenzar Gratis
+              </motion.button>
+            </div>
           </motion.div>
         </div>
       </section>
@@ -357,34 +377,34 @@ const EnhancedLanding = () => {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Lo que dicen <span className="gradient-text">nuestros clientes</span>
+              Lo que dicen <span className="gradient-text">nuestros colegas</span>
             </h2>
             <p className="text-lg text-gray-400">
-              Resultados reales de empresas que ya están ganando con Predix
+              Freelancers y directores de agencia que ya centralizaron su operación en Predix.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
               {
-                name: "Sarah Johnson",
-                role: "CMO, TechCorp",
-                avatar: "👩‍💼",
-                quote: "Predix nos ayudó a incrementar nuestro engagement en 340% anticipando tendencias virales. ROI impresionante.",
-                rating: 5
-              },
-              {
-                name: "Michael Chen",
-                role: "Marketing Director",
+                name: "Carlos Mendoza",
+                role: "Director de Agencia, CMZ",
                 avatar: "👨‍💼",
-                quote: "La precisión de las predicciones es impresionante. Logramos predicciones con 240% mejor ROI en el primer trimestre.",
+                quote: "Predix nos permitió dejar de pagar 5 suscripciones distintas. Ahora tengo SEO, Ads y Creatividad en un solo lugar bajo mi propio logo.",
                 rating: 5
               },
               {
-                name: "Sofia García",
-                role: "Content Creator",
-                avatar: "👩‍🎨",
-                quote: "Como creadora, Predix me da ventaja competitiva. Sé qué contenido crear antes que todos. Mis vistas subieron 400%.",
+                name: "Laura Gómez",
+                role: "Freelancer Social Media",
+                avatar: "👩‍💻",
+                quote: "El planificador omnicanal es mi salvavidas. Manejo 8 clientes yo sola y Predix me hace parecer un equipo de 5 personas.",
+                rating: 5
+              },
+              {
+                name: "Andrés Silva",
+                role: "Estratega B2B",
+                avatar: "🎯",
+                quote: "La Máquina B2B de LinkedIn me trajo 3 reuniones calificadas en mi primera semana. Es simplemente ridículo lo bien que funciona.",
                 rating: 5
               }
             ].map((testimonial, index) => (
@@ -398,7 +418,7 @@ const EnhancedLanding = () => {
                 whileHover={{ y: -5 }}
               >
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="text-4xl">{testimonial.avatar}</div>
+                  <div className="text-4xl bg-white/5 w-12 h-12 rounded-full flex items-center justify-center">{testimonial.avatar}</div>
                   <div>
                     <h4 className="text-white font-semibold">{testimonial.name}</h4>
                     <p className="text-gray-400 text-sm">{testimonial.role}</p>
@@ -406,10 +426,10 @@ const EnhancedLanding = () => {
                 </div>
                 <div className="flex gap-1 mb-3">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <span key={i} className="text-yellow-400">⭐</span>
+                    <span key={i} className="text-[#00ff9d]">★</span>
                   ))}
                 </div>
-                <p className="text-gray-300 text-sm italic">"{testimonial.quote}"</p>
+                <p className="text-gray-300 text-sm italic leading-relaxed">"{testimonial.quote}"</p>
               </motion.div>
             ))}
           </div>
@@ -430,39 +450,39 @@ const EnhancedLanding = () => {
               Preguntas <span className="gradient-text">Frecuentes</span>
             </h2>
             <p className="text-lg text-gray-400">
-              Todo lo que necesitas saber sobre Predix
+              Todo lo que necesitas saber sobre el Marketing OS.
             </p>
           </motion.div>
 
           <div className="space-y-4">
             {[
               {
-                q: "¿Cómo funciona Predix?",
-                a: "Predix utiliza algoritmos de deep learning que analizan 15 millones de datos diarios de múltiples plataformas para identificar patrones emergentes 24-72 horas antes que se vuelvan virales."
+                q: "¿Predix reemplazará mi trabajo como Marketer?",
+                a: "Absolutamente NO. Predix es tu copiloto. Nosotros ponemos la infraestructura pesada, los algoritmos y la organización, tú pones la estrategia, el gusto y la relación humana con el cliente."
               },
               {
-                q: "¿Qué plataformas soportan?",
-                a: "Actualmente monitoreamos TikTok, Instagram, Twitter/X, YouTube, LinkedIn, Spotify y más de 50 plataformas. Agregamos nuevas plataformas constantemente según demanda."
+                q: "¿Cómo funciona la Marca Blanca (White-label)?",
+                a: "Puedes subir el logo de tu agencia y elegir tus colores corporativos. Tus clientes verán tu marca en los reportes y dashboards, dándote un posicionamiento ultra profesional."
               },
               {
-                q: "¿Puedo cancelar en cualquier momento?",
-                a: "Sí, puedes cancelar tu subscripción en cualquier momento sin penalización. Además ofrecemos garantía de 14 días, si no estás satisfecho te devolvemos tu dinero."
+                q: "¿Puedo tener múltiples clientes separados?",
+                a: "Sí. La arquitectura de Predix es Multi-Workspace. Puedes crear un entorno para 'Empresa A' y otro totalmente separado para 'Empresa B', sin cruzar datos."
               },
               {
-                q: "¿Necesito conocimientos técnicos?",
-                a: "No. Predix está diseñado para ser intuitivo y fácil de usar. Si puedes usar redes sociales, puedes usar Predix. Además ofrecemos tutoriales y soporte 24/7."
+                q: "¿Qué herramientas incluye exactamente?",
+                a: "Incluye 6 departamentos: Finanzas/CRM, Estudio Creativo (Imágenes/Video), Copywriting, SEO (Auditorías), Gestión de Ads y Prospección B2B en LinkedIn."
               }
             ].map((faq, index) => (
               <motion.div
                 key={index}
-                className="glass-effect rounded-xl p-6"
+                className="glass-effect rounded-xl p-6 hover:border-[#00ff9d]/30 transition-colors"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
                 <h4 className="text-white font-semibold mb-2">{faq.q}</h4>
-                <p className="text-gray-400 text-sm">{faq.a}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">{faq.a}</p>
               </motion.div>
             ))}
           </div>
@@ -480,7 +500,7 @@ const EnhancedLanding = () => {
                 <img src="/logo.png" alt="Predix Logo" className="w-40 h-16 object-contain" />
               </div>
               <p className="text-gray-400 text-sm mb-4 max-w-xs">
-                La plataforma de IA más avanzada para predecir tendencias digitales y ganar en el mercado.
+                El Marketing OS diseñado para escalar agencias y potenciar el talento de freelancers globales.
               </p>
               {/* Social Media */}
               <div className="flex gap-3">
@@ -506,22 +526,20 @@ const EnhancedLanding = () => {
             <div>
               <h4 className="text-white font-semibold mb-4">Producto</h4>
               <ul className="space-y-2">
-                <li><button onClick={() => navigate('/pricing#technology')} className="text-gray-400 hover:text-[#00ff9d] transition-colors text-sm bg-transparent border-none cursor-pointer text-left">Tecnología</button></li>
-                <li><button onClick={() => navigate('/pricing#industries')} className="text-gray-400 hover:text-[#00ff9d] transition-colors text-sm bg-transparent border-none cursor-pointer text-left">Industrias</button></li>
-                <li><button onClick={() => navigate('/pricing#enterprise')} className="text-gray-400 hover:text-[#00ff9d] transition-colors text-sm bg-transparent border-none cursor-pointer text-left">Enterprise</button></li>
-                <li><button onClick={() => navigate('/pricing')} className="text-gray-400 hover:text-[#00ff9d] transition-colors text-sm bg-transparent border-none cursor-pointer text-left">Precios</button></li>
+                <li><button onClick={() => navigate('/pricing#technology')} className="text-gray-400 hover:text-[#00ff9d] transition-colors text-sm bg-transparent border-none cursor-pointer text-left">Plataforma</button></li>
+                <li><button onClick={() => navigate('/pricing#industries')} className="text-gray-400 hover:text-[#00ff9d] transition-colors text-sm bg-transparent border-none cursor-pointer text-left">Casos de Uso</button></li>
+                <li><button onClick={() => navigate('/pricing')} className="text-gray-400 hover:text-[#00ff9d] transition-colors text-sm bg-transparent border-none cursor-pointer text-left">Precios y Módulos</button></li>
               </ul>
             </div>
 
             {/* Company */}
             <div>
-              <h4 className="text-white font-semibold mb-4">Empresa</h4>
+              <h4 className="text-white font-semibold mb-4">Predix</h4>
               <ul className="space-y-2">
                 {[
-                  { label: 'Sobre Nosotros', href: '#' },
-                  { label: 'Blog', href: '#' },
-                  { label: 'Contacto', href: '#' },
-                  { label: 'Carreras', href: '#' }
+                  { label: 'Nuestra Misión', href: '#' },
+                  { label: 'Afiliados', href: '#' },
+                  { label: 'Soporte B2B', href: '#' }
                 ].map((link, i) => (
                   <li key={i}>
                     <a href={link.href} className="text-gray-400 hover:text-[#00ff9d] transition-colors text-sm">
@@ -536,12 +554,11 @@ const EnhancedLanding = () => {
           {/* Footer Bottom */}
           <div className="border-t border-gray-800 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              © 2024 Predix. Todos los derechos reservados. Hecho con ❤️ para predecir el futuro.
+              © 2024 Predix OS. Todos los derechos reservados. Impulsando el marketing mundial.
             </p>
             <div className="flex gap-6">
               <button onClick={() => navigate('/terms')} className="text-gray-400 hover:text-white transition-colors text-sm bg-transparent border-none cursor-pointer">Términos</button>
               <button onClick={() => navigate('/privacy')} className="text-gray-400 hover:text-white transition-colors text-sm bg-transparent border-none cursor-pointer">Privacidad</button>
-              <button className="text-gray-400 hover:text-white transition-colors text-sm bg-transparent border-none cursor-pointer">Cookies</button>
             </div>
           </div>
         </div>

@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, Layers, Star, BarChart2, TrendingUp } from 'lucide-react';
+import { Mail, Layers, Star, BarChart2, TrendingUp, MessageSquare } from 'lucide-react';
 import SequenceBuilder from './SequenceBuilder';
 import EmailTemplates from './EmailTemplates';
 import LeadScoring from './LeadScoring';
 import FunnelMap from './FunnelMap';
+import WhatsAppFunnel from './WhatsAppFunnel';
 
 const EmailFunnelModule = () => {
-  const [activeTab, setActiveTab] = useState('funnel');
+  const [activeTab, setActiveTab] = useState('whatsapp');
 
   const tabs = [
-    { id: 'funnel', label: 'Mapa de Embudo', icon: Layers },
-    { id: 'sequence', label: 'Secuencias de Email', icon: Mail },
-    { id: 'templates', label: 'Plantillas', icon: Star },
-    { id: 'scoring', label: 'Lead Scoring', icon: BarChart2 },
+    { id: 'whatsapp',  label: 'WhatsApp & Ventas',    icon: MessageSquare, color: 'text-green-400',  activeClass: 'bg-green-500/15 border-green-500/60 shadow-green-500/10' },
+    { id: 'funnel',    label: 'Mapa de Embudo',        icon: Layers,        color: 'text-violet-400', activeClass: 'bg-violet-500/15 border-violet-500/60 shadow-violet-500/10' },
+    { id: 'sequence',  label: 'Secuencias de Email',  icon: Mail,          color: 'text-blue-400',   activeClass: 'bg-blue-500/15 border-blue-500/60 shadow-blue-500/10' },
+    { id: 'templates', label: 'Plantillas',            icon: Star,          color: 'text-amber-400',  activeClass: 'bg-amber-500/15 border-amber-500/60 shadow-amber-500/10' },
+    { id: 'scoring',   label: 'Lead Scoring',          icon: BarChart2,     color: 'text-pink-400',   activeClass: 'bg-pink-500/15 border-pink-500/60 shadow-pink-500/10' },
   ];
 
   return (
@@ -46,18 +48,18 @@ const EmailFunnelModule = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-2 overflow-x-auto pb-1">
+      <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
         {tabs.map(tab => {
           const isActive = activeTab === tab.id;
           const Icon = tab.icon;
           return (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-5 py-3 rounded-xl transition-all whitespace-nowrap flex-shrink-0 border ${
-                isActive ? 'bg-violet-500/15 border-violet-500/60 text-white shadow-lg shadow-violet-500/10'
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl transition-all whitespace-nowrap flex-shrink-0 border text-sm font-semibold ${
+                isActive ? `${tab.activeClass} text-white shadow-lg`
                   : 'bg-[#111318] border-white/8 text-gray-400 hover:text-white hover:bg-[#1a1d24] hover:border-white/15'
               }`}>
-              <Icon className={`w-4 h-4 ${isActive ? 'text-violet-400' : ''}`} />
-              <span className="font-semibold text-sm">{tab.label}</span>
+              <Icon className={`w-4 h-4 ${isActive ? tab.color : ''}`} />
+              {tab.label}
             </button>
           );
         })}
@@ -66,6 +68,11 @@ const EmailFunnelModule = () => {
       {/* Content */}
       <div className="bg-[#0e1117] rounded-2xl border border-white/5 overflow-hidden min-h-[500px]">
         <AnimatePresence mode="wait">
+          {activeTab === 'whatsapp' && (
+            <motion.div key="wa" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+              <WhatsAppFunnel />
+            </motion.div>
+          )}
           {activeTab === 'funnel' && (
             <motion.div key="fn" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
               <FunnelMap />

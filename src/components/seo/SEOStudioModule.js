@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, CheckSquare, FileText, Map, TrendingUp } from 'lucide-react';
+import { Search, CheckSquare, FileText, Map, TrendingUp, Network } from 'lucide-react';
 import SEOAudit from './SEOAudit';
 import KeywordResearch from './KeywordResearch';
 import ContentOptimizer from './ContentOptimizer';
 import SEOArchitecture from './SEOArchitecture';
+import TopicalMapGenerator from './TopicalMapGenerator';
 
 const SEOStudioModule = () => {
-  const [activeTab, setActiveTab] = useState('audit');
+  const [activeTab, setActiveTab] = useState('topical');
 
   const tabs = [
+    { id: 'topical', label: 'Mapa de Autoridad Tópica', icon: Network },
     { id: 'audit', label: 'Auditoría SEO', icon: CheckSquare },
     { id: 'keywords', label: 'Keyword Research', icon: Search },
     { id: 'content', label: 'Optimizador de Contenido', icon: FileText },
@@ -72,6 +74,11 @@ const SEOStudioModule = () => {
       {/* Content */}
       <div className="bg-[#0e1117] rounded-2xl border border-white/5 overflow-hidden min-h-[500px]">
         <AnimatePresence mode="wait">
+          {activeTab === 'topical' && (
+            <motion.div key="topical" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+              <TopicalMapGenerator />
+            </motion.div>
+          )}
           {activeTab === 'audit' && (
             <motion.div key="audit" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
               <SEOAudit />
