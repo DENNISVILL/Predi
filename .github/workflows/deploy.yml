@@ -55,7 +55,7 @@ jobs:
       # Backend Tests
       - name: 🐍 Setup Python (Backend)
         if: matrix.component == 'backend'
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'
@@ -83,7 +83,7 @@ jobs:
       # AI System Tests
       - name: 🐍 Setup Python (AI System)
         if: matrix.component == 'ai_system'
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: '3.11'
           cache: 'pip'
