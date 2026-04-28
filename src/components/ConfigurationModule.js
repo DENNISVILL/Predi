@@ -27,9 +27,6 @@ import {
   BellRing,
   Clock, // Added for billing history
   MapPin,
-  Laptop,
-  Users,
-  Upload,
   Palette
 } from 'lucide-react';
 import useStore from '../store/useStore';

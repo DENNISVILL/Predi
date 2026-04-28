@@ -63,12 +63,19 @@ export const checkGeminiStatus = async () => {
 
 
 export const generateGeminiResponse = async (input, intent, country = 'México', isPro = false, previousMessages = []) => {
-    // BACKEND PROXY URL
-    const BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_API_URL) || 'http://localhost:8000/api/v1';
-    const BACKEND_URL = `${BASE_URL}/integrations/chat`;
+    const apiKey = getApiKey();
+
+    if (!apiKey) {
+        return {
+            success: false,
+            error: 'No API Key configurada',
+            fallbackResponse: `❌ **Predix AI no está configurada.**\n\nEl sistema no encontró una clave de API de Gemini. Contacta al administrador.`
+        };
+    }
+
+    const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
     try {
-        // Build the prompt locally (or move this logic to backend later)
         const systemInstructionText = SYSTEM_INSTRUCTIONS.marketing(country);
 
         let contextPrompt = "";
@@ -76,27 +83,31 @@ export const generateGeminiResponse = async (input, intent, country = 'México',
         if (intent === 'copy') contextPrompt = "El usuario necesita COPYWRITING. Genera variaciones, usa hooks potentes y enfócate en conversión.";
         if (intent === 'hashtags') contextPrompt = "El usuario necesita HASHTAGS. Clasifícalos por volumen (Altos, Medios, Nicho).";
 
-        // Convert history for the backend to handle (or handle here)
-        // Our backend expects a 'messages' array or similar. 
-        // Let's adapt to what we built in server.js: it expects 'messages' array where last one is user prompt.
-
-        // We will construct a 'virtual' conversation history to pass to the backend
-        // Note: The simple server.js I wrote takes 'messages' array.
+        // Construir historial en formato Gemini
         const history = previousMessages.slice(-10).map(msg => ({
             role: msg.type === 'user' ? 'user' : 'model',
-            content: msg.content
+            parts: [{ text: msg.content }]
         }));
 
-        // Append current system instruction + context as a "pre-prompt" or implicit context in the last message
-        // This preserves the "Smart Persona" logic without rewriting the backend complexly yet.
-        const finalPrompt = `[INSTRUCCIONES: ${systemInstructionText}]\n[CONTEXTO: ${contextPrompt}]\n\nUSUARIO: ${input}`;
+        // Mensaje final del usuario con instrucciones de sistema embebidas
+        const finalUserText = `[SISTEMA: ${systemInstructionText}]\n[CONTEXTO: ${contextPrompt || 'Responde de forma estratégica y directa.'}]\n\nUSUARIO: ${input}`;
+
+        const contents = [
+            ...history,
+            { role: 'user', parts: [{ text: finalUserText }] }
+        ];
 
         const payload = {
-            messages: [...history, { role: 'user', content: finalPrompt }],
-            model: isPro ? 'gemini-2.5-flash' : 'gemini-2.5-flash'
+            contents,
+            generationConfig: {
+                temperature: 0.85,
+                topK: 40,
+                topP: 0.95,
+                maxOutputTokens: 2048,
+            }
         };
 
-        const response = await fetch(BACKEND_URL, {
+        const response = await fetch(GEMINI_URL, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -105,21 +116,26 @@ export const generateGeminiResponse = async (input, intent, country = 'México',
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.error || 'Backend Error');
+            const errMsg = data.error?.message || 'Error desconocido en la API de Gemini';
+            throw new Error(errMsg);
         }
+
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+        if (!text) throw new Error('Respuesta vacía del modelo');
 
         return {
             success: true,
-            response: data.response,
-            model: 'predix-secure-backend'
+            response: text,
+            model: 'gemini-1.5-flash'
         };
 
     } catch (error) {
-        console.error('Error Gemini (Backend):', error);
+        console.error('Error Gemini Direct:', error);
         return {
             success: false,
             error: error.message,
-            fallbackResponse: `❌ **Error de Conexión Segura**\n\nNo se pudo conectar con el servidor de IA protegido. Asegúrate de que el backend (puerto 5000) esté corriendo.`
+            fallbackResponse: `❌ **Error de Conexión con Predix AI**\n\n${error.message}\n\nVerifica tu conexión a internet o intenta de nuevo en unos segundos.`
         };
     }
 };

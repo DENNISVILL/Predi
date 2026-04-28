@@ -52,6 +52,8 @@ import QuickActionsWidget from './dashboard/QuickActionsWidget';
 import ActivityFeed from './dashboard/ActivityFeed';
 import TimeRangeSelector from './dashboard/TimeRangeSelector';
 import MetricCard from './dashboard/MetricCard';
+import AgencyFloorPlan from './dashboard/AgencyFloorPlan';
+import ARIAAssistant from './assistant/ARIAAssistant';
 import ExportModal from './radar/ExportModal';
 import {
   Chart as ChartJS,
@@ -576,8 +578,8 @@ const MainDashboard = () => {
       category: '5. SEO, Web y Tecnología',
       roles: 'SEO Specialist · Web Dev · Data Analyst',
       items: [
-        { id: 'seo', label: 'SEO Studio', icon: Search },
-        { id: 'configuracion', label: 'Configuración', icon: Settings }
+        { id: 'seo', label: 'SEO Studio', icon: Search, description: 'Auditorías SEO, análisis de palabras clave y generación automática de topical maps para dominar buscadores.' },
+        { id: 'analytics', label: 'Analítica Web', icon: BarChart3, description: 'Métricas avanzadas de tráfico, conversiones y comportamiento de usuario conectadas vía Google Analytics.' },
       ]
     },
     {
@@ -971,7 +973,30 @@ const MainDashboard = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
-                  className="space-y-4 pb-20 md:pb-0" // Add padding bottom for mobile
+                  className="pb-20 md:pb-0"
+                >
+                  {/* ── NUEVO: Piso de Empresa / Organigrama ── */}
+                  <AgencyFloorPlan
+                    onSelectTool={(toolId) => {
+                      if (toolId === 'configuracion') {
+                        navigate('/settings');
+                      } else {
+                        setActiveSection(toolId);
+                      }
+                    }}
+                  />
+                </motion.div>
+              )}
+
+              {/* ── Vista de métricas clásica (oculta, pero disponible) ── */}
+              {activeSection === 'metrics' && (
+                <motion.div
+                  key="metrics"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-4 pb-20 md:pb-0"
                 >
                   {/* NEW: Quick Actions Widget (Moved to Top) */}
                   <QuickActionsWidget
@@ -1207,9 +1232,7 @@ const MainDashboard = () => {
                 </motion.div>
               )}
 
-
-
-              {/* === HUBS DE DEPARTAMENTO === */}
+              {/* === HUBS DE DEPARTAMENTO (heredado) === */}
               {activeSection.startsWith('dept-') && (
                 <motion.div
                   key={activeSection}
@@ -1516,6 +1539,18 @@ const MainDashboard = () => {
           */}
         </div>
       </div>
+
+      {/* ── ARIA: Asistente Interna de Predix ── */}
+      <ARIAAssistant 
+        onNavigate={(target) => {
+          if (target === 'configuracion' || target === 'settings') {
+            navigate('/settings');
+          } else {
+            setActiveSection(target);
+          }
+        }}
+        currentSection={activeSection}
+      />
     </div>
   );
 };

@@ -1,74 +1,136 @@
-# ROADMAP FASE 3: El camino al 100/100 (Backend, APIs e IA)
+# 🗺️ ROADMAP FASE 3 — Estado Actualizado al 27 Abr 2026
 
-Este documento es el plano maestro para transformar a Predix de un "Frontend Premium" a un **SaaS Completamente Funcional y Real**. Aquí detallamos exactamente qué falta por integrar, cómo funcionará, y qué vas a necesitar para que podamos ejecutarlo en la siguiente sesión.
-
----
-
-## 1. Persistencia y Seguridad (Supabase)
-Supabase será el "Cerebro" que guardará toda la información de Predix. Es gratuito y es la mejor alternativa moderna a Firebase.
-
-### Lo que integraremos en código:
-- **Sistema de Autenticación:** Pantallas de Login y Registro (con Email/Contraseña o Google).
-- **Protección de Rutas:** Si alguien no tiene cuenta, no puede ver el Dashboard.
-- **Base de Datos (PostgreSQL):** Crearemos tablas para guardar la información que ahora se borra:
-  - `perfiles_marca` (Tus configuraciones de Buyer Persona, Tono, etc.)
-  - `posts_programados` (La vista Kanban del planificador)
-  - `campanas_ads` (Tu simulador de presupuesto)
-
-> **Tu tarea antes de aplicar esto:**  
-> 1. Ir a [Supabase.com](https://supabase.com) y crear una cuenta gratuita.  
-> 2. Crear un nuevo proyecto (ej. "Predix App").  
-> 3. Entregarme la **URL del Proyecto** y la **API Key (anon/public)**.
+Este es el plano maestro en tiempo real para transformar Predix de un "Frontend Premium" a un **SaaS Completamente Funcional y Real**. Daniel lo actualiza conforme avanzamos.
 
 ---
 
-## 2. Motor de Inteligencia Artificial Real (Claude / Anthropic)
-Toda la lógica de prompts que inyectamos funcionará de verdad conectando la API de Claude (uno de los modelos más avanzados e inteligentes para escritura y análisis).
+## ✅ COMPLETADO — Integraciones Activas
 
-### Lo que integraremos en código:
-- Instalación del SDK de `Anthropic`.
-- **Estratega IA:** Conectar el *Brand Briefing* para que Claude redacte el perfil psicográfico completo en segundos.
-- **Creador Visual & Guiones:** Conectar los módulos del *Estudio Creativo* para escupir resultados reales basados en los "125 hooks" almacenados.
+### 🤖 Motor de IA: Google Gemini 1.5 Flash
+- **Estado**: ✅ ACTIVO Y FUNCIONANDO
+- **Modelo**: `gemini-1.5-flash` (Gratis, hasta 1M tokens/día)
+- **Qué hace**: Alimenta el **Chat Estratega**, el generador de hashtags y el analizador de tendencias
+- **Conexión**: Directa desde el Frontend (sin necesitar backend de Python)
+- `VITE_GEMINI_API_KEY` ✅ Configurada
 
-> **Tu tarea antes de aplicar esto:**  
-> 1. Ir a la consola de desarrolladores de Anthropic (Claude).  
-> 2. Crear una cuenta y generar una **API Key**.  
-> 3. Añadir saldo a tu cuenta (modelo Pay-As-You-Go, con unos $5 a $10 USD es más que suficiente para empezar pruebas intensas).
+### 📊 Google Analytics Data API
+- **Estado**: ✅ HABILITADA en Google Cloud Console
+- **Proyecto**: `Predix-AI`
+- `GOOGLE_CLIENT_ID` ✅ Configurada
+- `GOOGLE_CLIENT_SECRET` ✅ Configurada
 
----
-
-## 3. Conexión con la Realidad (APIs Oficiales Multiplataforma)
-Para que los KPIs y el Gestor de Ads muestren datos reales, necesitamos conectar Predix con el mundo exterior.
-
-### Lo que integraremos en código:
-- **Meta Graph API (Facebook & Instagram):** Para extraer métricas de engagement, alcance y permitir publicar directamente desde el *Planificador Omni*.
-- **Google API (Analytics & Ads):** Para el reporte de métricas y el cálculo real del ROAS/CPC en el *Gestor de Ads*.
-- **TikTok for Business API:** Para extraer el Sentimiento Global y las tendencias virales de música/hashtags.
-
-> **Tu tarea antes de aplicar esto:**  
-> Esta es la parte más burocrática. Tendrás que crear cuentas de desarrollador en:
-> - [Meta for Developers](https://developers.facebook.com/)
-> - [Google Cloud Console](https://console.cloud.google.com/)
-> - [TikTok for Developers](https://developers.tiktok.com/)  
-> Deberás crear una "App" en cada uno de ellos y darme las **Claves API** y los **Tokens de Acceso**.
+### 🎵 TikTok for Developers
+- **Estado**: ✅ App "Predix-Web" creada y activa (modo Individual/Sandbox)
+- **Qué hará**: Extraer tendencias virales de música y hashtags para el Radar
+- `TIKTOK_CLIENT_KEY` ✅ Configurada
+- `TIKTOK_CLIENT_SECRET` ✅ Configurada
 
 ---
 
-## 4. Despliegue a Producción (Deployment)
-Una vez conectado todo, nadie va a usar Predix entrando a `localhost:5173`. Hay que subirlo a internet.
+## ⏳ PENDIENTE — Lo que falta para el 100/100
 
-### Lo que haremos:
-- Usaremos **Vercel** o **Netlify** (plataformas de hosting gratuitas para el Frontend).
-- Conectaremos tu repositorio de GitHub directamente.
-- Configuraremos todas las **Variables de Entorno** (Tus claves de Supabase, Claude, Meta, etc.) de forma secreta en el servidor para que nadie pueda robártelas.
+### 1️⃣ Supabase — Persistencia y Autenticación (PRIORIDAD ALTA)
+Es el "cerebro de datos" de Predix. Sin esto, todo se borra al cerrar el navegador.
 
-> Con esto completado, tendrás un enlace público (ej. `predix-app.vercel.app` o tu dominio propio `predix.ai`) donde tú y tus clientes podrán iniciar sesión y usar el SaaS 100/100.
+**Lo que activaremos:**
+- **Login y Registro real** (Email/Contraseña + Login con Google)
+- **Protección de Rutas**: Si alguien no tiene cuenta, no accede al Dashboard
+- **Base de Datos PostgreSQL** con tablas para:
+  - `perfiles_marca` — Brand Briefing, Buyer Persona, Tono de voz
+  - `posts_programados` — Vista Kanban del Planificador Omni
+  - `campanas_ads` — Simulador de presupuesto del Gestor de Ads
+  - `usuarios` — Historial de suscripciones y planes
+
+> **Tu tarea:**
+> 1. Ir a [supabase.com](https://supabase.com) → Crear cuenta gratuita
+> 2. Crear proyecto nuevo → Llámarlo `Predix-App`
+> 3. Ir a **Configuración del Proyecto → API** y copiarme:
+>    - `URL del Proyecto` (ej: `https://xxxxx.supabase.co`)
+>    - `anon public key` (empieza con `eyJ...`)
+
+```
+VITE_SUPABASE_URL=pendiente
+VITE_SUPABASE_ANON_KEY=pendiente
+```
 
 ---
 
-### Resumen de tu lista de la compra tecnológica:
-Para que yo pueda ejecutar el código de esta Fase 3, necesitaré que me proporciones este listado de "Llaves":
-1. `VITE_SUPABASE_URL` (Gratis)
-2. `VITE_SUPABASE_ANON_KEY` (Gratis)
-3. `VITE_CLAUDE_API_KEY` (Requiere tarjeta y recarga mínima)
-4. `VITE_META_API_KEY` (Gratis, requiere registro dev)
+### 2️⃣ Meta Graph API — Facebook e Instagram (PRIORIDAD MEDIA)
+Para las métricas reales de engagement y el Planificador Omni.
+
+**Lo que activaremos:**
+- Publicar directamente desde Predix a Instagram/Facebook
+- Extraer métricas de alcance, interacciones y seguidores
+- Sincronizar el calendario de publicaciones con tu página
+
+> **Tu tarea:**
+> 1. Ir a [developers.facebook.com](https://developers.facebook.com/) con tu cuenta personal de Facebook
+> 2. Crear App → Tipo "Negocios" → Nombre: `Predix-Web`
+> 3. Ir a **Configuración → Básica** y copiarme:
+>    - `App ID` (número de 15 dígitos)
+>    - `App Secret` (cadena de letras y números)
+
+```
+META_APP_ID=pendiente
+META_APP_SECRET=pendiente
+META_ACCESS_TOKEN=pendiente
+```
+
+---
+
+### 3️⃣ Pasarela de Pagos — Stripe o Paymentez (PRIORIDAD ALTA)
+Sin pagos, Predix no genera ingresos. Activaremos planes Free, Pro y Enterprise.
+
+**Opciones disponibles:**
+| Opción | Ideal para | Comisión |
+|--------|-----------|---------|
+| **Stripe** | Internacional (USD/EUR) | 2.9% + $0.30 |
+| **Paymentez** | LATAM (Ecuador, Col, Mex) | Variable |
+| **Mercado Pago** | LATAM + muy popular | ~3.49% |
+
+**Lo que activaremos:**
+- Checkout de pagos con tarjeta
+- Webhook para activar el plan automáticamente al pagar
+- Portal de suscripciones (cancelar, cambiar plan)
+- Página de planes en el Frontend conectada a precios reales
+
+> **Tu decisión:** ¿Cuál de las 3 pasarelas quieres usar?
+> (Recomiendo **Stripe** si piensas tener clientes internacionales)
+>
+> **Tu tarea (después de decidir):**
+> 1. Crear cuenta en la pasarela elegida
+> 2. Ir a la sección **API Keys** de tu dashboard
+> 3. Copiarme la **Publishable Key** y la **Secret Key**
+
+```
+STRIPE_PUBLISHABLE_KEY=pendiente
+STRIPE_SECRET_KEY=pendiente
+STRIPE_WEBHOOK_SECRET=pendiente
+```
+
+---
+
+## 🚀 FASE 4 — Despliegue a Producción (Después de completar las 3 integraciones)
+
+Una vez que Supabase, Meta y Pagos estén activos:
+
+1. **Frontend → Vercel** (Gratis, despliegue automático desde GitHub)
+2. **Backend → Railway o Render** (Gratis en tier básico)
+3. **Dominio personalizado** → `predix.app` o `usepredix.com`
+4. **Variables de entorno** configuradas en los servidores (nadie verá tus llaves)
+
+---
+
+## 📋 Checklist Maestro
+
+| Item | Estado |
+|------|--------|
+| Google Analytics Data API | ✅ |
+| Google OAuth (Client ID + Secret) | ✅ |
+| Gemini AI 1.5 Flash (Gratis) | ✅ |
+| TikTok Developer API | ✅ |
+| Claude AI Key (disponible, sin saldo activo) | ⚠️ |
+| **Supabase (Auth + DB)** | ⏳ Pendiente |
+| **Meta Graph API** | ⏳ Pendiente |
+| **Pasarela de Pagos** | ⏳ Pendiente — Elegir: Stripe / Paymentez / MercadoPago |
+| Despliegue Vercel + Dominio | 🔜 Fase 4 |

@@ -7,7 +7,7 @@ import {
   Award, Infinity, ArrowRight, Play, ChevronDown, Sparkles,
   Crown, Edit, Camera, Zap, Globe
 } from 'lucide-react';
-import PricingPlans from './PricingPlans';
+// Pricing preview inline (full page at /pricing)
 import EntrepreneurProgram from './EntrepreneurProgram';
 import MobileMenu from './MobileMenu';
 
@@ -323,16 +323,102 @@ const EnhancedLanding = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <PricingPlans
-        onSelectPlan={(plan) => {
-          if (plan.id === 'entrepreneur') {
-            setShowEntrepreneurProgram(true);
-          } else {
-            navigate('/auth');
-          }
-        }}
-      />
+      {/* ─── Pricing Preview Section ─── */}
+      <section id="pricing" className="py-20 px-6 bg-gradient-to-b from-transparent to-[#1f1f1f]/40">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <motion.div
+            className="text-center mb-14"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            viewport={{ once: true }}
+          >
+            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 text-sm text-gray-400 mb-5">
+              <Sparkles className="w-4 h-4 text-[#00ff9d]" />
+              Planes que escalan contigo
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Paga <span className="gradient-text">exactamente</span> lo que usas
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Desde un plan completo hasta módulos individuales. Sin contratos, sin sorpresas.
+            </p>
+          </motion.div>
+
+          {/* Plans Grid */}
+          <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-10">
+            {[
+              { id: 'starter', name: 'Starter', price: 'Gratis', tagline: 'Para explorar', icon: Zap, color: 'from-slate-500 to-slate-400', border: 'border-slate-700/50', cta: 'Empezar Gratis', ctaStyle: 'border border-slate-600 text-white hover:bg-white/5', features: ['5 consultas IA/día', 'Radar básico', '1 plataforma (TikTok)'] },
+              { id: 'creator', name: 'Creator', price: '$29', tagline: '/mes · Creadores', icon: ArrowRight, color: 'from-blue-500 to-cyan-400', border: 'border-blue-500/30', cta: 'Activar Creator', ctaStyle: 'bg-gradient-to-r from-blue-500 to-cyan-400 text-white', features: ['IA ilimitada', 'Radar completo', 'Chat Estratega', 'Music Trends'] },
+              { id: 'pro', name: 'Pro', price: '$79', tagline: '/mes · Agencias', icon: Crown, color: 'from-violet-500 to-purple-600', border: 'border-violet-500', cta: 'Activar Pro', ctaStyle: 'bg-gradient-to-r from-violet-500 to-purple-600 text-white', badge: 'Más Popular', features: ['Todo en Creator', 'Planificador Omni', 'Gestor de Ads', 'Todas las plats.'] },
+              { id: 'enterprise', name: 'Enterprise', price: '$299', tagline: '/mes · Empresas', icon: Building, color: 'from-amber-400 to-orange-500', border: 'border-amber-500/40', cta: 'Contactar Ventas', ctaStyle: 'bg-gradient-to-r from-amber-400 to-orange-500 text-white', features: ['Todo en Pro', 'White-label', 'API ilimitada', 'Soporte 24/7'] },
+            ].map((plan, idx) => (
+              <motion.div
+                key={plan.id}
+                className={`relative rounded-2xl border ${plan.border} bg-white/3 backdrop-blur-sm p-5 flex flex-col`}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.08, duration: 0.5 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              >
+                {plan.badge && (
+                  <div className={`absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r ${plan.color} text-white text-xs font-bold px-4 py-1 rounded-full`}>
+                    ⭐ {plan.badge}
+                  </div>
+                )}
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-r ${plan.color} flex items-center justify-center mb-3`}>
+                  <plan.icon className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-lg font-bold text-white">{plan.name}</h3>
+                <div className="mb-1">
+                  <span className="text-3xl font-extrabold text-white">{plan.price}</span>
+                  <span className="text-gray-500 text-xs ml-1">{plan.tagline}</span>
+                </div>
+                <ul className="mt-3 mb-5 space-y-1.5 flex-1">
+                  {plan.features.map((f, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-gray-300">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#00ff9d] flex-shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <motion.button
+                  whileTap={{ scale: 0.97 }}
+                  onClick={() => navigate('/register', { state: { selectedPlan: plan.id } })}
+                  className={`w-full py-2.5 rounded-xl font-bold text-sm transition-all duration-200 ${plan.ctaStyle}`}
+                >
+                  {plan.cta}
+                </motion.button>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Modules CTA */}
+          <motion.div
+            className="text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <div className="inline-flex flex-col sm:flex-row items-center gap-4 bg-gradient-to-r from-[#007bff]/10 to-[#00ff9d]/10 border border-[#00ff9d]/20 rounded-2xl px-8 py-5">
+              <div className="text-left">
+                <p className="text-white font-semibold">¿No necesitas todo el paquete?</p>
+                <p className="text-gray-400 text-sm">Elige solo los módulos que necesitas y ahorra hasta un 20%.</p>
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => navigate('/pricing')}
+                className="flex-shrink-0 bg-gradient-to-r from-[#007bff] to-[#00ff9d] text-white px-6 py-3 rounded-xl font-bold text-sm hover:shadow-lg hover:shadow-[#00ff9d]/20 transition-all"
+              >
+                Ver Módulos y Precios Completos →
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="py-16 px-6">
